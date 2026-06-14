@@ -1,0 +1,119 @@
+{
+  "tasks": [
+    {
+      "id": "T1",
+      "title": "模块上下文总结 + 项目总览",
+      "layer": 1,
+      "deps": [],
+      "human": false,
+      "prompt": "你是资深 Java 工程师,正在为历史 Spring Boot 项目做交接资产化。\n项目:{{PROJECT}},根路径:{{REPO}},技术栈:{{STACK}}。\n\n任务:\n1. 扫描整个仓库,识别所有模块/包的职责。\n2. 为每个模块产出:职责、关键类、对外提供什么、依赖了谁。\n3. 汇总成项目总览:系统是干什么的、核心业务能力、技术分层。\n\n输出:docs/ai/00-project-overview.md、docs/ai/01-module-map.md\n\n硬性要求:\n- 业务推断一律用证据块格式(结论/可信度+标签/证据/限制/需人工确认),不要写成业务事实。\n- 只描述代码里能看到的;看不到的归到\"需人工确认\"并追加到 docs/ai/REVIEW-QUEUE.md。"
+    },
+    {
+      "id": "T2",
+      "title": "Controller / API 清单抽取",
+      "layer": 1,
+      "deps": [],
+      "human": false,
+      "prompt": "扫描 {{PROJECT}}({{REPO}})的所有 Controller,逐个接口抽取为表格,输出到 docs/ai/03-api-map.md。\n\n每个接口一行:接口路径 | HTTP 方法 | 入参 DTO | 出参 DTO | 调用的 Service | 涉及的数据表 | 鉴权要求 | 是否有副作用 | 是否幂等 | 潜在风险。\n\n要求:\n- \"涉及的数据表\"\"是否幂等\"这类需推断的列,拿不准就标 [推测] 或 [需人工确认],不要硬填。\n- 完成后基于此清单生成 OpenAPI 3.0 草稿 docs/ai/api-openapi-draft.yaml,文件头明确标注\"未经人工校对的底稿\"。"
+    },
+    {
+      "id": "T3",
+      "title": "Entity / Mapper / SQL 原始观察(只记录不下结论)",
+      "layer": 1,
+      "deps": [],
+      "human": false,
+      "prompt": "扫描 {{PROJECT}}({{REPO}})的所有 Entity、Mapper(XML/注解)、原生 SQL、migration 脚本。\n只做\"原始观察记录\",这一步不要下任何业务结论。输出到 docs/ai/04-database-raw-observations.md。\n\n对每张表记录:\n- 字段名、类型、注释(原文照抄)\n- 该字段在代码里被读/被写的位置(文件:行)\n- 出现过的字面量取值(如 status 出现过 0/1/2/7;amount 是否出现过 *100 或 /100)\n\n不要解释含义,只把\"代码里出现的事实\"摆出来,留给 T5 推断。"
+    },
+    {
+      "id": "T4",
+      "title": "依赖图 + 调用链(Mermaid)",
+      "layer": 2,
+      "deps": ["T1", "T2"],
+      "human": false,
+      "prompt": "基于 docs/ai/01-module-map.md 和 docs/ai/03-api-map.md,为 {{PROJECT}} 生成 Mermaid 图,输出到 docs/ai/diagrams/。\n\n如果环境里有 springboot-dependency-analyzer skill,优先用它得到更精确的调用链。\n\n分别生成:\n1. 模块依赖图 module-dependency.mmd\n2. 核心业务的 Controller→Service→Mapper→外部调用 调用链(每条核心流程一张)\n3. 定时任务 / 消息队列 流程图(如果有)\n\n要求:\n- 图里每个节点必须能在代码里找到对应类/方法,找不到的不画。\n- 顺带列出\"循环依赖\"和\"跨模块直接调用\"清单(可疑点,标 [需人工确认])。"
+    },
+    {
+      "id": "T5",
+      "title": "数据库语义文档(带证据,重点标高危项)",
+      "layer": 2,
+      "deps": ["T3"],
+      "human": false,
+      "prompt": "基于 docs/ai/04-database-raw-observations.md 的原始观察,推断 {{PROJECT}} 的数据库业务语义,输出到 docs/ai/04-database-schema.md。\n每条结论必须用证据块格式(结论/可信度/证据/限制/需人工确认)。\n\n重点排查并单列这几类高危项(任何一条出错都可能是生产事故):\n- status / type / code 等字段到底有哪些取值、各代表什么\n- is_deleted / deleted / del_flag 的语义(软删除约定是否全项目一致)\n- 金额字段单位:是否存在\"元/分\"混用(定位所有乘除 100 的位置)\n- 时间字段是否有时区问题\n- 关键状态流转(如订单状态)集中在哪些类\n\n注意:以上每一项证据推到极限通常仍需人工确认——全部追加到 docs/ai/REVIEW-QUEUE.md 并按风险排序。这是本任务最值钱的产物。"
+    },
+    {
+      "id": "T6",
+      "title": "启动流程 / 权限认证流程图 + 配置清单",
+      "layer": 2,
+      "deps": ["T1"],
+      "human": false,
+      "prompt": "为 {{PROJECT}} 梳理两条流程各画一张 Mermaid 图,输出到 docs/ai/07-startup-and-auth-flow.md:\n1. 应用启动流程(关键 Bean、初始化顺序、影响启动的配置)\n2. 权限/认证流程(登录、鉴权拦截器/过滤器、token 校验路径)\n\n同时整理 docs/ai/05-config-and-env.md:列出所有配置项、默认值、作用、哪些是启动必需的。\n推断项带标签,缺失的配置归入 docs/ai/REVIEW-QUEUE.md。"
+    },
+    {
+      "id": "T7",
+      "title": "工程风险扫描",
+      "layer": 3,
+      "deps": ["T4", "T5"],
+      "human": false,
+      "prompt": "对 {{PROJECT}} 做工程风险扫描,输出到 docs/ai/08-risk-and-tech-debt.md,按风险等级排序。\n\n覆盖:事务边界(@Transactional 失效/范围不当)、并发问题、安全(硬编码密钥、SQL 拼接注入、不安全反序列化)、异常处理(吞异常、全局处理缺失)、慢 SQL / N+1、巨型类与重复代码。\n\n每条:问题 | 位置(文件:行) | 风险等级 | 证据 | 建议(只给建议,不改代码)。\n依赖漏洞交给 OWASP/SonarQube 更准,这里只标\"建议用工具复查\";重点放在业务逻辑层隐患。"
+    },
+    {
+      "id": "T8",
+      "title": "测试候选清单 + 核心测试草稿",
+      "layer": 3,
+      "deps": ["T1"],
+      "human": false,
+      "prompt": "为 {{PROJECT}} 做测试缺口分析,输出 docs/ai/test-candidates.md:列出未被测试覆盖、且属于核心业务逻辑的 Service 方法,按价值排序。\n\n然后只为排序最高的前 5 个方法生成 JUnit + Mockito 单测草稿,放到对应 test 目录,文件头注明\"AI 生成草稿,待人工校验断言正确性\"。\n不要为 getter/setter、DTO、明显无逻辑的方法写测试。"
+    },
+    {
+      "id": "T9",
+      "title": "疑似未被内部调用的接口(候选,非死接口)",
+      "layer": 3,
+      "deps": ["T2"],
+      "human": false,
+      "prompt": "扫描 {{PROJECT}},找出本仓库内部没有找到调用方的 public 接口/方法,输出到 docs/ai/08b-suspected-unused-apis.md。\n如有 springboot-dependency-analyzer skill,用它的\"未使用接口\"能力。\n\n严格要求:\n- 标题统一叫\"疑似未被内部代码调用的接口\",禁止叫\"死接口/死代码\"。\n- 每条标注可能的外部来源(至少考虑:前端 / App / 外部系统 / 定时任务 / 反射 / 网关转发 / 老版本客户端 / Webhook 回调)。\n- 结论统一为\"候选\",附一句:确认前必须结合网关日志、Nginx 日志、APM、前端仓库、外部文档核对。\n- 绝不建议直接删除,绝不改代码。"
+    },
+    {
+      "id": "T10",
+      "title": "升级体检(Spring Boot / Java / 依赖)",
+      "layer": 3,
+      "deps": ["T1"],
+      "human": false,
+      "prompt": "评估 {{PROJECT}}(当前 {{STACK}})升级到 Spring Boot 3.x + Java 17/21 的工作量,输出到 docs/ai/upgrade-assessment.md。\n\n列出阻碍点:javax → jakarta 命名空间改动、废弃 API、不兼容的依赖版本、需替换的库。\n产出:改动清单 + 粗略工作量评估(高/中/低)+ 风险点。这是给决策用的报告,不要实际改代码。"
+    },
+    {
+      "id": "T12B",
+      "title": "对抗式回查(Agent B:证伪,不是确认)",
+      "layer": 5,
+      "deps": ["T4", "T5", "T6", "T7", "T8", "T9", "T10"],
+      "human": false,
+      "prompt": "现在切换到【对抗式审查】角色。你的唯一任务是证伪,不是确认。\n审查对象:{{PROJECT}} 已生成的 docs/ai/ 全部文档。输出到 docs/ai/12-adversarial-review.md。\n\n逐条审查每个结论,主动去代码里找它【不成立】的证据。对每条输出:\n- 原结论\n- 我找到的反证 / 没有任何代码支撑的事实(附文件:行)\n- 重新判定的可信度标签\n\n特别地:任何关于金额单位、软删除语义、状态枚举、时区、是否幂等的结论,如果不能用一条可运行的 grep 或一个测试证明,一律降级为 [需人工确认],不许标 [代码已证实]。\n把降级和冲突的结论列在最前面。\n\n(对抗有效性提示:不要复用上文已经认同过的判断,强制自己站在\"这文档写错了\"的立场重新读代码。)"
+    },
+    {
+      "id": "T12C",
+      "title": "整理人工复核队列(Agent C:只整理不分析)",
+      "layer": 5,
+      "deps": ["T12B"],
+      "human": false,
+      "prompt": "读取 docs/ai/12-adversarial-review.md 的审查结果,不要重新分析代码。\n只做一件事:把所有 [与代码冲突] 和 [需人工确认] 的条目,整理成给人看的复核队列,合并写入 docs/ai/REVIEW-QUEUE.md。\n\n每条:问题(一句话能回答) | 涉及文件 | 为什么 token 解决不了 | 风险等级。\n按风险等级排序。这份队列是今天给\"人\"的最终交付物。"
+    },
+    {
+      "id": "T13",
+      "title": "一键运行脚手架草稿(标注未验证)",
+      "layer": 6,
+      "deps": ["T5", "T6"],
+      "human": false,
+      "prompt": "为 {{PROJECT}} 生成本地可运行脚手架草稿(全部文件头标注\"AI 草稿,未在真实环境验证\"):\n- README.md(启动步骤)\n- .env.example\n- docker-compose.yml(按代码用到的中间件推断:MySQL/Redis/MQ 等)\n- application-local.yml\n- 本地数据库初始化 / 最小 Mock 数据 SQL\n\n目标命令:docker compose up -d && ./mvnw spring-boot:run\n若有信息缺口导致无法保证能跑(缺凭据、外部依赖、未知配置),明确列出\"为什么可能跑不起来\"清单,而不是假装能跑。"
+    },
+    {
+      "id": "T14",
+      "title": "working-rules 访谈(agent 提问→你回答→agent 整理)",
+      "layer": 7,
+      "deps": ["T12C"],
+      "human": true,
+      "prompt": "【需要人工参与,不能自动跑完】\n生成 {{PROJECT}} 的 docs/ai/09-agent-working-rules.md,但你不能自己编内容。分两步:\n\n第一步:基于已生成的 docs/ai/ 文档,向用户提出结构化访谈问题清单,覆盖:\n- 哪些包/模块不能随意改,为什么\n- 哪些接口看似没用但外部系统还在调\n- 哪些字段绝对不能动 / 有脏历史数据\n- 数据库字段变更的正确流程\n- 改接口前必须连带检查哪些 controller/service/mapper\n- 本地启动命令、测试命令、代码风格约定\n- 关键业务术语解释\n- 历史生产事故留下的坑、线上兼容要求\n每个问题尽量具体到用户能直接回答。\n\n第二步:等用户逐条回答后,整理成 09-agent-working-rules.md,每条标注来源:[用户口述]/[代码佐证]/[需进一步确认]。不要替用户补充他没说过的内容。"
+    }
+  ],
+  "gates": {
+    "after_T12C": "首个项目跑完 Layer1-5 后,建议你(真正懂这份代码的人)亲自校准:抽查 [代码已证实] 标签是否真的可信。校准通过再铺开到其它项目;若发现 [代码已证实] 贴在错误结论上,说明 prompt 在量产'自信的垃圾',先改 prompt。"
+  }
+}
