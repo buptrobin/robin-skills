@@ -64,7 +64,7 @@ For each conclusion that matters, trace `claim -> cited evidence -> inferential 
 - Does the author's wording express possibility, average tendency, or necessity? Does the evidence reach that strength?
 - What plausible observation would count against the claim? If none is imaginable, explain that the claim is hard to test rather than pretending to falsify it.
 
-Give a proportionate verdict: supported, conditionally supported, plausible but under-evidenced, or contradicted by specified evidence. An absent citation warrants uncertainty; it does not by itself prove the opposite.
+Give a proportionate verdict: supported, conditionally supported, `论证不足` with the specific evidence or inferential gap, or contradicted by specified evidence. Keep uncertainty visible when evidence cannot decide.
 
 ## 5. Competing explanation test
 
@@ -76,6 +76,18 @@ A useful alternative must explain the same phenomenon through a different mechan
 - Which explanation has stronger evidence and over what domain?
 
 Avoid cosmetic “economic / psychological / sociological” labels without mechanisms.
+
+## 5a. Breadth, depth, and time
+
+Breadth asks whose view or which level is missing: stakeholders, individual/organizational/system levels, relevant disciplines, and competing mechanisms. Depth follows `definition -> mechanism -> premises -> evidence -> boundaries`. Develop branches that change understanding or identify a consequential unknown.
+
+For time, connect historical origins or similar precedents -> changed conditions -> present position -> conditional future scenarios. Compare mechanisms and circumstances rather than assuming history repeats. Separate facts from trends and scenarios; for a meaningful scenario, name its key assumptions and a signal that could confirm or challenge it. Use information available at publication to assess the original argument; use later evidence to update today's understanding.
+
+## 5b. Analogies and other people's perspectives
+
+For a cross-domain analogy, show a concrete mechanism mapping: which actors, variables, constraints, or feedback loops correspond? What does the mapping help explain or predict, and where does it break? Treat it as an explanatory aid or hypothesis; verify conclusions through evidence in the target domain.
+
+For domestic and international perspectives, seek relevant original statements or research and compare their premises, mechanisms, context, and evidence. Neither region has a single view. Cite named people's actual positions. Distinguish a direct response to this material from a general position on a related issue; applying their framework to the material yourself is `推演`. When research is unavailable or inconclusive, disclose the gap and offer labeled analytical perspectives rather than attributed statements.
 
 ## 6. Cognitive-update patterns
 
@@ -106,14 +118,17 @@ The analysis changes what one should do when a particular observable condition i
 
 Confirm that:
 
-- the summary is not the majority of the answer;
+- the core views are explicitly summarized, with decisive qualifications, without making summary the majority of the answer;
 - criticism addresses the strongest source-supported argument, not a straw man;
 - missing discussion is not described as intentional omission without evidence;
-- lack of evidence is not called falsity;
-- external positions are sourced rather than invented;
+- insufficiently supported arguments are labeled `论证不足`, with the missing evidence or inferential step identified;
+- external positions are sourced; direct comments, related general views, and model applications of a framework are distinguished;
+- breadth exposes consequential perspectives and depth follows the mechanism to its premises, evidence, and boundaries;
+- historical comparisons account for changed conditions, and future scenarios carry assumptions and observable signals;
+- cross-domain analogies include a mechanism mapping and failure boundaries, rather than substituting resemblance for evidence;
 - later evidence is not used to unfairly judge what the author could have known at publication time;
 - “first principles” are not decorative slogans;
 - the analysis independently derives the central mechanism rather than only naming the author's assumptions;
 - criticism identifies the inferential step and its effect on the conclusion, rather than listing generic biases;
-- at least one section delivers a concrete cognitive update rather than a reformulation;
+- when the material supports cognitive gains, the answer delivers concrete gains rather than reformulations; when it supports none, the answer explains why without manufacturing novelty or forcing an update;
 - uncertainty remains visible where evidence cannot decide.

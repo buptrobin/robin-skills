@@ -1,7 +1,7 @@
 interface:
   display_name: "深度阅读与认知增量"
-  short_description: "从长文本中获得值得保留的新认知，并修正或校准已有判断"
-  default_prompt: "使用 $cognitive-deep-reading 深度阅读这份材料，检验作者的观点，并告诉我哪些新认知值得长期保留、哪些已有判断需要调整或增加边界。"
+  short_description: "总结核心观点，从原理、广深、历史未来与跨领域视角提炼认知"
+  default_prompt: "使用 $cognitive-deep-reading 总结这份材料的核心观点，从第一性原理和批判性思维深入检验，并结合相关的广度、历史到未来、跨领域类比与国内外观点，提炼值得长期保留的新认知和需要校准的判断。"
 policy:
   products:
   - chatgpt
