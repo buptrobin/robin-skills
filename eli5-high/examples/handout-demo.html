@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>酶 · 降低化学反应活化能 | 高中生物讲义</title>
+<style>
+  :root{
+    --paper:#faf9f6; --card:#ffffff; --ink:#1b1b19; --mid:#6b6a64; --faint:#c9c7bf;
+    --line:#e3e1d9; --blue:#2f6fd0; --blue-soft:#dce9fb; --amber:#c8862a; --amber-soft:#fbeed7;
+    --green:#2f8a5b; --green-soft:#dcefe5; --red:#c04a3c; --red-soft:#f8e2df;
+    --mono:ui-monospace,SFMono-Regular,Consolas,"Courier New",monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);line-height:1.72;-webkit-font-smoothing:antialiased;
+    font-family:-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif}
+  .wrap{max-width:1080px;margin:0 auto;padding:44px 24px 72px}
+  .kicker{font-size:12.5px;letter-spacing:.14em;color:var(--mid);margin-bottom:12px}
+  h1{font-size:32px;line-height:1.3;margin:0 0 12px;letter-spacing:-.02em;max-width:880px}
+  h1 em{font-style:normal;color:var(--blue)}
+  .meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--mid);margin:0 0 18px}
+  .meta span{display:inline-flex;align-items:center;gap:5px}
+  .meta i{width:5px;height:5px;border-radius:50%;background:var(--faint);display:block}
+  .lede{font-size:17px;line-height:1.78;color:#3a3a35;margin:0 0 24px;max-width:860px}
+  .lede b{background:var(--amber-soft);padding:1px 6px;border-radius:5px;font-weight:600}
+  .toc{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 30px}
+  .toc a{font-size:13px;color:#3a3a35;text-decoration:none;background:#f1f0ea;
+    border:1px solid var(--line);border-radius:999px;padding:6px 13px;transition:.14s}
+  .toc a:hover{border-color:#bcd4f5;color:#1f4f96;background:#f5f9ff}
+
+  .bdg{display:inline-block;font-size:11.5px;font-weight:700;line-height:1;padding:4px 9px;
+    border-radius:6px;letter-spacing:.04em;vertical-align:2px}
+  .bdg-must{background:var(--amber-soft);color:#8a5c14;border:1px solid #f0dcb4}
+  .bdg-warn{background:var(--red-soft);color:#8f3226;border:1px solid #f0cbc4}
+  .bdg-diff{background:var(--blue-soft);color:#1f4f96;border:1px solid #bcd4f5}
+  .bdg-ext{background:var(--green-soft);color:#1e6640;border:1px solid #bfe0cd}
+
+  h2{font-size:20px;margin:0 0 4px;letter-spacing:-.01em;display:flex;align-items:baseline;gap:10px}
+  h2 .sn{font-family:var(--mono);font-size:13px;color:var(--blue);font-weight:700}
+  .h2s{font-size:13.5px;color:var(--mid);margin:0 0 16px}
+  section{max-width:940px;margin:0 0 40px;scroll-margin-top:20px}
+  section.sec-wide{max-width:1040px}
+
+  .quote{border-left:3px solid var(--amber);background:#fffaf2;border-radius:0 14px 14px 0;
+    padding:14px 18px;margin:0 0 20px;max-width:880px}
+  .q-t{font-size:12.5px;color:var(--mid);margin:0 0 8px;font-weight:600}
+  .q-src{font-family:var(--mono);font-weight:400;margin-left:6px;font-size:11.5px}
+  .q-b{margin:0;font-size:16px;line-height:1.85;color:#2b2a26;
+    font-family:"Kaiti SC","KaiTi","STKaiti",Georgia,serif,serif}
+  .q-n{margin:10px 0 0;font-size:13.5px;color:#3a3a35;line-height:1.75;
+    padding-top:9px;border-top:1px dashed #f0dcb4}
+  .q-n b{color:#8a5c14}
+
+  figure{margin:0 0 18px;background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:22px 26px 20px;box-shadow:0 1px 2px rgba(0,0,0,.03);max-width:940px}
+  figure.wide{max-width:1040px}
+  .fig-cap{display:flex;align-items:baseline;gap:9px;margin-bottom:6px;flex-wrap:wrap}
+  .fig-no{font-size:13px;font-weight:700;color:var(--blue);letter-spacing:.06em;white-space:nowrap}
+  .fig-t{font-size:16px;font-weight:650}
+  .fig-s{font-size:15px;color:var(--mid);line-height:1.75;margin:0 0 16px}
+  .fig-s b{color:var(--ink)}
+  svg{display:block;width:100%;height:auto}
+  .take{margin:14px 0 0;padding-top:12px;border-top:1px dashed var(--line);
+    font-size:13.5px;color:#3a3a35;line-height:1.75}
+  .take::before{content:"结论\00a0\00a0";font-weight:700;color:var(--amber);letter-spacing:.06em}
+  .note{font-size:12.5px;color:var(--mid);margin:12px 0 0;padding-top:10px;border-top:1px dashed var(--line);line-height:1.7}
+  .halo{stroke:#fff;stroke-width:3.6;paint-order:stroke;stroke-linejoin:round;stroke-linecap:round}
+
+  .board svg{touch-action:none;user-select:none;outline:none}
+  .board svg:focus-visible{box-shadow:0 0 0 3px var(--blue-soft);border-radius:12px}
+  .board.stacked svg{max-width:460px;margin:0 auto}
+  .bar{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-top:14px;
+    padding-top:16px;border-top:1px dashed var(--line)}
+  .bar .lb{font-size:14px;font-weight:600;color:#3a3a35}
+  .bar input[type=range]{flex:1 1 220px;min-width:160px;accent-color:var(--blue);height:26px}
+  .bar button{font:inherit;font-size:13.5px;font-weight:600;color:var(--ink);background:#f4f3ee;
+    border:1px solid var(--line);border-radius:10px;padding:7px 14px;cursor:pointer}
+  .bar button:hover{background:#ecebe4}
+  .bar .hint{font-size:12.5px;color:var(--mid);flex-basis:100%;margin:0}
+  .stats{display:grid;gap:12px;grid-template-columns:repeat(3,1fr);margin-top:16px}
+  .st{background:#fbfaf7;border:1px solid var(--line);border-radius:14px;padding:12px 15px}
+  .st .k{font-size:12px;color:var(--mid);margin-bottom:3px;font-weight:600}
+  .st .v{font-size:21px;font-weight:700;font-family:var(--mono);letter-spacing:-.01em}
+  .st .s{font-size:12px;color:var(--mid);margin-top:2px}
+  .st.state .v{font-size:17px;font-family:inherit}
+  .st.state{border-color:#e0ddd2}
+
+  .ap-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 10px}
+  .ap-badge{font-size:12px;font-weight:700;letter-spacing:.04em;padding:5px 11px;border-radius:999px;
+    background:var(--blue-soft);color:#1f4f96;border:1px solid #bcd4f5;transition:.16s}
+  .ap-badge[data-mode="manual"]{background:var(--amber-soft);color:#8a5c14;border-color:#f0dcb4}
+  .ap-tip{font-size:12.5px;color:var(--mid)}
+
+  .ex{border:1px solid var(--line);border-radius:16px;padding:20px 22px;background:#fbfaf7;
+    margin:0 0 18px;max-width:940px}
+  .ex-t{font-size:13px;font-weight:700;color:var(--blue);letter-spacing:.06em;margin:0 0 10px}
+  .ex-q{font-size:15px;line-height:1.85;margin:0 0 16px;color:#2b2a26;background:#fff;
+    border:1px solid var(--line);border-radius:11px;padding:13px 15px}
+  .steps{list-style:none;margin:0;padding:0;counter-reset:s}
+  .step{position:relative;padding:0 0 14px 34px;margin:0 0 14px;border-bottom:1px dashed var(--line)}
+  .step:last-child{border-bottom:none;margin-bottom:6px;padding-bottom:0}
+  .step[hidden]{display:none}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;
+    width:22px;height:22px;border-radius:50%;background:var(--blue-soft);color:#1f4f96;
+    font-size:12px;font-weight:700;text-align:center;line-height:22px}
+  .s-h{font-size:13.5px;font-weight:700;margin:0 0 5px;color:#1f4f96}
+  .s-b{font-size:14px;line-height:1.8;margin:0;color:#3a3a35}
+  .s-b b{color:var(--ink)}
+  .s-k{font-size:12px;color:var(--mid);margin:6px 0 0;font-family:var(--mono)}
+  .exbar{display:flex;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
+  .exbar button{font:inherit;font-size:13.5px;font-weight:650;color:#fff;background:var(--blue);
+    border:1px solid var(--blue);border-radius:10px;padding:9px 20px;cursor:pointer}
+  .exbar button:disabled{background:#dcdad2;border-color:#dcdad2;color:#8a877e;cursor:default}
+  .exbar .cnt{font-size:12.5px;color:var(--mid);font-family:var(--mono)}
+  .ans{margin-top:16px;border:1px dashed #bfe0cd;background:#f6fbf8;border-radius:12px;padding:14px 16px}
+  .ans[hidden]{display:none}
+  .ans-t{font-size:12.5px;font-weight:700;color:var(--green);margin:0 0 8px;letter-spacing:.06em}
+  .ans-b{font-size:14px;line-height:1.9;margin:0;color:#2b2a26}
+
+  .qa{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(330px,1fr))}
+  .qac{border:1px solid var(--line);border-radius:14px;padding:15px 16px 14px;background:#fbfaf7}
+  .qac .q{margin:0 0 8px;font-size:14.5px;font-weight:700;line-height:1.55}
+  .qac .a{margin:0 0 12px;font-size:13.5px;line-height:1.75;color:#3a3a35}
+  .qac .a b{color:var(--ink)}
+  .qac svg{background:#fff;border:1px solid var(--line);border-radius:10px}
+  .ms{font-size:10px;fill:#6b6a64}
+  .mm{font-size:10.5px;font-family:var(--mono);font-weight:700}
+  .mh{font-size:11px;font-weight:700;fill:#1b1b19}
+
+  .errs{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+  .er{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:#fff}
+  .er-x{margin:0 0 8px;font-size:14px;color:#a04437;background:var(--red-soft);
+    border-radius:8px;padding:8px 11px;line-height:1.6}
+  .er-v{margin:0 0 8px;font-size:14px;color:#1e6640;background:var(--green-soft);
+    border-radius:8px;padding:8px 11px;line-height:1.75}
+  .er-w{margin:0;font-size:13px;color:var(--mid);line-height:1.7}
+  .er-w b{color:#3a3a35}
+
+  footer{margin-top:12px;font-size:12.5px;color:var(--mid);border-top:1px solid var(--line);
+    padding-top:18px;line-height:1.8;max-width:880px}
+  code{font-family:var(--mono);font-size:.92em;background:#f2f1ec;padding:1px 5px;border-radius:4px}
+
+  .svgbox{position:relative}
+  .zoomchip{display:none;position:absolute;top:-6px;right:-6px;z-index:2;font-size:12px;font-weight:600;
+    color:var(--blue);background:var(--blue-soft);border:1px solid #bcd4f5;border-radius:999px;padding:5px 12px}
+  .zoom{position:fixed;inset:0;z-index:60;background:#fff;overflow:auto;padding:58px 12px 36px}
+  .zoom[hidden]{display:none}
+  .zoom svg{width:720px;max-width:none;height:auto;display:block;margin:0 auto}
+  .zoom-x{position:fixed;top:14px;right:16px;z-index:61;width:44px;height:44px;border-radius:50%;
+    border:1px solid var(--line);background:#fff;cursor:pointer;font-size:18px;line-height:1;
+    color:var(--ink);font-family:inherit}
+  .zoom-tip{position:fixed;top:22px;left:18px;z-index:61;font-size:13px;color:var(--mid)}
+
+  @media (max-width:760px){
+    .wrap{padding:26px 14px 56px}
+    h1{font-size:clamp(23px,6vw,30px)}
+    .lede{font-size:clamp(14.5px,4.2vw,16.5px)}
+    h2{font-size:18px}
+    section{margin-bottom:32px}
+    figure{padding:17px 14px 15px;border-radius:14px}
+    .fig-t{font-size:clamp(14px,4.1vw,16px)}
+    .fig-s{font-size:clamp(13.5px,3.9vw,14.5px)}
+    .zoomchip{display:inline-block}
+    .q-b{font-size:15px}
+    .stats{grid-template-columns:1fr 1fr;gap:10px}
+    .stats .st:last-child{grid-column:1 / -1}
+    .st .v{font-size:19px}
+    .qa{grid-template-columns:1fr}
+    .errs{grid-template-columns:1fr}
+    .ex{padding:16px 14px}
+    .bar button{min-height:44px;flex:1 1 auto}
+    .bar input[type=range]{flex-basis:100%}
+    footer{font-size:12px}
+  }
+  @media (pointer:coarse){ button{min-height:44px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="kicker">ELI5-HIGH · 讲给要考试的人</div>
+<h1>酶不是"加速器"，<em>它是把门槛拆低的那个人</em></h1>
+<div class="meta">
+  <span><i></i>人教版必修1 第5章第1节</span>
+  <span><i></i>高一 · 细胞的能量供应和利用</span>
+  <span><i></i>阅读 10 分钟</span>
+  <span><i></i>含 1 个互动模型</span>
+</div>
+<p class="lede">这一节只有三件事要真正想通：酶<b>降低活化能</b>而不是提供能量、酶<b>有最适温度</b>、
+高温使酶失活<b>不可逆</b>而低温只是抑制。剩下的全是这三句话的变体。</p>
+
+<nav class="toc">
+  <a href="#a">① 课本怎么说</a><a href="#b">② 拆开看</a><a href="#c">③ 自己拖一下</a>
+  <a href="#d">④ 一道题走一遍</a><a href="#e">⑤ 会怎么考</a><a href="#f">⑥ 易错清单</a>
+</nav>
+
+<!-- ======== A ======== -->
+<section id="a">
+  <h2><span class="sn">01</span>课本怎么说</h2>
+  <p class="h2s">先记住标准表述，再看解释。顺序反了，答题时就写不出术语。</p>
+  <div class="quote">
+    <p class="q-t">课本原话<span class="q-src">人教版必修1 · 第5章第1节</span></p>
+    <p class="q-b">酶是活细胞产生的具有催化作用的有机物，其中绝大多数酶是蛋白质。</p>
+    <p class="q-n">→ 这句话里有 <b>三个条件同时成立</b>才算酶：<b>① 活细胞产生</b>、<b>② 有催化作用</b>、<b>③ 是有机物</b>。
+    少一个都不行——所以"从细胞里提取出来的酶在试管里照样能催化"，仍然满足"活细胞产生"这一条。</p>
+  </div>
+  <p class="note">注意"绝大多数"三个字：少数酶是 <b>RNA</b>（核酶）。这个"少数"是选择题的常客，
+  写"酶的化学本质都是蛋白质"就直接判错。</p>
+</section>
+
+<!-- ======== B ======== -->
+<section id="b">
+  <h2><span class="sn">02</span>拆开看</h2>
+  <p class="h2s">两张图：一张讲清"酶到底做了什么"，一张讲清"什么在限制反应速率"。</p>
+
+  <figure>
+    <div class="fig-cap"><span class="fig-no">图 1</span><span class="fig-t">酶做的事：把能垒削低，不动两端</span></div>
+    <p class="fig-s">纵轴是<b>能量</b>，横轴是<b>反应进程</b>。反应物要变成产物，必须先爬过中间那个"山包"——
+    这个山包的高度就叫<b>活化能</b>。加了酶，山包被削低，但<b>起点和终点的高度一个都没动</b>。</p>
+    <div class="svgbox">
+      <svg viewBox="0 0 900 360" role="img"
+           aria-label="反应进程与能量的关系：无催化剂时活化能高，加酶后活化能显著降低，但反应物与产物的能量水平不变">
+        <g id="eaChart"></g>
+      </svg>
+      <span class="zoomchip">点击放大</span>
+    </div>
+    <p class="take">酶只降低<b>活化能</b>，不改变反应物和产物的能量，所以<b>不改变反应放出的热量</b>，也不改变平衡点。</p>
+    <p class="note">这也解释了一个常考的反直觉现象：加酶后反应"更剧烈"，但最终放出的热量<b>一样多</b>——
+    酶只是让更多分子在同一时刻越过了门槛，并没有多给你能量。</p>
+  </figure>
+
+  <figure>
+    <div class="fig-cap"><span class="fig-no">图 2</span><span class="fig-t">什么在限制反应速率</span>
+      <span class="bdg bdg-diff">辨析</span></div>
+    <p class="fig-s">左图固定酶的量、不断增加底物，速率会先升后<b>持平</b>——因为酶的活性位点被占满了；
+    右图固定底物过量、不断增加酶，速率则<b>一直成正比上升</b>。两张图的拐点问的是同一件事：<b>谁是限制因素</b>。</p>
+    <div class="svgbox">
+      <svg viewBox="0 0 900 320" role="img"
+           aria-label="左：底物浓度增加时反应速率先上升后饱和；右：酶浓度增加时反应速率成正比上升">
+        <g id="limChart"></g>
+      </svg>
+      <span class="zoomchip">点击放大</span>
+    </div>
+    <p class="take">判断原则：<b>哪个先饱和，哪个就是当时的限制因素</b>。底物饱和后再加底物没用，必须加酶。</p>
+  </figure>
+</section>
+
+<!-- ======== C ======== -->
+<section id="c" class="sec-wide">
+  <h2><span class="sn">03</span>自己拖一下</h2>
+  <p class="h2s">温度是这一节唯一一条"会自己拐弯"的曲线。拖着看它怎么拐、在哪拐、拐过去还能不能回来。</p>
+  <figure class="wide">
+    <div class="fig-cap"><span class="fig-no">图 3</span><span class="fig-t">温度对酶活性的影响</span>
+      <span class="bdg bdg-warn">易错</span></div>
+    <p class="fig-s">打开时温度自己在 20℃ ↔ 70℃ 之间走一圈，在 37℃ 停 2.4 秒——那就是全篇最值钱的一帧。
+    你一碰就交给你，松手 5 秒重新接着演。重点盯住三件事：<b>曲线的最高点在哪</b>、<b>左侧下降得缓还是右侧下降得陡</b>、<b>状态那一栏写的是"可恢复"还是"不可逆"</b>。</p>
+    <div class="board">
+      <div class="ap-row">
+        <span class="ap-badge" id="apBadge" data-mode="auto">自动演示中</span>
+        <span class="ap-tip">轻点画面跳到下一个关键温度，或直接拖曲线</span>
+      </div>
+      <svg id="stage" viewBox="0 0 1100 470" tabindex="0" role="application"
+           aria-label="可拖动温度的互动图：左侧温度计随温度升降并变色，右侧显示酶活性随温度变化的曲线。用方向键微调">
+        <g id="thermo"></g>
+        <g id="chart"></g>
+      </svg>
+      <div class="bar">
+        <span class="lb">温度</span>
+        <input type="range" id="slider" min="0" max="70" step="0.5" value="20" aria-label="温度（摄氏度）">
+        <button id="b20" type="button">20℃</button>
+        <button id="b37" type="button">37℃</button>
+        <button id="b50" type="button">50℃</button>
+        <button id="b65" type="button">65℃</button>
+        <p class="hint">拖曲线可任意取值；按 ← → 微调（按住 Shift 加速）。</p>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="st"><div class="k">温度</div><div class="v" id="vT">20.0 ℃</div>
+        <div class="s">你正在调的量</div></div>
+      <div class="st"><div class="k">相对活性</div><div class="v" id="vA">64.0%</div>
+        <div class="s">以最适温度为 100%</div></div>
+      <div class="st state" id="stState"><div class="k">状态判断</div>
+        <div class="v" id="vS">低温抑制</div><div class="s" id="vSn">结构完好 · 升温可恢复</div></div>
+    </div>
+    <p class="take">低温只是<b>抑制</b>（酶还活着，升温就恢复）；高温使酶<b>变性失活</b>（空间结构被破坏，降温也回不来）。</p>
+    <p class="note">这张图的形状本身就是考点：<b>左侧缓、右侧陡</b>。为什么不对称？
+    低温只是分子运动变慢（物理过程，可逆）；高温是蛋白质的空间结构被破坏（化学变化，不可逆）。
+    两种机制不同，曲线的陡缓就不同。</p>
+  </figure>
+</section>
+
+<!-- ======== D ======== -->
+<section id="d">
+  <h2><span class="sn">04</span>一道题走一遍</h2>
+  <p class="h2s">先自己读题干，想 30 秒，再点"下一步"。每一步都标了用到哪个概念。</p>
+  <div class="ex">
+    <p class="ex-t">例题<span class="bdg bdg-must">必考</span></p>
+    <p class="ex-q">某同学用唾液淀粉酶探究温度对酶活性的影响，测得：20℃ 时活性约为最适值的 60%，
+    37℃ 时最高，50℃ 时几乎检测不到活性。<br>
+    请回答：<br>
+    （1）该实验的自变量和因变量分别是什么？<br>
+    （2）把 20℃ 的酶液先升温到 37℃ 再降回 20℃，活性最终是多少？<br>
+    （3）把 50℃ 的酶液降温到 37℃，活性能否恢复到最高？说明理由。</p>
+
+    <ol class="steps" id="steps">
+      <li class="step">
+        <p class="s-h">第 1 步 · 找变量</p>
+        <p class="s-b">自变量是<b>温度</b>；因变量是<b>酶活性</b>，用「单位时间内产物的生成量」或
+        「单位时间内底物的消耗量」来测。其余 pH、底物浓度、酶浓度都属于无关变量，<b>必须相同且适宜</b>。</p>
+        <p class="s-k">用到：单一变量原则 / 因变量的可测指标</p>
+      </li>
+      <li class="step" hidden>
+        <p class="s-h">第 2 步 · 判断"可不可逆"</p>
+        <p class="s-b">先给每一段定性：<b>20℃ 属于低温</b>，酶的空间结构没有被破坏，只是分子运动慢，<b>可逆</b>；
+        <b>50℃ 属于高温</b>，蛋白质空间结构已被破坏，<b>不可逆</b>。这一步定完，后面两问就有答案了。</p>
+        <p class="s-k">用到：低温抑制 / 高温变性失活</p>
+      </li>
+      <li class="step" hidden>
+        <p class="s-h">第 3 步 · 套用第（2）问</p>
+        <p class="s-b">20℃ → 37℃，活性升到最适（100%）；37℃ → 20℃，因为低温段可逆，
+        活性<b>原路返回 60%</b>。整个过程只发生了"慢—快—慢"，酶没有损失。</p>
+        <p class="s-k">用到：低温可逆 ⇒ 沿曲线往返</p>
+      </li>
+      <li class="step" hidden>
+        <p class="s-h">第 4 步 · 套用第（3）问</p>
+        <p class="s-b">50℃ 时酶已经变性，<b>空间结构被破坏且不可恢复</b>。所以即使把温度降到 37℃（最适温度），
+        活性<b>也不能恢复</b>——酶已经不是原来那个酶了。注意区别：这不是"温度不合适"，是"酶已经坏了"。</p>
+        <p class="s-k">用到：高温不可逆 ⇒ 不能沿曲线返回</p>
+      </li>
+    </ol>
+
+    <div class="exbar">
+      <button id="next" type="button">下一步</button>
+      <span class="cnt" id="cnt">1 / 4</span>
+    </div>
+
+    <div class="ans" id="ans" hidden>
+      <p class="ans-t">标准答案（可抄进答题卡）</p>
+      <p class="ans-b">（1）自变量：温度；因变量：酶活性（可用单位时间内淀粉的消耗量或还原糖的生成量表示）。<br>
+      （2）最终为最适值的 60%。低温只抑制酶活性，未破坏其空间结构，恢复原温度后活性可恢复。<br>
+      （3）不能。高温使酶的空间结构遭到破坏，这种变性<b>不可逆</b>；降温只能使温度回到最适值，
+      不能让已变性的酶恢复活性。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======== E ======== -->
+<section id="e">
+  <h2><span class="sn">05</span>会怎么考</h2>
+  <p class="h2s">选的都是"觉得自己懂了、一做就错"的角度。反直觉和易错两类要重点看。</p>
+  <div class="qa">
+
+    <div class="qac">
+      <p class="q">「酶和无机催化剂都能降低活化能，区别到底在哪？」</p>
+      <p class="a">三处不同：<b>降低幅度</b>（酶更显著，所以"高效性"）、<b>专一性</b>（一种酶只催化一种或一类反应）、
+      <b>条件</b>（酶要温和的温度和 pH，无机催化剂耐得住）。判据是这三条，不是"酶更厉害"。</p>
+      <svg viewBox="0 0 240 132" role="img" aria-label="同一条反应路径，酶把能垒削得更低">
+        <path d="M 20 104 L 52 104 L 80 44 L 108 104 L 216 104" fill="none" stroke="#a9a49a" stroke-width="2.2"/>
+        <path d="M 20 104 L 52 104 L 80 78 L 108 104 L 216 104" fill="none" stroke="#2f8a5b" stroke-width="2.6"/>
+        <path d="M 80 44 L 120 44" stroke="#d5d3cb" stroke-width="1.2" stroke-dasharray="3 3"/>
+        <path d="M 80 78 L 120 78" stroke="#d5d3cb" stroke-width="1.2" stroke-dasharray="3 3"/>
+        <text class="ms" x="124" y="48" fill="#8a877e">无催化剂</text>
+        <text class="ms" x="124" y="82" fill="#1e6640">加酶</text>
+        <text class="mm" x="20" y="126" fill="#c04a3c">↓ 削得更多 = 高效性</text>
+      </svg>
+    </div>
+
+    <div class="qac">
+      <p class="q">「加了酶，反应放出的热量会变多吗？」</p>
+      <p class="a">不会。<b>酶不提供能量，也不改变反应物和产物的能量</b>。放出的热量由始态和终态的差决定，
+      这个差没变，所以热量一样多；变的只是"多快放完"。</p>
+      <svg viewBox="0 0 240 132" role="img" aria-label="两条路径起点终点相同，只有中间能垒不同">
+        <line x1="24" y1="70" x2="216" y2="70" stroke="#e3e1d9" stroke-width="1"/>
+        <line x1="24" y1="70" x2="24" y2="40" stroke="#2f6fd0" stroke-width="2.4"/>
+        <line x1="216" y1="70" x2="216" y2="98" stroke="#2f6fd0" stroke-width="2.4"/>
+        <text class="ms" x="10" y="34">反应物</text>
+        <text class="ms" x="192" y="114">产物</text>
+        <path d="M 30 46 Q 120 4 210 92" fill="none" stroke="#a9a49a" stroke-width="1.8" stroke-dasharray="4 4"/>
+        <text class="mm" x="88" y="60" fill="#c04a3c">ΔH 不变</text>
+        <text class="ms" x="86" y="126">只是更快到达终点</text>
+      </svg>
+    </div>
+
+    <div class="qac">
+      <p class="q">「酶在反应前后会被消耗掉吗？」</p>
+      <p class="a">不会被消耗。酶在反应前后<b>化学性质和数量都不变</b>，可以反复使用。
+      所以极少量的酶能催化大量的底物——这也是"催化剂"三个字自带的含义。</p>
+      <svg viewBox="0 0 240 132" role="img" aria-label="一个酶分子反复催化多个底物">
+        <circle cx="40" cy="66" r="16" fill="#dcefe5" stroke="#2f8a5b" stroke-width="2"/>
+        <text class="mm" x="40" y="70" text-anchor="middle" fill="#2f8a5b">E</text>
+        <path d="M 62 66 L 92 66" stroke="#c9c7bf" stroke-width="1.6"/>
+        <path d="M 92 66 m -10 0 l 10 -5 l 0 10 z" fill="#c9c7bf"/>
+        <circle cx="120" cy="66" r="13" fill="#fbeed7" stroke="#c8862a" stroke-width="2"/>
+        <text class="mm" x="120" y="70" text-anchor="middle" fill="#c8862a">S</text>
+        <path d="M 140 66 L 170 66" stroke="#c9c7bf" stroke-width="1.6"/>
+        <path d="M 170 66 m -10 0 l 10 -5 l 0 10 z" fill="#c9c7bf"/>
+        <circle cx="200" cy="66" r="13" fill="#dce9fb" stroke="#2f6fd0" stroke-width="2"/>
+        <text class="mm" x="200" y="70" text-anchor="middle" fill="#2f6fd0">P</text>
+        <text class="ms" x="16" y="104">一个 E 用完还是 E</text>
+        <text class="ms" x="16" y="120">下一个 S 继续找它</text>
+      </svg>
+    </div>
+
+    <div class="qac">
+      <p class="q">「温度越高，酶活性越高吗？」</p>
+      <p class="a">不是。酶<b>有最适温度</b>，超过之后活性下降。人体酶最适约 37℃，唾液淀粉酶也在此附近；
+      而耐热菌的酶最适可以到 70℃ 以上——<b>"最适温度"不是一个固定数字</b>。</p>
+      <svg viewBox="0 0 240 132" role="img" aria-label="酶活性随温度先升后降，存在最适温度">
+        <path d="M 20 100 L 40 72 L 70 44 L 100 26 L 130 42 L 160 74 L 190 96 L 214 104"
+              fill="none" stroke="#2f6fd0" stroke-width="2.6"/>
+        <line x1="100" y1="26" x2="100" y2="100" stroke="#c8862a" stroke-width="1.4" stroke-dasharray="4 3"/>
+        <circle cx="100" cy="26" r="4.5" fill="#fff" stroke="#c8862a" stroke-width="2"/>
+        <text class="mm" x="106" y="22" fill="#c8862a">最适</text>
+        <text class="ms" x="20" y="122">低温</text>
+        <text class="ms" x="176" y="122">高温</text>
+      </svg>
+    </div>
+
+    <div class="qac">
+      <p class="q">「验证酶的高效性，为什么用无机催化剂作对照，而不是空白对照？」</p>
+      <p class="a">因为"高效"是<b>比较</b>出来的，必须有"能催化但弱一点"的参照物。
+      空白对照（不加任何催化剂）只能证明酶"能催化"，<b>证明不了"更高效"</b>。
+      同理，验证专一性要用"同一种酶 + 另一种底物"作对照。</p>
+      <svg viewBox="0 0 240 132" role="img" aria-label="三组对照：空白几乎无产物、无机催化剂居中、酶产物最多">
+        <rect x="14" y="24" width="44" height="82" rx="9" fill="#fdfdfb" stroke="#c9c7bf" stroke-width="1.6"/>
+        <rect x="15" y="96" width="42" height="9" rx="4" fill="#eeede6"/>
+        <rect x="94" y="24" width="44" height="82" rx="9" fill="#fdfdfb" stroke="#c9c7bf" stroke-width="1.6"/>
+        <rect x="95" y="58" width="42" height="47" rx="5" fill="#dcd9d0"/>
+        <rect x="174" y="24" width="44" height="82" rx="9" fill="#fdfdfb" stroke="#2f8a5b" stroke-width="1.8"/>
+        <rect x="175" y="42" width="42" height="63" rx="7" fill="#7fbf9a"/>
+        <text class="ms" x="36" y="122" text-anchor="middle">空白</text>
+        <text class="ms" x="116" y="122" text-anchor="middle">无机</text>
+        <text class="mm" x="196" y="122" text-anchor="middle" fill="#1e6640">酶</text>
+        <text class="ms" x="14" y="16">产物量对比</text>
+      </svg>
+    </div>
+
+    <div class="qac">
+      <p class="q">「低温保存酶制剂，是因为低温让酶更稳定吗？」</p>
+      <p class="a">说法要改。低温是<b>抑制</b>活性、<b>不破坏</b>结构，相当于让酶"暂停工作"，
+      需要时升温即可恢复。所以说"低温使酶<b>暂时</b>不发挥作用"准确，说"低温使酶更稳定"就跑偏了——
+      真正的稳定是结构没被破坏，而不是低温给了它什么好处。</p>
+      <svg viewBox="0 0 240 132" role="img" aria-label="低温时活性低但结构完好，升温后恢复">
+        <line x1="24" y1="96" x2="216" y2="96" stroke="#e3e1d9"/>
+        <circle cx="52" cy="52" r="20" fill="#fbeed7" stroke="#c8862a" stroke-width="2"/>
+        <text class="ms" x="52" y="108" text-anchor="middle">4℃ 活性低</text>
+        <text class="ms" x="52" y="122" text-anchor="middle">结构完好</text>
+        <path d="M 92 52 L 130 52" stroke="#c9c7bf" stroke-width="1.6" stroke-dasharray="4 3"/>
+        <path d="M 130 52 m -9 0 l 9 -5 l 0 10 z" fill="#c9c7bf"/>
+        <text class="ms" x="112" y="42" text-anchor="middle">升温</text>
+        <circle cx="170" cy="52" r="26" fill="#dcefe5" stroke="#2f8a5b" stroke-width="2"/>
+        <text class="ms" x="170" y="108" text-anchor="middle">37℃ 活性恢复</text>
+        <text class="mm" x="170" y="122" text-anchor="middle" fill="#2f8a5b">可逆</text>
+      </svg>
+    </div>
+
+  </div>
+  <p class="note">这六问其实是同一件事：<b>分清"活性低"和"酶坏了"</b>。
+  低温 = 活性低但没坏（可逆）；高温 = 坏了（不可逆）；不加酶 = 根本没有这个人。
+  三条判据一分开，绝大多数酶的选择题都能直接选。</p>
+</section>
+
+<!-- ======== F ======== -->
+<section id="f">
+  <h2><span class="sn">06</span>易错清单</h2>
+  <p class="h2s">左边是考试里真的会写出来的错句，右边是应该写的样子。后者可以直接背。</p>
+  <div class="errs">
+    <div class="er">
+      <p class="er-x">✗ 低温使酶变性失活</p>
+      <p class="er-v">✓ 低温只<b>抑制</b>酶的活性，空间结构未被破坏，回升温度后活性可以恢复</p>
+      <p class="er-w">错在哪：把"活性低"当成了"酶死了"。<b>只有高温、过酸过碱才会破坏空间结构。</b></p>
+    </div>
+    <div class="er">
+      <p class="er-x">✗ 酶能为反应提供能量</p>
+      <p class="er-v">✓ 酶<b>降低化学反应的活化能</b>，不提供能量</p>
+      <p class="er-w">错在哪：把"加快"和"供能"混为一谈。加快是因为门槛低了，不是因为给了能量。</p>
+    </div>
+    <div class="er">
+      <p class="er-x">✗ 酶只在细胞内起作用</p>
+      <p class="er-v">✓ 酶由活细胞产生，但<b>在细胞外、体外也能起作用</b></p>
+      <p class="er-w">错在哪：把"产生场所"当成了"作用场所"。唾液淀粉酶在口腔里工作，加酶洗衣粉里的酶在洗衣机里工作。</p>
+    </div>
+    <div class="er">
+      <p class="er-x">✗ 酶的化学本质都是蛋白质</p>
+      <p class="er-v">✓ <b>绝大多数</b>酶是蛋白质，<b>少数是 RNA</b></p>
+      <p class="er-w">错在哪：漏掉课本里"绝大多数"三个字。凡出现"都是""一定"的表述，先怀疑。</p>
+    </div>
+    <div class="er">
+      <p class="er-x">✗ 加酶能提高产物的最终生成量</p>
+      <p class="er-v">✓ 酶只<b>加快</b>反应速率，缩短到达平衡的时间，<b>不改变平衡点</b></p>
+      <p class="er-w">错在哪：产物量由反应物总量和平衡常数决定，酶不参与这个账。</p>
+    </div>
+    <div class="er">
+      <p class="er-x">✗ 高温和低温都会使酶失活</p>
+      <p class="er-v">✓ <b>高温使酶变性失活（不可逆）</b>；<b>低温只抑制活性（可逆）</b>，两者机制不同</p>
+      <p class="er-w">错在哪：把"活性下降"这同一个现象，错当成同一种原因。这也是图 3 那条曲线不对称的理由。</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  对应 人教版必修1 第5章第1节「降低化学反应活化能的酶」· 生成自 <code>eli5-high</code> skill（单文件零依赖，手写 SVG + 内联 JS）<br>
+  数据口径：图 3 的活性曲线为<b>教学示意模型</b> f(T)=exp(−(T−37)²/2σ²)，σ<sub>低温侧</sub>=18、σ<sub>高温侧</sub>=6.5，
+  最适温度取 37℃（人体酶）。这组参数只为了复现"左侧缓、右侧陡"的形状，<b>不是实测数据</b>，不要直接引用为实验值。<br>
+  图 1 的能垒高度、图 2 的饱和点均为示意的相对值，只保证<b>大小关系</b>正确，不保证绝对数值。
+</footer>
+
+</div>
+
+<div class="zoom" id="zoom" hidden>
+  <span class="zoom-tip">双指放大看细节</span>
+  <button class="zoom-x" type="button" aria-label="关闭">✕</button>
+  <div id="zoomInner"></div>
+</div>
+
+<!-- Autopilot 引擎：与 assets/autopilot.js 逐字一致。单文件页面必须全文内联，不许外链。 -->
+<script>
+/*!
+ * autopilot.js — 互动图「自走」控制器
+ *
+ * 只管一件事：什么时候该自己动、什么时候该听人的。
+ * 不负责画图 —— 通过 onChange(v) 把当前值交给你自己的 render()。
+ *
+ * 用法：
+ *   var ap = AutoPilot.create({
+ *     mount:  document.getElementById('screen'),   // 点这里换关键帧
+ *     follow: document.getElementById('slider'),    // 拖动 = 接管
+ *     loop:   [{t:0,v:0.4},{t:3,v:0.9},{t:4.5,v:1},{t:7,v:1},{t:10,v:1.5},{t:13,v:0.4}],
+ *     keys:   [0.35, 0.8, 1.0, 1.6, 2.35],
+ *     value:  0.4, min: 0.1, max: 2.6, step: 0.01,
+ *     idle:   5000,
+ *     onChange: function(v){ render(v); },
+ *     onMode:   function(m){ badge.textContent = m === 'auto' ? '自动演示中' : '你接管了'; }
+ *   });
+ *
+ * 工程约定（不要改）：
+ *   - 自动态每帧回写 follow.value 仅在 !manual 时进行，否则会和拖动打架
+ *   - 交还时用 nearestPhase() 找循环里最接近的相位，避免跳帧
+ *   - prefers-reduced-motion 下不自动播放
+ */
+(function (root) {
+  'use strict';
+
+  function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+  function ramp(a, b, t) { return clamp((t - a) / (b - a), 0, 1); }
+  function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+
+  var DEFAULTS = {
+    value: 0,
+    min: 0,
+    max: 1,
+    step: 0.01,
+    loop: null,
+    keys: null,
+    idle: 5000,
+    rate: 14,
+    prefer: null,
+    mount: null,
+    follow: null,
+    keyboard: true,
+    reducedMotion: null,
+    onChange: null,
+    onMode: null,
+    onKey: null
+  };
+
+  function create(o) {
+    var opt = {}, k;
+    for (k in DEFAULTS) {
+      opt[k] = (o && o[k] !== undefined && o[k] !== null) ? o[k] : DEFAULTS[k];
+    }
+
+    var decimals = opt.step >= 1 ? 0 : (opt.step >= 0.1 ? 1 : 2);
+    var loop = opt.loop;
+    var LOOP_LEN = 0;
+    if (loop && loop.length > 1) LOOP_LEN = loop[loop.length - 1].t || 1;
+
+    var reduce = opt.reducedMotion !== null
+      ? !!opt.reducedMotion
+      : !!(root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+    function loopV(t) {
+      if (!loop || !LOOP_LEN) return opt.value;
+      var u = ((t % LOOP_LEN) + LOOP_LEN) % LOOP_LEN;
+      for (var i = 0; i < loop.length - 1; i++) {
+        var a = loop[i], b = loop[i + 1];
+        if (u <= b.t) return a.v + (b.v - a.v) * ease(ramp(a.t, b.t, u));
+      }
+      return loop[loop.length - 1].v;
+    }
+
+    function nearestPhase(target) {
+      if (!loop || !LOOP_LEN) return 0;
+      var best = 0, bd = Infinity, N = 240, i, t, d;
+      for (i = 0; i < N; i++) {
+        t = i / N * LOOP_LEN;
+        d = Math.abs(loopV(t) - target);
+        if (opt.prefer && (t < opt.prefer[0] || t > opt.prefer[1])) d += 0.35;
+        if (d < bd) { bd = d; best = t; }
+      }
+      return best;
+    }
+
+    var st = {
+      v: opt.value,
+      target: opt.value,
+      phase: 0,
+      mode: 'manual',
+      idleMs: 0,
+      keysIdx: -1,
+      raf: 0,
+      last: 0,
+      dead: false
+    };
+    var listeners = [];
+
+    function on(el, ev, fn, opts) {
+      if (!el) return;
+      el.addEventListener(ev, fn, opts);
+      listeners.push([el, ev, fn, opts]);
+    }
+
+    function emit() { if (opt.onChange) opt.onChange(st.v); }
+
+    function setMode(m) {
+      if (st.mode === m) return;
+      st.mode = m;
+      if (opt.onMode) opt.onMode(m);
+    }
+
+    function take() {
+      setMode('manual');
+      st.idleMs = 0;
+    }
+
+    function release() {
+      setMode('auto');
+      st.phase = nearestPhase(st.v);
+    }
+
+    function syncFollow() {
+      if (opt.follow && st.mode !== 'manual') {
+        opt.follow.value = st.v.toFixed(decimals);
+      }
+    }
+
+    function setValue(v, fromUser) {
+      st.target = clamp(+v, opt.min, opt.max);
+      if (fromUser) {
+        take();
+        if (opt.follow) opt.follow.value = st.target.toFixed(decimals);
+      } else if (!st.raf) {
+        st.v = st.target;
+        emit();
+      }
+    }
+
+    function tick(dt) {
+      if (st.dead) return;
+      if (st.mode === 'manual') {
+        st.idleMs += dt * 1000;
+        if (st.idleMs >= opt.idle) release();
+      } else if (loop) {
+        st.phase += dt;
+        st.target = loopV(st.phase);
+      }
+      st.v += (st.target - st.v) * (1 - Math.exp(-dt * opt.rate));
+      if (Math.abs(st.target - st.v) < 0.0004) st.v = st.target;
+      syncFollow();
+      emit();
+    }
+
+    /* ---- 输入接线 ---- */
+    if (opt.follow) {
+      on(opt.follow, 'pointerdown', function () { take(); });
+      on(opt.follow, 'input', function () {
+        take();
+        st.target = clamp(parseFloat(opt.follow.value), opt.min, opt.max);
+      });
+    }
+
+    if (opt.mount && opt.keys && opt.keys.length) {
+      on(opt.mount, 'click', function () {
+        take();
+        st.keysIdx = (st.keysIdx + 1) % opt.keys.length;
+        var v = opt.keys[st.keysIdx];
+        st.target = v;
+        if (opt.follow) opt.follow.value = v.toFixed(decimals);
+        if (opt.onKey) opt.onKey(v);
+      });
+    }
+
+    if (opt.keyboard) {
+      on(document, 'keydown', function (ev) {
+        var t = ev.target;
+        if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+        if (ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight') return;
+        ev.preventDefault();
+        take();
+        st.target = clamp(
+          +(st.target + (ev.key === 'ArrowRight' ? opt.step : -opt.step)).toFixed(4),
+          opt.min, opt.max
+        );
+        if (opt.follow) opt.follow.value = st.target.toFixed(decimals);
+      });
+    }
+
+    /* ---- 主循环 ---- */
+    function frame(now) {
+      if (st.dead) return;
+      if (!st.last) st.last = now;
+      var dt = Math.min((now - st.last) / 1000, 0.05);
+      st.last = now;
+      tick(dt);
+      st.raf = root.requestAnimationFrame(frame);
+    }
+
+    if (loop && !reduce) {
+      st.mode = 'auto';
+      if (opt.onMode) opt.onMode('auto');
+      st.raf = root.requestAnimationFrame(frame);
+    } else {
+      st.mode = 'manual';
+      if (opt.onMode) opt.onMode('manual');
+      emit();
+    }
+
+    return {
+      tick: tick,
+      take: take,
+      release: release,
+      setValue: setValue,
+      pulse: function (dtSeconds) { tick(dtSeconds || 0.016); },
+      destroy: function () {
+        st.dead = true;
+        if (st.raf) root.cancelAnimationFrame(st.raf);
+        for (var i = 0; i < listeners.length; i++) {
+          listeners[i][0].removeEventListener(listeners[i][1], listeners[i][2], listeners[i][3]);
+        }
+        listeners = [];
+      },
+      get value() { return st.v; },
+      get mode() { return st.mode; },
+      get decimals() { return decimals; }
+    };
+  }
+
+  root.AutoPilot = { create: create, version: '1.0.0' };
+})(window);
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var NS = "http://www.w3.org/2000/svg";
+  function $(id) { return document.getElementById(id); }
+  function el(tag, attrs, parent) {
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+  function f(v, d) { return (+v).toFixed(d === undefined ? 1 : d); }
+
+  /* ============ 图 1：活化能 ============ */
+  (function () {
+    var G = $("eaChart");
+    var X0 = 170, X1 = 830, YAX = 132, XAY = 330;
+    var yR = 244, yP = 302;          // 反应物 / 产物的能量水平
+    var yPk1 = 74, yPk2 = 154;       // 无酶 / 有酶的峰值
+    var PK = 0.43, SIG = 0.125;
+
+    function base(t) {                // 两端之间的平滑底
+      var s = t * t * (3 - 2 * t);
+      return yR + (yP - yR) * s;
+    }
+    var bPeak = base(PK);
+
+    function curveD(yPeak) {
+      var d = "", n = 220, i, t, px, py, bump = bPeak - yPeak;
+      for (i = 0; i <= n; i++) {
+        t = i / n;
+        py = base(t) - bump * Math.exp(-Math.pow((t - PK) / SIG, 2));
+        px = X0 + (X1 - X0) * t;
+        d += (i ? " L " : "M ") + f(px, 2) + " " + f(py, 2);
+      }
+      return d;
+    }
+    // 白边打底：任何压在曲线上的标注都能压得住
+    function wline(x1, y1, x2, y2, col, w, dash) {
+      el("line", { x1: x1, y1: y1, x2: x2, y2: y2, stroke: "#fff", "stroke-width": w + 3.4,
+                   "stroke-linecap": "round" }, G);
+      el("line", { x1: x1, y1: y1, x2: x2, y2: y2, stroke: col, "stroke-width": w,
+                   "stroke-linecap": "round", "stroke-dasharray": dash || "none" }, G);
+    }
+    function wbar(x, yTop, yBot, col) {   // 竖直双箭头，带白边
+      el("line", { x1: x, y1: yTop, x2: x, y2: yBot, stroke: "#fff", "stroke-width": 4.6 }, G);
+      el("line", { x1: x, y1: yTop, x2: x, y2: yBot, stroke: col, "stroke-width": 1.5 }, G);
+      ["M " + x + " " + yTop + " l -4.5 8 l 9 0 z",
+       "M " + x + " " + yBot + " l -4.5 -8 l 9 0 z"].forEach(function (d) {
+        el("path", { d: d, fill: "#fff", stroke: "#fff", "stroke-width": 3.2, "stroke-linejoin": "round" }, G);
+        el("path", { d: d, fill: col }, G);
+      });
+    }
+
+    // 坐标轴
+    el("line", { x1: YAX - 16, y1: XAY, x2: X1 + 12, y2: XAY, stroke: "#c9c7bf", "stroke-width": 1.4 }, G);
+    el("line", { x1: YAX, y1: XAY, x2: YAX, y2: 52, stroke: "#c9c7bf", "stroke-width": 1.4 }, G);
+    var ax1 = el("text", { x: X1 + 12, y: XAY + 24, "text-anchor": "end", "font-size": 13,
+                           fill: "#6b6a64" }, G);
+    ax1.textContent = "反应进程 →";
+    var ax2 = el("text", { x: YAX - 8, y: 48, "text-anchor": "end", "font-size": 13,
+                           fill: "#6b6a64" }, G);
+    ax2.textContent = "能量";
+
+    // 反应物 / 产物 水平线
+    wline(YAX, yR, 590, yR, "#c9c7bf", 1, "5 5");
+    wline(640, yP, X1 + 10, yP, "#c9c7bf", 1, "5 5");
+
+    // 两条曲线
+    el("path", { d: curveD(yPk1), fill: "none", stroke: "#a9a49a", "stroke-width": 2.6,
+                 "stroke-linecap": "round" }, G);
+    el("path", { d: curveD(yPk2), fill: "none", stroke: "#2f8a5b", "stroke-width": 3,
+                 "stroke-linecap": "round" }, G);
+
+    // 能垒箭头：画在"山包内部"，不会横穿曲线
+    var xpk = X0 + (X1 - X0) * PK;
+    wbar(xpk - 14, yPk1, yR, "#8a877e");
+    wbar(xpk + 22, yPk2, yR, "#2f8a5b");
+
+    function lab(x, y, txt, col, size, anchor, weight) {
+      var t = el("text", { x: x, y: y, "font-size": size || 12.5, fill: col,
+                           class: "halo", "font-weight": weight || 400,
+                           "text-anchor": anchor || "start" }, G);
+      t.textContent = txt;
+      return t;
+    }
+    lab(xpk - 22, yPk1 + 62, "活化能", "#8a877e", 13, "end", 600);
+    lab(xpk - 22, yPk1 + 79, "无催化剂", "#8a877e", 12, "end");
+    lab(xpk + 30, yPk2 + 48, "活化能", "#1e6640", 13, "start", 600);
+    lab(xpk + 30, yPk2 + 65, "加酶", "#1e6640", 12, "start");
+
+    // ΔH：两端能量差，酶不改变它
+    wbar(148, yR, yP, "#2f6fd0");
+    lab(142, (yR + yP) / 2 + 4, "ΔH", "#2f6fd0", 13, "end", 700);
+
+    // 图例（右上空白区）
+    wline(516, 58, 546, 58, "#a9a49a", 3);
+    lab(554, 62, "不加催化剂", "#6b6a64", 13);
+    wline(662, 58, 692, 58, "#2f8a5b", 3);
+    lab(700, 62, "加酶", "#1e6640", 13, "start", 600);
+
+    lab(180, yR - 12, "反应物", "#3a3a35", 13, "start", 600);
+    lab(X1 + 6, yP + 22, "产物（能量更低）", "#3a3a35", 13, "end", 600);
+  })();
+
+  /* ============ 图 2：限制因素 ============ */
+  (function () {
+    var G = $("limChart");
+    function panel(px0, px1, py0, py1) {
+      var g = el("g", {}, G);
+      el("line", { x1: px0, y1: py1, x2: px1, y2: py1, stroke: "#c9c7bf", "stroke-width": 1.3 }, g);
+      el("line", { x1: px0, y1: py1, x2: px0, y2: py0, stroke: "#c9c7bf", "stroke-width": 1.3 }, g);
+      return { g: g, px0: px0, px1: px1, py0: py0, py1: py1 };
+    }
+    var A = panel(76, 412, 66, 246), B = panel(524, 860, 66, 246);
+
+    // 左：底物浓度 → 饱和
+    var KM = 2.6, SMAX = 14, d = "", i, s, v, px, py;
+    for (i = 0; i <= 160; i++) {
+      s = i / 160 * SMAX;
+      v = s / (KM + s);
+      px = A.px0 + (A.px1 - A.px0) * (s / SMAX);
+      py = A.py1 - (A.py1 - A.py0) * v * 0.94;
+      d += (i ? " L " : "M ") + f(px, 2) + " " + f(py, 2);
+    }
+    el("path", { d: d, fill: "none", stroke: "#2f6fd0", "stroke-width": 3, "stroke-linecap": "round" }, A.g);
+    el("line", { x1: A.px0, y1: A.py1 - (A.py1 - A.py0) * 0.94, x2: A.px1,
+                 y2: A.py1 - (A.py1 - A.py0) * 0.94, stroke: "#c9c7bf", "stroke-width": 1.2,
+                 "stroke-dasharray": "4 4" }, A.g);
+    var sa = el("text", { x: A.px1 - 6, y: A.py1 - (A.py1 - A.py0) * 0.94 - 10, class: "halo",
+                          "text-anchor": "end", "font-size": 12.5, fill: "#8a5c14", "font-weight": 600 }, A.g);
+    sa.textContent = "饱和：酶的活性位点已占满";
+    var lx = el("text", { x: A.px1, y: A.py1 + 26, "text-anchor": "end", "font-size": 13, fill: "#6b6a64" }, A.g);
+    lx.textContent = "底物浓度 →";
+    var ly = el("text", { x: A.px0 - 10, y: A.py0 - 10, "text-anchor": "end", "font-size": 13,
+                          fill: "#6b6a64" }, A.g);
+    ly.textContent = "反应速率";
+    var tt = el("text", { x: A.px0, y: 40, "font-size": 14, "font-weight": 650, fill: "#1b1b19" }, A.g);
+    tt.textContent = "酶的量固定，加底物";
+
+    // 右：酶浓度 → 正比
+    var d2 = "";
+    for (i = 0; i <= 60; i++) {
+      v = i / 60;
+      px = B.px0 + (B.px1 - B.px0) * v;
+      py = B.py1 - (B.py1 - B.py0) * v * 0.94;
+      d2 += (i ? " L " : "M ") + f(px, 2) + " " + f(py, 2);
+    }
+    el("path", { d: d2, fill: "none", stroke: "#2f8a5b", "stroke-width": 3, "stroke-linecap": "round" }, B.g);
+    var lx2 = el("text", { x: B.px1, y: B.py1 + 26, "text-anchor": "end", "font-size": 13, fill: "#6b6a64" }, B.g);
+    lx2.textContent = "酶浓度 →";
+    var ly2 = el("text", { x: B.px0 - 10, y: B.py0 - 10, "text-anchor": "end", "font-size": 13,
+                           fill: "#6b6a64" }, B.g);
+    ly2.textContent = "反应速率";
+    var tt2 = el("text", { x: B.px0, y: 40, "font-size": 14, "font-weight": 650, fill: "#1b1b19" }, B.g);
+    tt2.textContent = "底物过量，加酶";
+    var sa2 = el("text", { x: B.px0 + 14, y: B.py0 + 28, class: "halo",
+                           "font-size": 12.5, fill: "#1e6640", "font-weight": 600 }, B.g);
+    sa2.textContent = "成正比上升，不饱和";
+  })();
+
+  /* ============ 图 3：互动 ============ */
+  var TOPT = 37, SL = 18, SH = 6.5, TMAX = 70;
+  function act(t) {
+    var d = t - TOPT, s = d < 0 ? SL : SH;
+    return Math.exp(-(d * d) / (2 * s * s)) * 100;
+  }
+  function stateOf(t) {
+    if (t < 30) return { label: "低温抑制", note: "结构完好 · 升温可恢复", c: "#c8862a", bg: "#fbeed7", rev: true };
+    if (t <= 44) return { label: Math.abs(t - TOPT) < 0.7 ? "最适温度" : "最适区间",
+                          note: "结构完好 · 活性最高", c: "#2f8a5b", bg: "#dcefe5", rev: true };
+    if (t <= 55) return { label: "高温变性中", note: "空间结构开始破坏 · 不可逆", c: "#c04a3c", bg: "#f8e2df", rev: false };
+    return { label: "完全失活", note: "空间结构已破坏 · 不可逆", c: "#c04a3c", bg: "#f8e2df", rev: false };
+  }
+
+  var WIDE = {
+    vb: "0 0 1100 470", breakpoint: 860,
+    th: { cx: 200, w: 44, top: 86, bot: 372, bulbCy: 384, bulbR: 30,
+          m70: 104, m0: 372, bigY: 52, lbY: 24, tick: true, tickX: 168 },
+    ch: { x0: 560, x1: 1060, y0: 110, y1: 390, tFS: 12.5,
+          titleX: 552, titleY: 46, titleAnchor: "start" }
+  };
+  var NARROW = {
+    vb: "0 0 440 640", breakpoint: 860,
+    th: { cx: 220, w: 32, top: 72, bot: 196, bulbCy: 208, bulbR: 22,
+          m70: 88, m0: 196, bigY: 56, lbY: 26, tick: false, tickX: 0 },
+    ch: { x0: 50, x1: 410, y0: 300, y1: 566, tFS: 11.5,
+          titleX: 410, titleY: 266, titleAnchor: "end" }
+  };
+  var L = WIDE;
+
+  var stage = $("stage"), board = stage.parentElement;
+  var TG = $("thermo"), CG = $("chart");
+
+  /* --- 温度计 --- */
+  var thTube = el("rect", { fill: "#fcfbf8", stroke: "#c9c7bf", "stroke-width": 2 }, TG);
+  var thBulb = el("circle", { fill: "#fcfbf8", stroke: "#c9c7bf", "stroke-width": 2 }, TG);
+  var thMer = el("rect", { fill: "#c8862a" }, TG);
+  var thMerBulb = el("circle", {}, TG);
+  var thBig = el("text", { "text-anchor": "middle", "font-weight": 700,
+                           "font-family": "ui-monospace,Consolas,monospace", fill: "#1b1b19" }, TG);
+  var ticks = [];
+  for (var k = 0; k < 4; k++) {
+    ticks.push({ l: el("line", { stroke: "#c9c7bf", "stroke-width": 1.3 }, TG),
+                 t: el("text", { "text-anchor": "end", "font-size": 11, fill: "#9a9890" }, TG) });
+  }
+
+  /* --- 曲线 --- */
+  var cTitle = el("text", { fill: "#6b6a64", "font-weight": 600 }, CG);
+  var xAx = el("line", { stroke: "#c9c7bf", "stroke-width": 1.2 }, CG);
+  var yAx = el("line", { stroke: "#c9c7bf", "stroke-width": 1.2 }, CG);
+  var bands = [];
+  for (k = 0; k < 3; k++) bands.push(el("rect", { }, CG));
+  var grid = [], xt = [];
+  for (k = 0; k < 5; k++) {
+    grid.push({ l: el("line", { stroke: "#f0efe9", "stroke-width": 1 }, CG),
+                t: el("text", { "text-anchor": "end", fill: "#9a9890" }, CG) });
+  }
+  for (k = 0; k < 5; k++) {
+    xt.push({ l: el("line", { stroke: "#c9c7bf", "stroke-width": 1.1 }, CG),
+              t: el("text", { "text-anchor": "middle", fill: "#9a9890" }, CG) });
+  }
+  var curveP = el("path", { fill: "none", stroke: "#2f6fd0", "stroke-width": 3,
+                            "stroke-linecap": "round" }, CG);
+  var optLine = el("line", { stroke: "#2f8a5b", "stroke-width": 1.3, "stroke-dasharray": "5 4" }, CG);
+  var optTxt = el("text", { fill: "#1e6640", "font-weight": 700, "font-size": 12, class: "halo" }, CG);
+  optTxt.textContent = "最适 37℃";
+  var optLink = el("line", { stroke: "#a9c9b4", "stroke-width": 1, "stroke-dasharray": "3 3" }, CG);
+  var cur = el("line", { stroke: "#1b1b19", "stroke-width": 1.3, opacity: .28 }, CG);
+  var dot = el("circle", { r: 6, stroke: "#fff", "stroke-width": 2.5 }, CG);
+  var valTxt = el("text", { "font-weight": 700, "font-size": 13, "class": "halo" }, CG);
+  var axLbl = el("text", { fill: "#9a9890" }, CG);
+  axLbl.textContent = "温度（℃）";
+
+  function xOf(t) { return L.ch.x0 + (t / TMAX) * (L.ch.x1 - L.ch.x0); }
+  function yOf(v) { return L.ch.y1 - (v / 100) * (L.ch.y1 - L.ch.y0); }
+
+  function layout() {
+    var T = L.th, C = L.ch, i;
+    stage.setAttribute("viewBox", L.vb);
+    board.classList.toggle("stacked", L !== WIDE);
+
+    thTube.setAttribute("x", T.cx - T.w / 2); thTube.setAttribute("y", T.top);
+    thTube.setAttribute("width", T.w); thTube.setAttribute("height", T.bot - T.top);
+    thTube.setAttribute("rx", T.w / 2);
+    thBulb.setAttribute("cx", T.cx); thBulb.setAttribute("cy", T.bulbCy);
+    thBulb.setAttribute("r", T.bulbR);
+    thMer.setAttribute("x", T.cx - T.w / 2 + 8);
+    thMer.setAttribute("width", T.w - 16);
+    thMer.setAttribute("rx", (T.w - 16) / 2);
+    thMerBulb.setAttribute("cx", T.cx); thMerBulb.setAttribute("cy", T.bulbCy);
+    thMerBulb.setAttribute("r", T.bulbR - 7);
+    thBig.setAttribute("x", T.cx); thBig.setAttribute("y", T.bigY);
+    thBig.setAttribute("font-size", L === WIDE ? 32 : 30);
+
+    var marks = [0, 20, 40, 60];
+    for (i = 0; i < 4; i++) {
+      var yy = T.m0 - (marks[i] / TMAX) * (T.m0 - T.m70);
+      ticks[i].l.setAttribute("x1", T.tickX); ticks[i].l.setAttribute("x2", T.tickX + 10);
+      ticks[i].l.setAttribute("y1", yy); ticks[i].l.setAttribute("y2", yy);
+      ticks[i].t.setAttribute("x", T.tickX - 5); ticks[i].t.setAttribute("y", yy + 4);
+      ticks[i].t.textContent = marks[i];
+      ticks[i].l.style.display = T.tick ? "" : "none";
+      ticks[i].t.style.display = T.tick ? "" : "none";
+    }
+
+    cTitle.setAttribute("x", C.titleX); cTitle.setAttribute("y", C.titleY);
+    cTitle.setAttribute("text-anchor", C.titleAnchor);
+    cTitle.setAttribute("font-size", L === WIDE ? 14 : 12.5);
+    cTitle.textContent = L === WIDE ? "酶活性随温度的变化（%）" : "活性随温度变化（%）";
+
+    // 三色区间
+    var seg = [[0, 30, "#fdf6e8"], [30, 44, "#eef7f1"], [44, TMAX, "#fdf0ee"]];
+    for (i = 0; i < 3; i++) {
+      bands[i].setAttribute("x", xOf(seg[i][0]));
+      bands[i].setAttribute("width", xOf(seg[i][1]) - xOf(seg[i][0]));
+      bands[i].setAttribute("y", C.y0);
+      bands[i].setAttribute("height", C.y1 - C.y0);
+      bands[i].setAttribute("fill", seg[i][2]);
+    }
+
+    xAx.setAttribute("x1", C.x0); xAx.setAttribute("y1", C.y1);
+    xAx.setAttribute("x2", C.x1); xAx.setAttribute("y2", C.y1);
+    yAx.setAttribute("x1", C.x0); yAx.setAttribute("y1", C.y0);
+    yAx.setAttribute("x2", C.x0); yAx.setAttribute("y2", C.y1);
+
+    var ys = [0, 25, 50, 75, 100];
+    for (i = 0; i < 5; i++) {
+      var py = yOf(ys[i]);
+      grid[i].l.setAttribute("x1", C.x0); grid[i].l.setAttribute("x2", C.x1);
+      grid[i].l.setAttribute("y1", py); grid[i].l.setAttribute("y2", py);
+      grid[i].t.setAttribute("x", C.x0 - 8); grid[i].t.setAttribute("y", py + 4);
+      grid[i].t.setAttribute("font-size", C.tFS);
+      grid[i].t.textContent = ys[i];
+    }
+    var xs = [0, 20, 40, 60, 70];
+    for (i = 0; i < 5; i++) {
+      var px = xOf(xs[i]);
+      xt[i].l.setAttribute("x1", px); xt[i].l.setAttribute("x2", px);
+      xt[i].l.setAttribute("y1", C.y1); xt[i].l.setAttribute("y2", C.y1 + 5);
+      xt[i].t.setAttribute("x", px); xt[i].t.setAttribute("y", C.y1 + C.tFS + 10);
+      xt[i].t.setAttribute("font-size", C.tFS);
+      xt[i].t.textContent = xs[i];
+    }
+
+    var d = "", n = 180, tt, vv;
+    for (i = 0; i <= n; i++) {
+      tt = i / n * TMAX; vv = act(tt);
+      d += (i ? " L " : "M ") + f(xOf(tt), 2) + " " + f(yOf(vv), 2);
+    }
+    curveP.setAttribute("d", d);
+
+    optLine.setAttribute("x1", xOf(TOPT)); optLine.setAttribute("x2", xOf(TOPT));
+    optLine.setAttribute("y1", C.y0); optLine.setAttribute("y2", C.y1);
+    optTxt.setAttribute("x", C.x0 + 6);
+    optTxt.setAttribute("y", C.y0 + 34);
+    optTxt.setAttribute("text-anchor", "start");
+    optTxt.setAttribute("font-size", C.tFS);
+    optLink.setAttribute("x1", C.x0 + 66);
+    optLink.setAttribute("x2", xOf(TOPT) - 2);
+    optLink.setAttribute("y1", C.y0 + 40);
+    optLink.setAttribute("y2", C.y0 + 40);
+
+    axLbl.setAttribute("x", C.x1); axLbl.setAttribute("y", C.y1 + C.tFS * 2 + 16);
+    axLbl.setAttribute("text-anchor", "end");
+    axLbl.setAttribute("font-size", C.tFS);
+  }
+
+  var tVal = 20, dragging = false, animId = null;
+  var stState = $("stState"), apBadge = $("apBadge"), ap = null, suppressTap = false;
+
+  function render() {
+    var T = L.th, C = L.ch;
+    var v = act(tVal), s = stateOf(tVal);
+
+    // 温度计
+    var merY = T.m0 - (tVal / TMAX) * (T.m0 - T.m70);
+    thMer.setAttribute("y", merY);
+    thMer.setAttribute("height", Math.max(0, T.bot - merY) + 6);
+    thMer.setAttribute("fill", s.c);
+    thMerBulb.setAttribute("fill", s.c);
+    thBig.textContent = f(tVal, 1) + "℃";
+    thBig.setAttribute("fill", s.c);
+
+    // 曲线上的游标
+    var px = xOf(tVal), py = yOf(v);
+    cur.setAttribute("x1", px); cur.setAttribute("x2", px);
+    cur.setAttribute("y1", C.y0); cur.setAttribute("y2", C.y1);
+    dot.setAttribute("cx", px); dot.setAttribute("cy", py);
+    dot.setAttribute("fill", s.c);
+    var flip = px > (C.x0 + C.x1) / 2;
+    valTxt.setAttribute("x", flip ? px - 10 : px + 10);
+    valTxt.setAttribute("y", py - 11);
+    valTxt.setAttribute("text-anchor", flip ? "end" : "start");
+    valTxt.setAttribute("fill", s.c);
+    valTxt.textContent = f(v, 1) + "%";
+
+    // 数值卡
+    $("vT").textContent = f(tVal, 1) + " ℃";
+    $("vA").textContent = f(v, 1) + "%";
+    $("vS").textContent = s.label;
+    $("vS").style.color = s.c;
+    $("vSn").textContent = s.note;
+    stState.style.borderColor = s.c;
+    stState.style.background = s.bg;
+  }
+
+  function pickLayout() {
+    return board.getBoundingClientRect().width >= WIDE.breakpoint ? WIDE : NARROW;
+  }
+  var slider = $("slider");
+
+  // 页面唯一入口：写 tVal → 交给引擎 → 重画。fromUser 为真表示这一下是人给的。
+  // 自动态里引擎自己回写 slider，这里绝不能再写一遍，否则和自走的圆点打架。
+  function setT(v, fromUser) {
+    tVal = Math.max(0, Math.min(TMAX, v));
+    if (ap) ap.setValue(tVal, !!fromUser);
+    render();
+  }
+
+  function hit(ev) {
+    var box = stage.getBoundingClientRect();
+    var sx = parseInt(L.vb.split(" ")[2], 10) / box.width;
+    return { x: (ev.clientX - box.left) * sx, y: (ev.clientY - box.top) * sx };
+  }
+  function inChart(ev) {
+    var p = hit(ev), C = L.ch;
+    return p.x >= C.x0 - 18 && p.x <= C.x1 + 14 && p.y >= C.y0 - 26 && p.y <= C.y1 + 22;
+  }
+  /* 点 vs 拖：走够 5px 才算拖（拖 = 直接取值），没走够就交给引擎当成"点"跳关键帧 */
+  var pressX = null, moved = false;
+  stage.addEventListener("pointerdown", function (ev) {
+    if (!inChart(ev)) return;
+    pressX = hit(ev).x;
+    moved = false;
+    try { stage.setPointerCapture(ev.pointerId); } catch (err) {}
+  });
+  stage.addEventListener("pointermove", function (ev) {
+    var p = hit(ev), C = L.ch;
+    if (pressX === null) { stage.style.cursor = inChart(ev) ? "grab" : ""; return; }
+    if (!moved && Math.abs(p.x - pressX) < 5) return;
+    moved = true; dragging = true;
+    ev.preventDefault();
+    stage.style.cursor = "grabbing";
+    setT((p.x - C.x0) / (C.x1 - C.x0) * TMAX, true);
+  });
+  ["pointerup", "pointercancel"].forEach(function (t) {
+    stage.addEventListener(t, function () {
+      if (moved) suppressTap = true;   // 拖完浏览器还会补一个 click，别让它被当成"点"
+      pressX = null; dragging = false; stage.style.cursor = "";
+    });
+  });
+  window.addEventListener("blur", function () {
+    pressX = null; dragging = false; stage.style.cursor = "";
+  });
+
+  // ⚠️ 必须注册在 AutoPilot.create 之前：同一节点按注册顺序触发，
+  // 这里 stopImmediatePropagation 才挡得住引擎那个 click（否则每次拖完都会多跳一个关键帧）。
+  stage.addEventListener("click", function (ev) {
+    if (!suppressTap) return;
+    suppressTap = false;
+    ev.stopImmediatePropagation();
+  });
+
+  slider.addEventListener("input", function () { setT(parseFloat(this.value), true); });
+  document.addEventListener("keydown", function (ev) {
+    if (ev.target.tagName === "INPUT") return;
+    var step = ev.shiftKey ? 5 : 1;
+    if (ev.key === "ArrowRight" || ev.key === "ArrowUp") { setT(tVal + step, true); ev.preventDefault(); }
+    else if (ev.key === "ArrowLeft" || ev.key === "ArrowDown") { setT(tVal - step, true); ev.preventDefault(); }
+  });
+
+  function animateTo(target) {
+    if (animId) cancelAnimationFrame(animId);
+    var from = tVal, t0 = performance.now(), dur = 420;
+    (function step(now) {
+      var p = Math.min(1, (now - t0) / dur);
+      var kk = p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      setT(from + (target - from) * kk, true);
+      if (p < 1) animId = requestAnimationFrame(step); else animId = null;
+    })(performance.now());
+  }
+  $("b20").addEventListener("click", function () { animateTo(20); });
+  $("b37").addEventListener("click", function () { animateTo(37); });
+  $("b50").addEventListener("click", function () { animateTo(50); });
+  $("b65").addEventListener("click", function () { animateTo(65); });
+
+  L = pickLayout();
+  layout();
+
+  /* ---- Autopilot：空闲自走，一碰接管 ----
+     循环 12.4 秒：20 → 37（停 2.4 秒，全篇最值钱的一帧）→ 50 → 62 → 70 → 回 20。
+     点画面按 keys 顺序跳；拖曲线直接取值；松手 5 秒从最接近的相位接回，不跳帧。 */
+  ap = AutoPilot.create({
+    mount: stage,
+    follow: slider,
+    loop: [
+      { t: 0.0, v: 20 }, { t: 2.6, v: 37 },
+      { t: 5.0, v: 37 },
+      { t: 6.6, v: 50 }, { t: 8.2, v: 62 },
+      { t: 9.6, v: 70 }, { t: 12.4, v: 20 }
+    ],
+    keys: [20, 37, 50, 65],
+    value: 20, min: 0, max: TMAX, step: 0.5,
+    idle: 5000,
+    prefer: [1.0, 7.5],
+    keyboard: false,      // 键盘由本页接管（支持 Shift 加速），所以关掉引擎那一份
+    onChange: function (v) {
+      if (!ap || ap.mode === "auto") { tVal = v; render(); }
+    },
+    onKey: function (v) { tVal = v; render(); },   // 点画面跳关键帧时，数值要立刻跟上
+    onMode: function (m) {
+      apBadge.textContent = m === "auto" ? "自动演示中" : "你接管了";
+      apBadge.setAttribute("data-mode", m);
+    }
+  });
+  window.__ap = ap;       // 只为验证脚本读状态
+
+  render();
+
+  var rt = null;
+  window.addEventListener("resize", function () {
+    if (rt) clearTimeout(rt);
+    rt = setTimeout(function () {
+      var nl = pickLayout();
+      if (nl !== L) { L = nl; layout(); render(); }
+    }, 120);
+  });
+
+  /* ============ 例题分步 ============ */
+  (function () {
+    var steps = document.querySelectorAll("#steps .step");
+    var ans = $("ans"), btn = $("next"), cnt = $("cnt"), i = 1;
+    if (!steps.length) return;
+    steps[0].hidden = false;
+    cnt.textContent = "1 / " + steps.length;
+    btn.addEventListener("click", function () {
+      if (i < steps.length) { steps[i].hidden = false; i++; cnt.textContent = i + " / " + steps.length; }
+      if (i >= steps.length) {
+        ans.hidden = false;
+        btn.textContent = "已全部展开";
+        btn.disabled = true;
+      }
+    });
+  })();
+
+  /* ============ 手机放大 ============ */
+  (function () {
+    var zoom = $("zoom"), zin = $("zoomInner");
+    function zclose() {
+      zoom.hidden = true;
+      document.body.style.overflow = "";
+      zin.innerHTML = "";
+    }
+    Array.prototype.forEach.call(document.querySelectorAll(".svgbox"), function (box) {
+      box.addEventListener("click", function () {
+        if (window.innerWidth > 760) return;
+        var svg = box.querySelector("svg");
+        if (!svg) return;
+        zin.innerHTML = "";
+        zin.appendChild(svg.cloneNode(true));
+        zoom.hidden = false;
+        document.body.style.overflow = "hidden";
+      });
+    });
+    zoom.addEventListener("click", function (ev) {
+      if (ev.target === zoom || ev.target.className === "zoom-x") zclose();
+    });
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && !zoom.hidden) zclose();
+    });
+  })();
+
+  window.__probe = function () {
+    return {
+      t: tVal,
+      apV: ap ? +ap.value.toFixed(2) : null,
+      apMode: ap ? ap.mode : "none",
+      badge: apBadge.textContent,
+      slider: parseFloat(slider.value),
+      act: f(act(tVal), 2),
+      state: $("vS").textContent,
+      note: $("vSn").textContent,
+      layout: L === WIDE ? "wide" : "narrow",
+      stepsShown: document.querySelectorAll("#steps .step:not([hidden])").length,
+      ansHidden: $("ans").hidden,
+      overflow: document.documentElement.scrollWidth - window.innerWidth,
+      sheets: document.styleSheets.length,
+      topOfBody: document.body.firstChild && document.body.firstChild.nodeType === 3
+        ? document.body.firstChild.textContent.trim().slice(0, 40) : "(元素)"
+    };
+  };
+})();
+</script>
+</body>
+</html>

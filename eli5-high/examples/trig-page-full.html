@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人教版高中三角函数 · ELI5</title>
+<style>
+  :root{
+    --paper:#faf9f6; --card:#ffffff; --ink:#1b1b19; --mid:#6b6a64; --faint:#c9c7bf;
+    --line:#e3e1d9; --blue:#2f6fd0; --blue-soft:#dce9fb; --amber:#c8862a; --amber-soft:#fbeed7;
+    --green:#2f8a5b; --green-soft:#dcefe5; --red:#c04a3c; --red-soft:#f8e2df;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 24px 72px}
+  .kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-bottom:14px}
+  h1{font-size:34px;line-height:1.25;margin:0 0 18px;letter-spacing:-.02em}
+  h1 em{font-style:normal;color:var(--blue)}
+  .lede{font-size:18px;color:#3a3a35;margin:0 0 26px;max-width:690px}
+  .lede b{background:var(--amber-soft);padding:1px 6px;border-radius:5px;font-weight:600}
+  .nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:34px}
+  .nav span{font-size:13px;color:var(--mid);background:#f1f0ea;border:1px solid var(--line);
+    border-radius:999px;padding:5px 13px}
+  figure{margin:0 0 18px;background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:26px 28px 22px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+  .fig-cap{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+  .fig-no{font-size:13px;font-weight:700;color:var(--blue);letter-spacing:.06em;white-space:nowrap}
+  .fig-t{font-size:16px;font-weight:650}
+  .fig-s{font-size:14.5px;color:var(--mid);margin:0 0 18px}
+  svg{display:block;width:100%;height:auto}
+  .note{font-size:14px;color:var(--mid);margin:16px 0 0;padding-top:14px;border-top:1px dashed var(--line)}
+  .note b{color:var(--ink)}
+  .tl{font-size:22px;font-weight:700;font-family:ui-monospace,Consolas,monospace}
+  .tn{font-size:12px;font-weight:700;font-family:ui-monospace,Consolas,monospace}
+  .tb{font-size:14px;font-weight:650;fill:#1b1b19}
+  .tm{font-size:13.5px;font-weight:700;font-family:ui-monospace,Consolas,monospace;fill:#1b1b19}
+  .ts{font-size:12.5px;fill:#6b6a64}
+  .tf{font-size:13px;font-weight:600;fill:#1b1b19}
+  .cards{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(358px,1fr));margin-top:18px}
+  .c{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--card)}
+  .c h3{margin:0 0 8px;font-size:14.5px;color:#1b1b19}
+  .c p{margin:0;font-size:13.5px;color:var(--mid)}
+  .fx{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;
+    background:#f7f6f1;border-radius:8px;padding:10px 12px;margin:0 0 10px;display:block;
+    white-space:pre-wrap;line-height:1.85;color:#33322d;overflow-x:auto}
+  .fx:last-child{margin-bottom:0}
+  footer{margin-top:44px;font-size:13.5px;color:var(--mid);border-top:1px solid var(--line);padding-top:20px}
+  code{font-family:ui-monospace,Consolas,monospace;font-size:.92em;background:#f2f1ec;padding:1px 5px;border-radius:4px}
+/* ---------- 图 7：互动区 ---------- */
+  .wrap{max-width:1060px}
+  h1,.lede,.note,footer{max-width:820px}
+  figure{max-width:900px}
+  figure.wide{max-width:1012px}
+  figure .board{background:transparent;border:none;box-shadow:none;padding:0;border-radius:0}
+  .board svg{touch-action:none;user-select:none;outline:none}
+  .board svg:focus-visible{box-shadow:0 0 0 3px var(--blue-soft);border-radius:12px}
+  .hit{cursor:grab}
+  .hit.dragging{cursor:grabbing}
+  .halo{stroke:#fff;stroke-width:3.6;paint-order:stroke;stroke-linejoin:round;stroke-linecap:round}
+  .bar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:14px;
+    padding-top:16px;border-top:1px dashed var(--line)}
+  .bar button{font:inherit;font-size:14px;font-weight:600;color:var(--ink);background:#f4f3ee;
+    border:1px solid var(--line);border-radius:10px;padding:8px 16px;cursor:pointer}
+  .bar button:hover{background:#ecebe4}
+  .bar button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+  .bar label.chk{display:inline-flex;align-items:center;gap:7px;font-size:14px;color:#3a3a35;cursor:pointer}
+  .bar input[type=range]{width:220px;accent-color:var(--blue)}
+  .bar .hint{font-size:13px;color:var(--mid);margin-left:auto}
+  .sym{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;padding:10px 14px;
+    background:#f7f6f1;border-radius:10px;font-size:13.5px;color:#3a3a35}
+  .sym[hidden]{display:none}
+  .sym code{background:#fff;color:#1b1b19}
+  .tag{font-weight:700;font-size:12.5px;padding:2px 8px;border-radius:6px;
+    font-family:ui-monospace,Consolas,monospace}
+  .t1{background:var(--red-soft);color:var(--red)}
+  .t2{background:var(--green-soft);color:var(--green)}
+  .t3{background:var(--amber-soft);color:var(--amber)}
+  .sep{color:var(--faint)}
+  .stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-top:16px}
+  .st{background:#fbfaf7;border:1px solid var(--line);border-radius:14px;padding:13px 15px}
+  .st .k{font-size:12.5px;color:var(--mid);margin-bottom:4px;font-weight:600}
+  .st .v{font-size:20px;font-weight:700;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+    letter-spacing:-.01em}
+  .st .s{font-size:12px;color:var(--mid);margin-top:2px}
+  .v-cos{color:var(--blue)} .v-sin{color:var(--green)} .v-tan{color:var(--red)} .v-ang{color:var(--amber)}
+/* ---------- 手机适配 ---------- */
+  .svgbox{position:relative}
+  .zoomchip{display:none;position:absolute;top:-4px;right:-4px;z-index:2;
+    font-size:12px;font-weight:600;color:var(--blue);background:var(--blue-soft);
+    border:1px solid #bcd4f5;border-radius:999px;padding:5px 12px;cursor:pointer}
+  .zoom{position:fixed;inset:0;z-index:60;background:#fff;overflow:auto;
+    -webkit-overflow-scrolling:touch;padding:58px 12px 36px}
+  .zoom[hidden]{display:none}
+  /* 堆叠模式：图限制在手机宽度居中，避免在大屏上被放大成巨图 */
+  .board.stacked svg{max-width:460px;margin:0 auto}
+  .zoom svg{width:720px;max-width:none;height:auto;display:block;margin:0 auto}
+  .zoom-x{position:fixed;top:14px;right:16px;z-index:61;width:44px;height:44px;
+    border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;
+    font-size:18px;line-height:1;color:var(--ink);font-family:inherit}
+  .zoom-tip{position:fixed;top:22px;left:18px;z-index:61;font-size:13px;color:var(--mid)}
+
+  @media (max-width:760px){
+    .wrap{padding:28px 14px 56px}
+    h1{font-size:clamp(25px,6.4vw,32px)}
+    .lede{font-size:clamp(15px,4.3vw,17px);margin-bottom:20px}
+    .nav{margin-bottom:22px}
+    figure{padding:18px 14px 16px;border-radius:14px}
+    .fig-cap{gap:8px}
+    .fig-t{font-size:clamp(14px,4.1vw,16px)}
+    .fig-s{font-size:clamp(13.5px,3.9vw,14.5px)}
+    .note{font-size:13.5px}
+    .zoomchip{display:inline-block}
+    .stats{grid-template-columns:repeat(2,1fr);gap:10px}
+    .st{padding:10px 12px}
+    .st .v{font-size:clamp(17px,4.8vw,20px)}
+    .cards{grid-template-columns:1fr}
+    .bar{gap:10px}
+    .bar button{min-height:44px;flex:1 1 auto}
+    .bar label.chk{min-height:34px}
+    .bar input[type=range]{width:100%}
+    .bar .hint{margin-left:0;flex-basis:100%}
+    footer{font-size:13px}
+  }
+  @media (pointer:coarse){
+    .bar button{min-height:44px}
+    .sym{padding:10px 12px}
+  }
+/* ---------- 图 8：问答卡 ---------- */
+  .qa{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(336px,1fr))}
+  .qac{border:1px solid var(--line);border-radius:14px;padding:16px 18px 14px;background:#fbfaf7}
+  .qac .q{font-size:15px;font-weight:700;color:#1b1b19;margin:0 0 7px;line-height:1.5}
+  .qac .a{font-size:14px;color:#3a3a35;margin:0 0 12px;line-height:1.72}
+  .qac .a b{color:var(--blue)}
+  .qac svg{display:block;width:100%;height:auto;background:#fff;
+    border:1px solid var(--line);border-radius:10px}
+  .ms{font-size:10px;fill:#6b6a64}
+  .mm{font-size:10.5px;font-weight:700;font-family:ui-monospace,Consolas,monospace;fill:#1b1b19}
+  .mh{font-size:11px;font-weight:700;fill:#1b1b19}
+
+  /* ---------- 图 9：时间轴 ---------- */
+  .tl{position:relative;margin:20px 0 4px;padding-left:28px}
+  .tl::before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:var(--line)}
+  .tl .ev{position:relative;margin-bottom:17px}
+  .tl .ev:last-child{margin-bottom:0}
+  .tl .ev::before{content:"";position:absolute;left:-26px;top:5px;width:11px;height:11px;
+    border-radius:50%;background:#fff;border:2.5px solid var(--blue)}
+  .tl .ev.warm::before{border-color:var(--amber)}
+  .tl .ev.now::before{border-color:var(--green);background:var(--green)}
+  .tl .when{font-size:12px;font-weight:700;color:var(--mid);letter-spacing:.03em;
+    font-family:ui-monospace,Consolas,monospace}
+  .tl .what{font-size:15px;font-weight:650;margin:3px 0 2px;line-height:1.5}
+  .tl .why{font-size:13.5px;color:var(--mid);margin:0;line-height:1.68}
+  .etym{border-left:4px solid var(--amber);background:var(--amber-soft);
+    border-radius:0 12px 12px 0;padding:15px 18px;margin:22px 0 0;
+    font-size:14.5px;color:#4a3a1e;line-height:1.8}
+  .etym b{color:#1b1b19}
+  .etym .chain{font-family:ui-monospace,Consolas,monospace;font-size:13.5px;
+    display:block;margin:8px 0 6px;color:#1b1b19}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="kicker">ELI5 · 讲给想探知的人</div>
+<h1>人教版高中三角函数，<em>其实只干一件事</em></h1>
+<p class="lede">这一章公式看着密密麻麻，但整章只做一个动作：
+把一个角放进一个<b>半径是 1 的圆</b>里，看它的终边落在圆上的哪个点。
+那个点的<b>横坐标就是 cos</b>，<b>纵坐标就是 sin</b>。图象、诱导公式、恒等变换，全是从这一个动作里长出来的。</p>
+
+<div class="nav">
+  <span>① 角能一直转</span><span>② 弧度和度</span><span>③ 单位圆（心脏）</span>
+  <span>④ 卷成波浪</span><span>⑤ 诱导公式</span><span>⑥ 三个旋钮</span><span>⑦ 自己试试</span><span>⑧ 别人会怎么问</span><span>⑨ 它从哪来</span>
+</div>
+<figure>
+  <div class="fig-cap"><span class="fig-no">图 1</span><span class="fig-t">角可以一直转，还能倒着转</span></div>
+  <p class="fig-s">初中说角最大到 180°。高中把角放进「转圈」的世界：逆时针转是正角，顺时针转是负角，转多少圈都行。</p>
+<div class="svgbox"><svg viewBox="0 0 800 280" role="img" aria-label="任意角：30度、390度、负330度的终边落在同一根射线上"><circle cx="140" cy="104" r="74" fill="none" stroke="#e3e1d9" stroke-width="1.2"/><line x1="140" y1="104" x2="233.00" y2="104.00" stroke="#c9c7bf" stroke-width="1.6"/><line x1="140" y1="104" x2="220.54" y2="57.50" stroke="#1b1b19" stroke-width="1.9"/><circle cx="140" cy="104" r="3" fill="#1b1b19"/><path d="M 198.00 104.00 A 58.00 58.00 0 0 0 190.23 75.00" fill="none" stroke="#2f6fd0" stroke-width="2.6"/><polygon points="185.73,67.21 196.27,73.59 185.99,79.53" fill="#2f6fd0"/><text class="tl" x="140" y="212" text-anchor="middle" fill="#2f6fd0">30°</text><text class="ts" x="140" y="236" text-anchor="middle">转 0 圈</text><circle cx="400" cy="104" r="74" fill="none" stroke="#e3e1d9" stroke-width="1.2"/><line x1="400" y1="104" x2="493.00" y2="104.00" stroke="#c9c7bf" stroke-width="1.6"/><line x1="400" y1="104" x2="480.54" y2="57.50" stroke="#1b1b19" stroke-width="1.9"/><circle cx="400" cy="104" r="3" fill="#1b1b19"/><circle cx="400" cy="104" r="40" fill="none" stroke="#c8862a" stroke-width="2" stroke-dasharray="5 4"/><polygon points="391.00,64.00 401.80,58.06 401.80,69.94" fill="#c8862a"/><path d="M 458.00 104.00 A 58.00 58.00 0 0 0 450.23 75.00" fill="none" stroke="#c8862a" stroke-width="2.6"/><polygon points="445.73,67.21 456.27,73.59 445.99,79.53" fill="#c8862a"/><text class="tl" x="400" y="212" text-anchor="middle" fill="#c8862a">390°</text><text class="ts" x="400" y="236" text-anchor="middle">逆时针转满 1 整圈再 30°</text><circle cx="660" cy="104" r="74" fill="none" stroke="#e3e1d9" stroke-width="1.2"/><line x1="660" y1="104" x2="753.00" y2="104.00" stroke="#c9c7bf" stroke-width="1.6"/><line x1="660" y1="104" x2="740.54" y2="57.50" stroke="#1b1b19" stroke-width="1.9"/><circle cx="660" cy="104" r="3" fill="#1b1b19"/><path d="M 700.00 104.00 A 40.00 40.00 0 1 1 694.64 84.00" fill="none" stroke="#2f8a5b" stroke-width="2" stroke-dasharray="5 4"/><polygon points="699.14,91.79 688.60,85.41 698.89,79.47" fill="#2f8a5b"/><text class="tl" x="660" y="212" text-anchor="middle" fill="#2f8a5b">−330°</text><text class="ts" x="660" y="236" text-anchor="middle">顺时针转 330°</text><text class="tf" x="400" y="268" text-anchor="middle">三个角最后停在同一根射线上（终边相同）→ 三角函数值完全一样</text></svg><span class="zoomchip">🔍 点击放大</span></div>
+  <p class="note">关键不是转了多少，而是<b>最后停在哪根射线上</b>（叫终边）。停在同一根射线上的一堆角，相差 360° 的整数倍，所以三角函数值一模一样。</p>
+</figure>
+<figure>
+  <div class="fig-cap"><span class="fig-no">图 2</span><span class="fig-t">换个量角的单位：弧度</span></div>
+  <p class="fig-s">除了「度」，还可以用「这段弧是半径的几倍」来量角。弧长正好等于半径时，这个角就是 1 弧度。</p>
+<div class="svgbox"><svg viewBox="0 0 800 252" role="img" aria-label="弧度制：弧长等于半径时的角是1弧度，以及角度与弧度的换算"><circle cx="150" cy="100" r="78" fill="none" stroke="#e3e1d9" stroke-width="1.2"/><line x1="150" y1="100" x2="228.00" y2="100.00" stroke="#c9c7bf" stroke-width="1.7"/><text class="ts" x="184" y="92">r</text><path d="M 228.00 100.00 A 78.00 78.00 0 0 0 192.14 34.37" fill="none" stroke="#c8862a" stroke-width="3"/><line x1="150" y1="100" x2="192.14" y2="34.37" stroke="#c9c7bf" stroke-width="1.7"/><text class="tb" x="241.31" y="46.22">弧长 = r</text><text class="ts" x="150" y="196" text-anchor="middle" fill="#c8862a">这个角就是 1 弧度 ≈ 57.3°</text><text class="ts" x="150" y="220" text-anchor="middle">弧长正好等于半径</text><text class="tb" x="360" y="30">换个单位，值不变</text><rect x="360" y="46" width="190" height="42" rx="10" fill="#dce9fb" stroke="#2f6fd0" stroke-width="1.2"/><text class="tb" x="378" y="74">30°</text><text class="tm" x="532" y="74" text-anchor="end">π/6</text><rect x="575" y="46" width="190" height="42" rx="10" fill="#dce9fb" stroke="#2f6fd0" stroke-width="1.2"/><text class="tb" x="593" y="74">45°</text><text class="tm" x="747" y="74" text-anchor="end">π/4</text><rect x="360" y="102" width="190" height="42" rx="10" fill="#dce9fb" stroke="#2f6fd0" stroke-width="1.2"/><text class="tb" x="378" y="130">60°</text><text class="tm" x="532" y="130" text-anchor="end">π/3</text><rect x="575" y="102" width="190" height="42" rx="10" fill="#dce9fb" stroke="#2f6fd0" stroke-width="1.2"/><text class="tb" x="593" y="130">90°</text><text class="tm" x="747" y="130" text-anchor="end">π/2</text><rect x="360" y="158" width="190" height="42" rx="10" fill="#dce9fb" stroke="#2f6fd0" stroke-width="1.2"/><text class="tb" x="378" y="186">180°</text><text class="tm" x="532" y="186" text-anchor="end">π</text><rect x="575" y="158" width="190" height="42" rx="10" fill="#dce9fb" stroke="#2f6fd0" stroke-width="1.2"/><text class="tb" x="593" y="186">360°</text><text class="tm" x="747" y="186" text-anchor="end">2π</text><text class="ts" x="360" y="232">用弧度写公式更干净：弧长 l = αr，扇形面积 S = ½αr²</text></svg><span class="zoomchip">🔍 点击放大</span></div>
+  <p class="note">记法：<b>180° = π，360° = 2π</b>。因为半圈弧长是 π 个半径。用弧度写公式会变干净，比如弧长 <b>l = αr</b>、扇形面积 <b>S = ½αr²</b>。</p>
+</figure>
+<figure>
+  <div class="fig-cap"><span class="fig-no">图 3</span><span class="fig-t">心脏在这里：单位圆</span></div>
+  <p class="fig-s">半径 = 1 的圆，把角 α 放进去，终边和圆交于点 P。那么 P 的横坐标就是 cos α，纵坐标就是 sin α。</p>
+<div class="svgbox"><svg viewBox="0 0 800 300" role="img" aria-label="单位圆：角的终边与圆交于点P，横坐标是cos，纵坐标是sin"><line x1="80" y1="168" x2="400" y2="168" stroke="#c9c7bf" stroke-width="1.4"/><line x1="240" y1="60" x2="240" y2="285" stroke="#c9c7bf" stroke-width="1.4"/><circle cx="240" cy="168" r="120" fill="none" stroke="#e3e1d9" stroke-width="1.3"/><line x1="240" y1="168" x2="327.42" y2="56.10" stroke="#1b1b19" stroke-width="1.9"/><path d="M 276.00 168.00 A 36.00 36.00 0 0 0 262.16 139.63" fill="none" stroke="#2f6fd0" stroke-width="2.4"/><text class="tb" x="281.55" y="152.71" fill="#2f6fd0">α</text><line x1="313.88" y1="73.44" x2="313.88" y2="168" stroke="#2f6fd0" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="313.88" y1="73.44" x2="240" y2="73.44" stroke="#2f8a5b" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="313.88" cy="73.44" r="4.5" fill="#1b1b19"/><text class="tb" x="322.88" y="66.44">P</text><text class="tm" x="309.88" y="188" fill="#2f6fd0">cos α</text><text class="tm" x="232" y="77.44" text-anchor="end" fill="#2f8a5b">sin α</text><text class="ts" x="273.40" y="111.57" text-anchor="end">1</text><text class="ts" x="240" y="292" text-anchor="middle" fill="#6b6a64">圆的半径 = 1</text><text class="tb" x="470" y="30">四个象限，谁正谁负</text><rect x="470" y="44" width="152" height="52" rx="11" fill="#dcefe5" stroke="#2f8a5b" stroke-width="1.2"/><text class="tb" x="482" y="66" fill="#2f8a5b">第 Ⅰ 象限</text><text class="ts" x="482" y="85">全 部 为 正</text><rect x="635" y="44" width="152" height="52" rx="11" fill="#dce9fb" stroke="#2f6fd0" stroke-width="1.2"/><text class="tb" x="647" y="66" fill="#2f6fd0">第 Ⅱ 象限</text><text class="ts" x="647" y="85">只有 sin 为正</text><rect x="470" y="106" width="152" height="52" rx="11" fill="#fbeed7" stroke="#c8862a" stroke-width="1.2"/><text class="tb" x="482" y="128" fill="#c8862a">第 Ⅲ 象限</text><text class="ts" x="482" y="147">只有 tan 为正</text><rect x="635" y="106" width="152" height="52" rx="11" fill="#f8e2df" stroke="#c04a3c" stroke-width="1.2"/><text class="tb" x="647" y="128" fill="#c04a3c">第 Ⅳ 象限</text><text class="ts" x="647" y="147">只有 cos 为正</text><text class="ts" x="470" y="204">口诀：一全正，二正弦，三正切，四余弦</text><text class="tf" x="470" y="230">tan α = 纵坐标 ÷ 横坐标</text><text class="ts" x="470" y="252">横坐标为 0 时 tan α 不存在</text></svg><span class="zoomchip">🔍 点击放大</span></div>
+  <p class="note">这不是要背的公式，<b>这就是定义本身</b>。所以 sin、cos 的值域天然是 [−1, 1]——圆上的点跑不出这个范围。</p>
+</figure>
+<figure>
+  <div class="fig-cap"><span class="fig-no">图 4</span><span class="fig-t">把圆「卷开」，就是正弦曲线</span></div>
+  <p class="fig-s">让点沿圆匀速转，把它离水平轴的高度画出来，就得到了 y = sin x 那条波浪。</p>
+<div class="svgbox"><svg viewBox="0 0 800 310" role="img" aria-label="把单位圆上点的高度展开，就得到正弦曲线"><line x1="14" y1="155" x2="206" y2="155" stroke="#c9c7bf" stroke-width="1.3"/><line x1="110" y1="60" x2="110" y2="250" stroke="#c9c7bf" stroke-width="1.3"/><circle cx="110" cy="155" r="78" fill="none" stroke="#e3e1d9" stroke-width="1.3"/><line x1="110" y1="155" x2="149.00" y2="87.45" stroke="#1b1b19" stroke-width="1.7"/><circle cx="149.00" cy="87.45" r="4.5" fill="#c8862a"/><path d="M 156.00 155.00 A 46.00 46.00 0 0 0 133.00 115.16" fill="none" stroke="#c8862a" stroke-width="2" stroke-dasharray="5 4"/><text class="ts" x="165.96" y="125.00" fill="#c8862a">60°</text><line x1="210" y1="155" x2="750" y2="155" stroke="#c9c7bf" stroke-width="1.3"/><line x1="210" y1="77.00" x2="210" y2="233.00" stroke="#c9c7bf" stroke-width="1.3"/><line x1="149.00" y1="87.45" x2="300" y2="87.45" stroke="#c8862a" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M 210.00 155.00 L 212.45 152.77 L 214.91 150.55 L 217.36 148.33 L 219.82 146.11 L 222.27 143.90 L 224.73 141.70 L 227.18 139.51 L 229.64 137.33 L 232.09 135.17 L 234.55 133.02 L 237.00 130.90 L 239.45 128.79 L 241.91 126.70 L 244.36 124.64 L 246.82 122.60 L 249.27 120.58 L 251.73 118.60 L 254.18 116.64 L 256.64 114.72 L 259.09 112.83 L 261.55 110.97 L 264.00 109.15 L 266.45 107.37 L 268.91 105.63 L 271.36 103.92 L 273.82 102.26 L 276.27 100.64 L 278.73 99.06 L 281.18 97.53 L 283.64 96.05 L 286.09 94.62 L 288.55 93.23 L 291.00 91.90 L 293.45 90.61 L 295.91 89.38 L 298.36 88.20 L 300.82 87.08 L 303.27 86.01 L 305.73 85.00 L 308.18 84.05 L 310.64 83.15 L 313.09 82.31 L 315.55 81.54 L 318.00 80.82 L 320.45 80.16 L 322.91 79.56 L 325.36 79.03 L 327.82 78.55 L 330.27 78.14 L 332.73 77.79 L 335.18 77.51 L 337.64 77.29 L 340.09 77.13 L 342.55 77.03 L 345.00 77.00 L 347.45 77.03 L 349.91 77.13 L 352.36 77.29 L 354.82 77.51 L 357.27 77.79 L 359.73 78.14 L 362.18 78.55 L 364.64 79.03 L 367.09 79.56 L 369.55 80.16 L 372.00 80.82 L 374.45 81.54 L 376.91 82.31 L 379.36 83.15 L 381.82 84.05 L 384.27 85.00 L 386.73 86.01 L 389.18 87.08 L 391.64 88.20 L 394.09 89.38 L 396.55 90.61 L 399.00 91.90 L 401.45 93.23 L 403.91 94.62 L 406.36 96.05 L 408.82 97.53 L 411.27 99.06 L 413.73 100.64 L 416.18 102.26 L 418.64 103.92 L 421.09 105.63 L 423.55 107.37 L 426.00 109.15 L 428.45 110.97 L 430.91 112.83 L 433.36 114.72 L 435.82 116.64 L 438.27 118.60 L 440.73 120.58 L 443.18 122.60 L 445.64 124.64 L 448.09 126.70 L 450.55 128.79 L 453.00 130.90 L 455.45 133.02 L 457.91 135.17 L 460.36 137.33 L 462.82 139.51 L 465.27 141.70 L 467.73 143.90 L 470.18 146.11 L 472.64 148.33 L 475.09 150.55 L 477.55 152.77 L 480.00 155.00 L 482.45 157.23 L 484.91 159.45 L 487.36 161.67 L 489.82 163.89 L 492.27 166.10 L 494.73 168.30 L 497.18 170.49 L 499.64 172.67 L 502.09 174.83 L 504.55 176.98 L 507.00 179.10 L 509.45 181.21 L 511.91 183.30 L 514.36 185.36 L 516.82 187.40 L 519.27 189.42 L 521.73 191.40 L 524.18 193.36 L 526.64 195.28 L 529.09 197.17 L 531.55 199.03 L 534.00 200.85 L 536.45 202.63 L 538.91 204.37 L 541.36 206.08 L 543.82 207.74 L 546.27 209.36 L 548.73 210.94 L 551.18 212.47 L 553.64 213.95 L 556.09 215.38 L 558.55 216.77 L 561.00 218.10 L 563.45 219.39 L 565.91 220.62 L 568.36 221.80 L 570.82 222.92 L 573.27 223.99 L 575.73 225.00 L 578.18 225.95 L 580.64 226.85 L 583.09 227.69 L 585.55 228.46 L 588.00 229.18 L 590.45 229.84 L 592.91 230.44 L 595.36 230.97 L 597.82 231.45 L 600.27 231.86 L 602.73 232.21 L 605.18 232.49 L 607.64 232.71 L 610.09 232.87 L 612.55 232.97 L 615.00 233.00 L 617.45 232.97 L 619.91 232.87 L 622.36 232.71 L 624.82 232.49 L 627.27 232.21 L 629.73 231.86 L 632.18 231.45 L 634.64 230.97 L 637.09 230.44 L 639.55 229.84 L 642.00 229.18 L 644.45 228.46 L 646.91 227.69 L 649.36 226.85 L 651.82 225.95 L 654.27 225.00 L 656.73 223.99 L 659.18 222.92 L 661.64 221.80 L 664.09 220.62 L 666.55 219.39 L 669.00 218.10 L 671.45 216.77 L 673.91 215.38 L 676.36 213.95 L 678.82 212.47 L 681.27 210.94 L 683.73 209.36 L 686.18 207.74 L 688.64 206.08 L 691.09 204.37 L 693.55 202.63 L 696.00 200.85 L 698.45 199.03 L 700.91 197.17 L 703.36 195.28 L 705.82 193.36 L 708.27 191.40 L 710.73 189.42 L 713.18 187.40 L 715.64 185.36 L 718.09 183.30 L 720.55 181.21 L 723.00 179.10 L 725.45 176.98 L 727.91 174.83 L 730.36 172.67 L 732.82 170.49 L 735.27 168.30 L 737.73 166.10 L 740.18 163.89 L 742.64 161.67 L 745.09 159.45 L 747.55 157.23 L 750.00 155.00" fill="none" stroke="#2f6fd0" stroke-width="2.6"/><circle cx="210.00" cy="155.00" r="4" fill="#2f6fd0"/><line x1="210.00" y1="159" x2="210.00" y2="167" stroke="#c9c7bf" stroke-width="1.1"/><text class="ts" x="210.00" y="183" text-anchor="middle">0</text><circle cx="345.00" cy="77.00" r="4" fill="#2f6fd0"/><line x1="345.00" y1="159" x2="345.00" y2="167" stroke="#c9c7bf" stroke-width="1.1"/><text class="ts" x="345.00" y="183" text-anchor="middle">π/2</text><circle cx="480.00" cy="155.00" r="4" fill="#2f6fd0"/><line x1="480.00" y1="159" x2="480.00" y2="167" stroke="#c9c7bf" stroke-width="1.1"/><text class="ts" x="480.00" y="183" text-anchor="middle">π</text><circle cx="615.00" cy="233.00" r="4" fill="#2f6fd0"/><line x1="615.00" y1="159" x2="615.00" y2="167" stroke="#c9c7bf" stroke-width="1.1"/><text class="ts" x="615.00" y="183" text-anchor="middle">3π/2</text><circle cx="750.00" cy="155.00" r="4" fill="#2f6fd0"/><line x1="750.00" y1="159" x2="750.00" y2="167" stroke="#c9c7bf" stroke-width="1.1"/><text class="ts" x="750.00" y="183" text-anchor="middle">2π</text><text class="ts" x="202.00" y="82.00" text-anchor="end">1</text><text class="ts" x="202.00" y="238.00" text-anchor="end">−1</text><line x1="210" y1="268" x2="750" y2="268" stroke="#6b6a64" stroke-width="1.6"/><line x1="210" y1="262" x2="210" y2="274" stroke="#6b6a64" stroke-width="1.6"/><line x1="750" y1="262" x2="750" y2="274" stroke="#6b6a64" stroke-width="1.6"/><text class="tf" x="480" y="290" text-anchor="middle">转一圈 = 一个周期 T = 2π　　最高最低 = 值域 [−1, 1]</text></svg><span class="zoomchip">🔍 点击放大</span></div>
+  <p class="note">转一圈 = 一个周期 2π；最高最低 = [−1, 1]。从 0 出发、关于原点对称，所以 sin 是奇函数；cos 则是关于 y 轴对称的偶函数。</p>
+</figure>
+<figure>
+  <div class="fig-cap"><span class="fig-no">图 5</span><span class="fig-t">诱导公式：在圆上换个位置</span></div>
+  <p class="fig-s">把角变个样子（加 π、取相反数、换成 π/2 的补角），圆上的点只是挪到对称位置，坐标最多差个正负号。</p>
+<div class="svgbox"><svg viewBox="0 0 800 300" role="img" aria-label="四个对称位置上的点，坐标只差正负号"><line x1="60" y1="165" x2="360" y2="165" stroke="#c9c7bf" stroke-width="1.3"/><line x1="205" y1="55" x2="205" y2="275" stroke="#c9c7bf" stroke-width="1.3"/><circle cx="205" cy="165" r="110" fill="none" stroke="#e3e1d9" stroke-width="1.3"/><rect x="114.89" y="101.91" width="180.21" height="126.19" fill="none" stroke="#c9c7bf" stroke-width="1.3" stroke-dasharray="5 4"/><line x1="205" y1="165" x2="295.11" y2="101.91" stroke="#2f6fd0" stroke-width="1.7"/><circle cx="295.11" cy="101.91" r="5" fill="#2f6fd0"/><circle cx="315.11" cy="92.91" r="11" fill="#2f6fd0"/><text class="tn" x="315.11" y="97.41" text-anchor="middle" fill="#fff">1</text><line x1="205" y1="165" x2="295.11" y2="228.09" stroke="#c04a3c" stroke-width="1.7"/><circle cx="295.11" cy="228.09" r="5" fill="#c04a3c"/><circle cx="315.11" cy="237.09" r="11" fill="#c04a3c"/><text class="tn" x="315.11" y="241.59" text-anchor="middle" fill="#fff">2</text><line x1="205" y1="165" x2="114.89" y2="101.91" stroke="#2f8a5b" stroke-width="1.7"/><circle cx="114.89" cy="101.91" r="5" fill="#2f8a5b"/><circle cx="94.89" cy="92.91" r="11" fill="#2f8a5b"/><text class="tn" x="94.89" y="97.41" text-anchor="middle" fill="#fff">3</text><line x1="205" y1="165" x2="114.89" y2="228.09" stroke="#c8862a" stroke-width="1.7"/><circle cx="114.89" cy="228.09" r="5" fill="#c8862a"/><circle cx="94.89" cy="237.09" r="11" fill="#c8862a"/><text class="tn" x="94.89" y="241.59" text-anchor="middle" fill="#fff">4</text><path d="M 243.00 165.00 A 38.00 38.00 0 0 0 236.13 143.20" fill="none" stroke="#2f6fd0" stroke-width="2.2"/><text class="tb" x="250.87" y="155.17" fill="#2f6fd0">α</text><text class="tb" x="430" y="30">换个位置，坐标只差正负号</text><rect x="430" y="44" width="350" height="28" rx="8" fill="#f4f3ee"/><circle cx="452.00" cy="58.00" r="11" fill="#2f6fd0"/><text class="tn" x="452.00" y="62.50" text-anchor="middle" fill="#fff">1</text><text class="tm" x="472" y="63" fill="#2f6fd0">α</text><text class="tm" x="556" y="63">(cos α,  sin α)</text><rect x="430" y="78" width="350" height="28" rx="8" fill="#f4f3ee"/><circle cx="452.00" cy="92.00" r="11" fill="#c04a3c"/><text class="tn" x="452.00" y="96.50" text-anchor="middle" fill="#fff">2</text><text class="tm" x="472" y="97" fill="#c04a3c">−α</text><text class="tm" x="556" y="97">(cos α, −sin α)</text><rect x="430" y="112" width="350" height="28" rx="8" fill="#f4f3ee"/><circle cx="452.00" cy="126.00" r="11" fill="#2f8a5b"/><text class="tn" x="452.00" y="130.50" text-anchor="middle" fill="#fff">3</text><text class="tm" x="472" y="131" fill="#2f8a5b">π − α</text><text class="tm" x="556" y="131">(−cos α,  sin α)</text><rect x="430" y="146" width="350" height="28" rx="8" fill="#f4f3ee"/><circle cx="452.00" cy="160.00" r="11" fill="#c8862a"/><text class="tn" x="452.00" y="164.50" text-anchor="middle" fill="#fff">4</text><text class="tm" x="472" y="165" fill="#c8862a">π + α</text><text class="tm" x="556" y="165">(−cos α, −sin α)</text><text class="tf" x="430" y="212">例：sin(π − α) = sin α</text><text class="ts" x="430" y="232">π = 2 × π/2（偶）→ 名字不变；第 Ⅱ 象限 sin 为正</text><text class="tf" x="430" y="266">例：cos(π/2 + α) = − sin α</text><text class="ts" x="430" y="286">π/2 = 1 × π/2（奇）→ 换成 sin；第 Ⅱ 象限 cos 为负</text></svg><span class="zoomchip">🔍 点击放大</span></div>
+  <p class="note">口诀 <b>「奇变偶不变，符号看象限」</b>：奇 / 偶指 π/2 的倍数是奇数还是偶数——奇数就换函数名（sin ↔ cos），偶数不改名；符号则看原来的角落在哪个象限。</p>
+</figure>
+<figure>
+  <div class="fig-cap"><span class="fig-no">图 6</span><span class="fig-t">课本那个式子，其实是三个旋钮：y = A sin(ωx + φ)</span></div>
+  <p class="fig-s">别把它当成怪符号，它就是一条正弦波给你三个调节旋钮。</p>
+<div class="svgbox"><svg viewBox="0 0 800 412" role="img" aria-label="A、omega、phi 三个参数对正弦曲线的影响"><line x1="175" y1="74" x2="770" y2="74" stroke="#c9c7bf" stroke-width="1.2"/><path d="M 175.00 74.00 L 177.70 73.43 L 180.41 72.86 L 183.11 72.29 L 185.82 71.72 L 188.52 71.15 L 191.23 70.59 L 193.93 70.03 L 196.64 69.47 L 199.34 68.92 L 202.05 68.37 L 204.75 67.82 L 207.45 67.28 L 210.16 66.74 L 212.86 66.21 L 215.57 65.69 L 218.27 65.18 L 220.98 64.67 L 223.68 64.17 L 226.39 63.67 L 229.09 63.19 L 231.80 62.71 L 234.50 62.24 L 237.20 61.79 L 239.91 61.34 L 242.61 60.90 L 245.32 60.48 L 248.02 60.06 L 250.73 59.66 L 253.43 59.27 L 256.14 58.89 L 258.84 58.52 L 261.55 58.16 L 264.25 57.82 L 266.95 57.49 L 269.66 57.17 L 272.36 56.87 L 275.07 56.59 L 277.77 56.31 L 280.48 56.05 L 283.18 55.81 L 285.89 55.58 L 288.59 55.36 L 291.30 55.16 L 294.00 54.98 L 296.70 54.81 L 299.41 54.66 L 302.11 54.52 L 304.82 54.40 L 307.52 54.29 L 310.23 54.20 L 312.93 54.13 L 315.64 54.07 L 318.34 54.03 L 321.05 54.01 L 323.75 54.00 L 326.45 54.01 L 329.16 54.03 L 331.86 54.07 L 334.57 54.13 L 337.27 54.20 L 339.98 54.29 L 342.68 54.40 L 345.39 54.52 L 348.09 54.66 L 350.80 54.81 L 353.50 54.98 L 356.20 55.16 L 358.91 55.36 L 361.61 55.58 L 364.32 55.81 L 367.02 56.05 L 369.73 56.31 L 372.43 56.59 L 375.14 56.87 L 377.84 57.17 L 380.55 57.49 L 383.25 57.82 L 385.95 58.16 L 388.66 58.52 L 391.36 58.89 L 394.07 59.27 L 396.77 59.66 L 399.48 60.06 L 402.18 60.48 L 404.89 60.90 L 407.59 61.34 L 410.30 61.79 L 413.00 62.24 L 415.70 62.71 L 418.41 63.19 L 421.11 63.67 L 423.82 64.17 L 426.52 64.67 L 429.23 65.18 L 431.93 65.69 L 434.64 66.21 L 437.34 66.74 L 440.05 67.28 L 442.75 67.82 L 445.45 68.37 L 448.16 68.92 L 450.86 69.47 L 453.57 70.03 L 456.27 70.59 L 458.98 71.15 L 461.68 71.72 L 464.39 72.29 L 467.09 72.86 L 469.80 73.43 L 472.50 74.00 L 475.20 74.57 L 477.91 75.14 L 480.61 75.71 L 483.32 76.28 L 486.02 76.85 L 488.73 77.41 L 491.43 77.97 L 494.14 78.53 L 496.84 79.08 L 499.55 79.63 L 502.25 80.18 L 504.95 80.72 L 507.66 81.26 L 510.36 81.79 L 513.07 82.31 L 515.77 82.82 L 518.48 83.33 L 521.18 83.83 L 523.89 84.33 L 526.59 84.81 L 529.30 85.29 L 532.00 85.76 L 534.70 86.21 L 537.41 86.66 L 540.11 87.10 L 542.82 87.52 L 545.52 87.94 L 548.23 88.34 L 550.93 88.73 L 553.64 89.11 L 556.34 89.48 L 559.05 89.84 L 561.75 90.18 L 564.45 90.51 L 567.16 90.83 L 569.86 91.13 L 572.57 91.41 L 575.27 91.69 L 577.98 91.95 L 580.68 92.19 L 583.39 92.42 L 586.09 92.64 L 588.80 92.84 L 591.50 93.02 L 594.20 93.19 L 596.91 93.34 L 599.61 93.48 L 602.32 93.60 L 605.02 93.71 L 607.73 93.80 L 610.43 93.87 L 613.14 93.93 L 615.84 93.97 L 618.55 93.99 L 621.25 94.00 L 623.95 93.99 L 626.66 93.97 L 629.36 93.93 L 632.07 93.87 L 634.77 93.80 L 637.48 93.71 L 640.18 93.60 L 642.89 93.48 L 645.59 93.34 L 648.30 93.19 L 651.00 93.02 L 653.70 92.84 L 656.41 92.64 L 659.11 92.42 L 661.82 92.19 L 664.52 91.95 L 667.23 91.69 L 669.93 91.41 L 672.64 91.13 L 675.34 90.83 L 678.05 90.51 L 680.75 90.18 L 683.45 89.84 L 686.16 89.48 L 688.86 89.11 L 691.57 88.73 L 694.27 88.34 L 696.98 87.94 L 699.68 87.52 L 702.39 87.10 L 705.09 86.66 L 707.80 86.21 L 710.50 85.76 L 713.20 85.29 L 715.91 84.81 L 718.61 84.33 L 721.32 83.83 L 724.02 83.33 L 726.73 82.82 L 729.43 82.31 L 732.14 81.79 L 734.84 81.26 L 737.55 80.72 L 740.25 80.18 L 742.95 79.63 L 745.66 79.08 L 748.36 78.53 L 751.07 77.97 L 753.77 77.41 L 756.48 76.85 L 759.18 76.28 L 761.89 75.71 L 764.59 75.14 L 767.30 74.57 L 770.00 74.00" fill="none" stroke="#c9c7bf" stroke-width="1.8" stroke-dasharray="6 4"/><path d="M 175.00 74.00 L 177.70 72.80 L 180.41 71.60 L 183.11 70.41 L 185.82 69.21 L 188.52 68.02 L 191.23 66.84 L 193.93 65.66 L 196.64 64.49 L 199.34 63.32 L 202.05 62.17 L 204.75 61.02 L 207.45 59.89 L 210.16 58.76 L 212.86 57.65 L 215.57 56.55 L 218.27 55.47 L 220.98 54.40 L 223.68 53.35 L 226.39 52.31 L 229.09 51.29 L 231.80 50.29 L 234.50 49.31 L 237.20 48.35 L 239.91 47.41 L 242.61 46.50 L 245.32 45.60 L 248.02 44.73 L 250.73 43.88 L 253.43 43.06 L 256.14 42.26 L 258.84 41.49 L 261.55 40.74 L 264.25 40.02 L 266.95 39.33 L 269.66 38.67 L 272.36 38.03 L 275.07 37.43 L 277.77 36.85 L 280.48 36.31 L 283.18 35.80 L 285.89 35.31 L 288.59 34.86 L 291.30 34.44 L 294.00 34.06 L 296.70 33.70 L 299.41 33.38 L 302.11 33.09 L 304.82 32.84 L 307.52 32.62 L 310.23 32.43 L 312.93 32.27 L 315.64 32.15 L 318.34 32.07 L 321.05 32.02 L 323.75 32.00 L 326.45 32.02 L 329.16 32.07 L 331.86 32.15 L 334.57 32.27 L 337.27 32.43 L 339.98 32.62 L 342.68 32.84 L 345.39 33.09 L 348.09 33.38 L 350.80 33.70 L 353.50 34.06 L 356.20 34.44 L 358.91 34.86 L 361.61 35.31 L 364.32 35.80 L 367.02 36.31 L 369.73 36.85 L 372.43 37.43 L 375.14 38.03 L 377.84 38.67 L 380.55 39.33 L 383.25 40.02 L 385.95 40.74 L 388.66 41.49 L 391.36 42.26 L 394.07 43.06 L 396.77 43.88 L 399.48 44.73 L 402.18 45.60 L 404.89 46.50 L 407.59 47.41 L 410.30 48.35 L 413.00 49.31 L 415.70 50.29 L 418.41 51.29 L 421.11 52.31 L 423.82 53.35 L 426.52 54.40 L 429.23 55.47 L 431.93 56.55 L 434.64 57.65 L 437.34 58.76 L 440.05 59.89 L 442.75 61.02 L 445.45 62.17 L 448.16 63.32 L 450.86 64.49 L 453.57 65.66 L 456.27 66.84 L 458.98 68.02 L 461.68 69.21 L 464.39 70.41 L 467.09 71.60 L 469.80 72.80 L 472.50 74.00 L 475.20 75.20 L 477.91 76.40 L 480.61 77.59 L 483.32 78.79 L 486.02 79.98 L 488.73 81.16 L 491.43 82.34 L 494.14 83.51 L 496.84 84.68 L 499.55 85.83 L 502.25 86.98 L 504.95 88.11 L 507.66 89.24 L 510.36 90.35 L 513.07 91.45 L 515.77 92.53 L 518.48 93.60 L 521.18 94.65 L 523.89 95.69 L 526.59 96.71 L 529.30 97.71 L 532.00 98.69 L 534.70 99.65 L 537.41 100.59 L 540.11 101.50 L 542.82 102.40 L 545.52 103.27 L 548.23 104.12 L 550.93 104.94 L 553.64 105.74 L 556.34 106.51 L 559.05 107.26 L 561.75 107.98 L 564.45 108.67 L 567.16 109.33 L 569.86 109.97 L 572.57 110.57 L 575.27 111.15 L 577.98 111.69 L 580.68 112.20 L 583.39 112.69 L 586.09 113.14 L 588.80 113.56 L 591.50 113.94 L 594.20 114.30 L 596.91 114.62 L 599.61 114.91 L 602.32 115.16 L 605.02 115.38 L 607.73 115.57 L 610.43 115.73 L 613.14 115.85 L 615.84 115.93 L 618.55 115.98 L 621.25 116.00 L 623.95 115.98 L 626.66 115.93 L 629.36 115.85 L 632.07 115.73 L 634.77 115.57 L 637.48 115.38 L 640.18 115.16 L 642.89 114.91 L 645.59 114.62 L 648.30 114.30 L 651.00 113.94 L 653.70 113.56 L 656.41 113.14 L 659.11 112.69 L 661.82 112.20 L 664.52 111.69 L 667.23 111.15 L 669.93 110.57 L 672.64 109.97 L 675.34 109.33 L 678.05 108.67 L 680.75 107.98 L 683.45 107.26 L 686.16 106.51 L 688.86 105.74 L 691.57 104.94 L 694.27 104.12 L 696.98 103.27 L 699.68 102.40 L 702.39 101.50 L 705.09 100.59 L 707.80 99.65 L 710.50 98.69 L 713.20 97.71 L 715.91 96.71 L 718.61 95.69 L 721.32 94.65 L 724.02 93.60 L 726.73 92.53 L 729.43 91.45 L 732.14 90.35 L 734.84 89.24 L 737.55 88.11 L 740.25 86.98 L 742.95 85.83 L 745.66 84.68 L 748.36 83.51 L 751.07 82.34 L 753.77 81.16 L 756.48 79.98 L 759.18 78.79 L 761.89 77.59 L 764.59 76.40 L 767.30 75.20 L 770.00 74.00" fill="none" stroke="#2f6fd0" stroke-width="2.6"/><text class="tb" x="10" y="68">A ｜ 拧高度</text><text class="ts" x="10" y="90">振幅 = A</text><line x1="175.00" y1="122" x2="175.00" y2="128" stroke="#c9c7bf" stroke-width="1.1"/><line x1="323.75" y1="122" x2="323.75" y2="128" stroke="#c9c7bf" stroke-width="1.1"/><line x1="472.50" y1="122" x2="472.50" y2="128" stroke="#c9c7bf" stroke-width="1.1"/><line x1="621.25" y1="122" x2="621.25" y2="128" stroke="#c9c7bf" stroke-width="1.1"/><line x1="770.00" y1="122" x2="770.00" y2="128" stroke="#c9c7bf" stroke-width="1.1"/><text class="ts" x="175.00" y="142" text-anchor="middle">0</text><text class="ts" x="323.75" y="142" text-anchor="middle">π/2</text><text class="ts" x="472.50" y="142" text-anchor="middle">π</text><text class="ts" x="621.25" y="142" text-anchor="middle">3π/2</text><text class="ts" x="770.00" y="142" text-anchor="middle">2π</text><line x1="175" y1="202" x2="770" y2="202" stroke="#c9c7bf" stroke-width="1.2"/><path d="M 175.00 202.00 L 177.70 201.20 L 180.41 200.40 L 183.11 199.60 L 185.82 198.81 L 188.52 198.02 L 191.23 197.23 L 193.93 196.44 L 196.64 195.66 L 199.34 194.88 L 202.05 194.11 L 204.75 193.35 L 207.45 192.59 L 210.16 191.84 L 212.86 191.10 L 215.57 190.37 L 218.27 189.65 L 220.98 188.93 L 223.68 188.23 L 226.39 187.54 L 229.09 186.86 L 231.80 186.20 L 234.50 185.54 L 237.20 184.90 L 239.91 184.28 L 242.61 183.66 L 245.32 183.07 L 248.02 182.49 L 250.73 181.92 L 253.43 181.37 L 256.14 180.84 L 258.84 180.32 L 261.55 179.83 L 264.25 179.35 L 266.95 178.89 L 269.66 178.44 L 272.36 178.02 L 275.07 177.62 L 277.77 177.24 L 280.48 176.87 L 283.18 176.53 L 285.89 176.21 L 288.59 175.91 L 291.30 175.63 L 294.00 175.37 L 296.70 175.13 L 299.41 174.92 L 302.11 174.73 L 304.82 174.56 L 307.52 174.41 L 310.23 174.28 L 312.93 174.18 L 315.64 174.10 L 318.34 174.05 L 321.05 174.01 L 323.75 174.00 L 326.45 174.01 L 329.16 174.05 L 331.86 174.10 L 334.57 174.18 L 337.27 174.28 L 339.98 174.41 L 342.68 174.56 L 345.39 174.73 L 348.09 174.92 L 350.80 175.13 L 353.50 175.37 L 356.20 175.63 L 358.91 175.91 L 361.61 176.21 L 364.32 176.53 L 367.02 176.87 L 369.73 177.24 L 372.43 177.62 L 375.14 178.02 L 377.84 178.44 L 380.55 178.89 L 383.25 179.35 L 385.95 179.83 L 388.66 180.32 L 391.36 180.84 L 394.07 181.37 L 396.77 181.92 L 399.48 182.49 L 402.18 183.07 L 404.89 183.66 L 407.59 184.28 L 410.30 184.90 L 413.00 185.54 L 415.70 186.20 L 418.41 186.86 L 421.11 187.54 L 423.82 188.23 L 426.52 188.93 L 429.23 189.65 L 431.93 190.37 L 434.64 191.10 L 437.34 191.84 L 440.05 192.59 L 442.75 193.35 L 445.45 194.11 L 448.16 194.88 L 450.86 195.66 L 453.57 196.44 L 456.27 197.23 L 458.98 198.02 L 461.68 198.81 L 464.39 199.60 L 467.09 200.40 L 469.80 201.20 L 472.50 202.00 L 475.20 202.80 L 477.91 203.60 L 480.61 204.40 L 483.32 205.19 L 486.02 205.98 L 488.73 206.77 L 491.43 207.56 L 494.14 208.34 L 496.84 209.12 L 499.55 209.89 L 502.25 210.65 L 504.95 211.41 L 507.66 212.16 L 510.36 212.90 L 513.07 213.63 L 515.77 214.35 L 518.48 215.07 L 521.18 215.77 L 523.89 216.46 L 526.59 217.14 L 529.30 217.80 L 532.00 218.46 L 534.70 219.10 L 537.41 219.72 L 540.11 220.34 L 542.82 220.93 L 545.52 221.51 L 548.23 222.08 L 550.93 222.63 L 553.64 223.16 L 556.34 223.68 L 559.05 224.17 L 561.75 224.65 L 564.45 225.11 L 567.16 225.56 L 569.86 225.98 L 572.57 226.38 L 575.27 226.76 L 577.98 227.13 L 580.68 227.47 L 583.39 227.79 L 586.09 228.09 L 588.80 228.37 L 591.50 228.63 L 594.20 228.87 L 596.91 229.08 L 599.61 229.27 L 602.32 229.44 L 605.02 229.59 L 607.73 229.72 L 610.43 229.82 L 613.14 229.90 L 615.84 229.95 L 618.55 229.99 L 621.25 230.00 L 623.95 229.99 L 626.66 229.95 L 629.36 229.90 L 632.07 229.82 L 634.77 229.72 L 637.48 229.59 L 640.18 229.44 L 642.89 229.27 L 645.59 229.08 L 648.30 228.87 L 651.00 228.63 L 653.70 228.37 L 656.41 228.09 L 659.11 227.79 L 661.82 227.47 L 664.52 227.13 L 667.23 226.76 L 669.93 226.38 L 672.64 225.98 L 675.34 225.56 L 678.05 225.11 L 680.75 224.65 L 683.45 224.17 L 686.16 223.68 L 688.86 223.16 L 691.57 222.63 L 694.27 222.08 L 696.98 221.51 L 699.68 220.93 L 702.39 220.34 L 705.09 219.72 L 707.80 219.10 L 710.50 218.46 L 713.20 217.80 L 715.91 217.14 L 718.61 216.46 L 721.32 215.77 L 724.02 215.07 L 726.73 214.35 L 729.43 213.63 L 732.14 212.90 L 734.84 212.16 L 737.55 211.41 L 740.25 210.65 L 742.95 209.89 L 745.66 209.12 L 748.36 208.34 L 751.07 207.56 L 753.77 206.77 L 756.48 205.98 L 759.18 205.19 L 761.89 204.40 L 764.59 203.60 L 767.30 202.80 L 770.00 202.00" fill="none" stroke="#c9c7bf" stroke-width="1.8" stroke-dasharray="6 4"/><path d="M 175.00 202.00 L 177.70 200.40 L 180.41 198.81 L 183.11 197.23 L 185.82 195.66 L 188.52 194.11 L 191.23 192.59 L 193.93 191.10 L 196.64 189.65 L 199.34 188.23 L 202.05 186.86 L 204.75 185.54 L 207.45 184.28 L 210.16 183.07 L 212.86 181.92 L 215.57 180.84 L 218.27 179.83 L 220.98 178.89 L 223.68 178.02 L 226.39 177.24 L 229.09 176.53 L 231.80 175.91 L 234.50 175.37 L 237.20 174.92 L 239.91 174.56 L 242.61 174.28 L 245.32 174.10 L 248.02 174.01 L 250.73 174.01 L 253.43 174.10 L 256.14 174.28 L 258.84 174.56 L 261.55 174.92 L 264.25 175.37 L 266.95 175.91 L 269.66 176.53 L 272.36 177.24 L 275.07 178.02 L 277.77 178.89 L 280.48 179.83 L 283.18 180.84 L 285.89 181.92 L 288.59 183.07 L 291.30 184.28 L 294.00 185.54 L 296.70 186.86 L 299.41 188.23 L 302.11 189.65 L 304.82 191.10 L 307.52 192.59 L 310.23 194.11 L 312.93 195.66 L 315.64 197.23 L 318.34 198.81 L 321.05 200.40 L 323.75 202.00 L 326.45 203.60 L 329.16 205.19 L 331.86 206.77 L 334.57 208.34 L 337.27 209.89 L 339.98 211.41 L 342.68 212.90 L 345.39 214.35 L 348.09 215.77 L 350.80 217.14 L 353.50 218.46 L 356.20 219.72 L 358.91 220.93 L 361.61 222.08 L 364.32 223.16 L 367.02 224.17 L 369.73 225.11 L 372.43 225.98 L 375.14 226.76 L 377.84 227.47 L 380.55 228.09 L 383.25 228.63 L 385.95 229.08 L 388.66 229.44 L 391.36 229.72 L 394.07 229.90 L 396.77 229.99 L 399.48 229.99 L 402.18 229.90 L 404.89 229.72 L 407.59 229.44 L 410.30 229.08 L 413.00 228.63 L 415.70 228.09 L 418.41 227.47 L 421.11 226.76 L 423.82 225.98 L 426.52 225.11 L 429.23 224.17 L 431.93 223.16 L 434.64 222.08 L 437.34 220.93 L 440.05 219.72 L 442.75 218.46 L 445.45 217.14 L 448.16 215.77 L 450.86 214.35 L 453.57 212.90 L 456.27 211.41 L 458.98 209.89 L 461.68 208.34 L 464.39 206.77 L 467.09 205.19 L 469.80 203.60 L 472.50 202.00 L 475.20 200.40 L 477.91 198.81 L 480.61 197.23 L 483.32 195.66 L 486.02 194.11 L 488.73 192.59 L 491.43 191.10 L 494.14 189.65 L 496.84 188.23 L 499.55 186.86 L 502.25 185.54 L 504.95 184.28 L 507.66 183.07 L 510.36 181.92 L 513.07 180.84 L 515.77 179.83 L 518.48 178.89 L 521.18 178.02 L 523.89 177.24 L 526.59 176.53 L 529.30 175.91 L 532.00 175.37 L 534.70 174.92 L 537.41 174.56 L 540.11 174.28 L 542.82 174.10 L 545.52 174.01 L 548.23 174.01 L 550.93 174.10 L 553.64 174.28 L 556.34 174.56 L 559.05 174.92 L 561.75 175.37 L 564.45 175.91 L 567.16 176.53 L 569.86 177.24 L 572.57 178.02 L 575.27 178.89 L 577.98 179.83 L 580.68 180.84 L 583.39 181.92 L 586.09 183.07 L 588.80 184.28 L 591.50 185.54 L 594.20 186.86 L 596.91 188.23 L 599.61 189.65 L 602.32 191.10 L 605.02 192.59 L 607.73 194.11 L 610.43 195.66 L 613.14 197.23 L 615.84 198.81 L 618.55 200.40 L 621.25 202.00 L 623.95 203.60 L 626.66 205.19 L 629.36 206.77 L 632.07 208.34 L 634.77 209.89 L 637.48 211.41 L 640.18 212.90 L 642.89 214.35 L 645.59 215.77 L 648.30 217.14 L 651.00 218.46 L 653.70 219.72 L 656.41 220.93 L 659.11 222.08 L 661.82 223.16 L 664.52 224.17 L 667.23 225.11 L 669.93 225.98 L 672.64 226.76 L 675.34 227.47 L 678.05 228.09 L 680.75 228.63 L 683.45 229.08 L 686.16 229.44 L 688.86 229.72 L 691.57 229.90 L 694.27 229.99 L 696.98 229.99 L 699.68 229.90 L 702.39 229.72 L 705.09 229.44 L 707.80 229.08 L 710.50 228.63 L 713.20 228.09 L 715.91 227.47 L 718.61 226.76 L 721.32 225.98 L 724.02 225.11 L 726.73 224.17 L 729.43 223.16 L 732.14 222.08 L 734.84 220.93 L 737.55 219.72 L 740.25 218.46 L 742.95 217.14 L 745.66 215.77 L 748.36 214.35 L 751.07 212.90 L 753.77 211.41 L 756.48 209.89 L 759.18 208.34 L 761.89 206.77 L 764.59 205.19 L 767.30 203.60 L 770.00 202.00" fill="none" stroke="#2f6fd0" stroke-width="2.6"/><text class="tb" x="10" y="196">ω ｜ 拧疏密</text><text class="ts" x="10" y="218">T = 2π / ω</text><line x1="175.00" y1="236" x2="175.00" y2="242" stroke="#c9c7bf" stroke-width="1.1"/><line x1="323.75" y1="236" x2="323.75" y2="242" stroke="#c9c7bf" stroke-width="1.1"/><line x1="472.50" y1="236" x2="472.50" y2="242" stroke="#c9c7bf" stroke-width="1.1"/><line x1="621.25" y1="236" x2="621.25" y2="242" stroke="#c9c7bf" stroke-width="1.1"/><line x1="770.00" y1="236" x2="770.00" y2="242" stroke="#c9c7bf" stroke-width="1.1"/><text class="ts" x="175.00" y="256" text-anchor="middle">0</text><text class="ts" x="323.75" y="256" text-anchor="middle">π/2</text><text class="ts" x="472.50" y="256" text-anchor="middle">π</text><text class="ts" x="621.25" y="256" text-anchor="middle">3π/2</text><text class="ts" x="770.00" y="256" text-anchor="middle">2π</text><line x1="175" y1="330" x2="770" y2="330" stroke="#c9c7bf" stroke-width="1.2"/><path d="M 175.00 330.00 L 177.70 329.20 L 180.41 328.40 L 183.11 327.60 L 185.82 326.81 L 188.52 326.02 L 191.23 325.23 L 193.93 324.44 L 196.64 323.66 L 199.34 322.88 L 202.05 322.11 L 204.75 321.35 L 207.45 320.59 L 210.16 319.84 L 212.86 319.10 L 215.57 318.37 L 218.27 317.65 L 220.98 316.93 L 223.68 316.23 L 226.39 315.54 L 229.09 314.86 L 231.80 314.20 L 234.50 313.54 L 237.20 312.90 L 239.91 312.28 L 242.61 311.66 L 245.32 311.07 L 248.02 310.49 L 250.73 309.92 L 253.43 309.37 L 256.14 308.84 L 258.84 308.32 L 261.55 307.83 L 264.25 307.35 L 266.95 306.89 L 269.66 306.44 L 272.36 306.02 L 275.07 305.62 L 277.77 305.24 L 280.48 304.87 L 283.18 304.53 L 285.89 304.21 L 288.59 303.91 L 291.30 303.63 L 294.00 303.37 L 296.70 303.13 L 299.41 302.92 L 302.11 302.73 L 304.82 302.56 L 307.52 302.41 L 310.23 302.28 L 312.93 302.18 L 315.64 302.10 L 318.34 302.05 L 321.05 302.01 L 323.75 302.00 L 326.45 302.01 L 329.16 302.05 L 331.86 302.10 L 334.57 302.18 L 337.27 302.28 L 339.98 302.41 L 342.68 302.56 L 345.39 302.73 L 348.09 302.92 L 350.80 303.13 L 353.50 303.37 L 356.20 303.63 L 358.91 303.91 L 361.61 304.21 L 364.32 304.53 L 367.02 304.87 L 369.73 305.24 L 372.43 305.62 L 375.14 306.02 L 377.84 306.44 L 380.55 306.89 L 383.25 307.35 L 385.95 307.83 L 388.66 308.32 L 391.36 308.84 L 394.07 309.37 L 396.77 309.92 L 399.48 310.49 L 402.18 311.07 L 404.89 311.66 L 407.59 312.28 L 410.30 312.90 L 413.00 313.54 L 415.70 314.20 L 418.41 314.86 L 421.11 315.54 L 423.82 316.23 L 426.52 316.93 L 429.23 317.65 L 431.93 318.37 L 434.64 319.10 L 437.34 319.84 L 440.05 320.59 L 442.75 321.35 L 445.45 322.11 L 448.16 322.88 L 450.86 323.66 L 453.57 324.44 L 456.27 325.23 L 458.98 326.02 L 461.68 326.81 L 464.39 327.60 L 467.09 328.40 L 469.80 329.20 L 472.50 330.00 L 475.20 330.80 L 477.91 331.60 L 480.61 332.40 L 483.32 333.19 L 486.02 333.98 L 488.73 334.77 L 491.43 335.56 L 494.14 336.34 L 496.84 337.12 L 499.55 337.89 L 502.25 338.65 L 504.95 339.41 L 507.66 340.16 L 510.36 340.90 L 513.07 341.63 L 515.77 342.35 L 518.48 343.07 L 521.18 343.77 L 523.89 344.46 L 526.59 345.14 L 529.30 345.80 L 532.00 346.46 L 534.70 347.10 L 537.41 347.72 L 540.11 348.34 L 542.82 348.93 L 545.52 349.51 L 548.23 350.08 L 550.93 350.63 L 553.64 351.16 L 556.34 351.68 L 559.05 352.17 L 561.75 352.65 L 564.45 353.11 L 567.16 353.56 L 569.86 353.98 L 572.57 354.38 L 575.27 354.76 L 577.98 355.13 L 580.68 355.47 L 583.39 355.79 L 586.09 356.09 L 588.80 356.37 L 591.50 356.63 L 594.20 356.87 L 596.91 357.08 L 599.61 357.27 L 602.32 357.44 L 605.02 357.59 L 607.73 357.72 L 610.43 357.82 L 613.14 357.90 L 615.84 357.95 L 618.55 357.99 L 621.25 358.00 L 623.95 357.99 L 626.66 357.95 L 629.36 357.90 L 632.07 357.82 L 634.77 357.72 L 637.48 357.59 L 640.18 357.44 L 642.89 357.27 L 645.59 357.08 L 648.30 356.87 L 651.00 356.63 L 653.70 356.37 L 656.41 356.09 L 659.11 355.79 L 661.82 355.47 L 664.52 355.13 L 667.23 354.76 L 669.93 354.38 L 672.64 353.98 L 675.34 353.56 L 678.05 353.11 L 680.75 352.65 L 683.45 352.17 L 686.16 351.68 L 688.86 351.16 L 691.57 350.63 L 694.27 350.08 L 696.98 349.51 L 699.68 348.93 L 702.39 348.34 L 705.09 347.72 L 707.80 347.10 L 710.50 346.46 L 713.20 345.80 L 715.91 345.14 L 718.61 344.46 L 721.32 343.77 L 724.02 343.07 L 726.73 342.35 L 729.43 341.63 L 732.14 340.90 L 734.84 340.16 L 737.55 339.41 L 740.25 338.65 L 742.95 337.89 L 745.66 337.12 L 748.36 336.34 L 751.07 335.56 L 753.77 334.77 L 756.48 333.98 L 759.18 333.19 L 761.89 332.40 L 764.59 331.60 L 767.30 330.80 L 770.00 330.00" fill="none" stroke="#c9c7bf" stroke-width="1.8" stroke-dasharray="6 4"/><path d="M 175.00 302.00 L 177.70 302.01 L 180.41 302.05 L 183.11 302.10 L 185.82 302.18 L 188.52 302.28 L 191.23 302.41 L 193.93 302.56 L 196.64 302.73 L 199.34 302.92 L 202.05 303.13 L 204.75 303.37 L 207.45 303.63 L 210.16 303.91 L 212.86 304.21 L 215.57 304.53 L 218.27 304.87 L 220.98 305.24 L 223.68 305.62 L 226.39 306.02 L 229.09 306.44 L 231.80 306.89 L 234.50 307.35 L 237.20 307.83 L 239.91 308.32 L 242.61 308.84 L 245.32 309.37 L 248.02 309.92 L 250.73 310.49 L 253.43 311.07 L 256.14 311.66 L 258.84 312.28 L 261.55 312.90 L 264.25 313.54 L 266.95 314.20 L 269.66 314.86 L 272.36 315.54 L 275.07 316.23 L 277.77 316.93 L 280.48 317.65 L 283.18 318.37 L 285.89 319.10 L 288.59 319.84 L 291.30 320.59 L 294.00 321.35 L 296.70 322.11 L 299.41 322.88 L 302.11 323.66 L 304.82 324.44 L 307.52 325.23 L 310.23 326.02 L 312.93 326.81 L 315.64 327.60 L 318.34 328.40 L 321.05 329.20 L 323.75 330.00 L 326.45 330.80 L 329.16 331.60 L 331.86 332.40 L 334.57 333.19 L 337.27 333.98 L 339.98 334.77 L 342.68 335.56 L 345.39 336.34 L 348.09 337.12 L 350.80 337.89 L 353.50 338.65 L 356.20 339.41 L 358.91 340.16 L 361.61 340.90 L 364.32 341.63 L 367.02 342.35 L 369.73 343.07 L 372.43 343.77 L 375.14 344.46 L 377.84 345.14 L 380.55 345.80 L 383.25 346.46 L 385.95 347.10 L 388.66 347.72 L 391.36 348.34 L 394.07 348.93 L 396.77 349.51 L 399.48 350.08 L 402.18 350.63 L 404.89 351.16 L 407.59 351.68 L 410.30 352.17 L 413.00 352.65 L 415.70 353.11 L 418.41 353.56 L 421.11 353.98 L 423.82 354.38 L 426.52 354.76 L 429.23 355.13 L 431.93 355.47 L 434.64 355.79 L 437.34 356.09 L 440.05 356.37 L 442.75 356.63 L 445.45 356.87 L 448.16 357.08 L 450.86 357.27 L 453.57 357.44 L 456.27 357.59 L 458.98 357.72 L 461.68 357.82 L 464.39 357.90 L 467.09 357.95 L 469.80 357.99 L 472.50 358.00 L 475.20 357.99 L 477.91 357.95 L 480.61 357.90 L 483.32 357.82 L 486.02 357.72 L 488.73 357.59 L 491.43 357.44 L 494.14 357.27 L 496.84 357.08 L 499.55 356.87 L 502.25 356.63 L 504.95 356.37 L 507.66 356.09 L 510.36 355.79 L 513.07 355.47 L 515.77 355.13 L 518.48 354.76 L 521.18 354.38 L 523.89 353.98 L 526.59 353.56 L 529.30 353.11 L 532.00 352.65 L 534.70 352.17 L 537.41 351.68 L 540.11 351.16 L 542.82 350.63 L 545.52 350.08 L 548.23 349.51 L 550.93 348.93 L 553.64 348.34 L 556.34 347.72 L 559.05 347.10 L 561.75 346.46 L 564.45 345.80 L 567.16 345.14 L 569.86 344.46 L 572.57 343.77 L 575.27 343.07 L 577.98 342.35 L 580.68 341.63 L 583.39 340.90 L 586.09 340.16 L 588.80 339.41 L 591.50 338.65 L 594.20 337.89 L 596.91 337.12 L 599.61 336.34 L 602.32 335.56 L 605.02 334.77 L 607.73 333.98 L 610.43 333.19 L 613.14 332.40 L 615.84 331.60 L 618.55 330.80 L 621.25 330.00 L 623.95 329.20 L 626.66 328.40 L 629.36 327.60 L 632.07 326.81 L 634.77 326.02 L 637.48 325.23 L 640.18 324.44 L 642.89 323.66 L 645.59 322.88 L 648.30 322.11 L 651.00 321.35 L 653.70 320.59 L 656.41 319.84 L 659.11 319.10 L 661.82 318.37 L 664.52 317.65 L 667.23 316.93 L 669.93 316.23 L 672.64 315.54 L 675.34 314.86 L 678.05 314.20 L 680.75 313.54 L 683.45 312.90 L 686.16 312.28 L 688.86 311.66 L 691.57 311.07 L 694.27 310.49 L 696.98 309.92 L 699.68 309.37 L 702.39 308.84 L 705.09 308.32 L 707.80 307.83 L 710.50 307.35 L 713.20 306.89 L 715.91 306.44 L 718.61 306.02 L 721.32 305.62 L 724.02 305.24 L 726.73 304.87 L 729.43 304.53 L 732.14 304.21 L 734.84 303.91 L 737.55 303.63 L 740.25 303.37 L 742.95 303.13 L 745.66 302.92 L 748.36 302.73 L 751.07 302.56 L 753.77 302.41 L 756.48 302.28 L 759.18 302.18 L 761.89 302.10 L 764.59 302.05 L 767.30 302.01 L 770.00 302.00" fill="none" stroke="#2f6fd0" stroke-width="2.6"/><text class="tb" x="10" y="324">φ ｜ 拧平移</text><text class="ts" x="10" y="346">初相 = φ</text><line x1="175.00" y1="364" x2="175.00" y2="370" stroke="#c9c7bf" stroke-width="1.1"/><line x1="323.75" y1="364" x2="323.75" y2="370" stroke="#c9c7bf" stroke-width="1.1"/><line x1="472.50" y1="364" x2="472.50" y2="370" stroke="#c9c7bf" stroke-width="1.1"/><line x1="621.25" y1="364" x2="621.25" y2="370" stroke="#c9c7bf" stroke-width="1.1"/><line x1="770.00" y1="364" x2="770.00" y2="370" stroke="#c9c7bf" stroke-width="1.1"/><text class="ts" x="175.00" y="384" text-anchor="middle">0</text><text class="ts" x="323.75" y="384" text-anchor="middle">π/2</text><text class="ts" x="472.50" y="384" text-anchor="middle">π</text><text class="ts" x="621.25" y="384" text-anchor="middle">3π/2</text><text class="ts" x="770.00" y="384" text-anchor="middle">2π</text><text class="ts" x="10" y="398">灰色虚线 = 标准 y = sin x　｜　蓝色 = 拧过以后</text></svg><span class="zoomchip">🔍 点击放大</span></div>
+  <p class="note">A 管高度（振幅）；ω 管疏密，<b>周期 T = 2π / ω</b>；φ 管左右平移（初相）。注意「先平移后伸缩」和「先伸缩后平移」不一样——因为横坐标伸缩会把 φ 一起缩放。</p>
+</figure>
+
+<figure class="wide">
+  <div class="fig-cap"><span class="fig-no">图 7</span><span class="fig-t">自己试试：拖动圆上的点，看着它们一起动</span></div>
+  <p class="fig-s">上面六张图讲的是同一个道理，但都画死了。这里让你自己转：圆上的点到两条轴的距离就是 cos 和 sin，
+  而它离水平轴的高度横着画出来，就得到那条波浪。转一圈，把下面三条结论亲手验一遍。</p>
+  <div class="board">
+    <svg id="stage" viewBox="0 0 1100 462" tabindex="0" role="application"
+       aria-label="可拖动的单位圆与正弦曲线联动图，用方向键微调角度">
+    <defs>
+      <clipPath id="circleClip"><rect x="34" y="74" width="312" height="312"/></clipPath>
+      <clipPath id="waveClip"><rect x="466" y="74" width="618" height="312"/></clipPath>
+    </defs>
+
+    <g id="static"></g>
+    <g id="ghosts"></g>
+    <g id="dynamic"></g>
+    <g id="handle"></g>
+  </svg>
+    <div class="sym" id="symLegend" hidden>
+    <span class="tag t1">−α</span> → <code>(cos α, −sin α)</code>
+    <span class="sep">·</span>
+    <span class="tag t2">π − α</span> → <code>(−cos α, sin α)</code>
+    <span class="sep">·</span>
+    <span class="tag t3">π + α</span> → <code>(−cos α, −sin α)</code>
+  </div>
+    <div class="bar">
+    <button id="play" type="button">▶ 自动旋转</button>
+    <label class="chk"><input type="checkbox" id="showCos"> 画出 cos 曲线</label>
+    <label class="chk"><input type="checkbox" id="showSym"> 显示三个对称角</label>
+    <label class="chk">角度 <input type="range" id="slider" min="0" max="359.5" step="0.5" value="40"></label>
+    <span class="hint">拖动圆上的白点，或按 ← →（Shift 加速）</span>
+  </div>
+  </div>
+  <div class="stats">
+  <div class="st"><div class="k">角度 α</div><div class="v v-ang" id="vDeg">40.0°</div><div class="s" id="vTurn">第 1 圈</div></div>
+  <div class="st"><div class="k">弧度 α</div><div class="v v-ang" id="vRad">0.222π</div><div class="s">≈ 0.698 rad</div></div>
+  <div class="st"><div class="k">cos α（横坐标）</div><div class="v v-cos" id="vCos">0.766</div><div class="s" id="sCos">横轴上的蓝段</div></div>
+  <div class="st"><div class="k">sin α（纵坐标）</div><div class="v v-sin" id="vSin">0.643</div><div class="s" id="sSin">竖直的绿段</div></div>
+  <div class="st"><div class="k">tan α（切线长）</div><div class="v v-tan" id="vTan">0.839</div><div class="s" id="sTan">x = 1 处的红段</div></div>
+  <div class="st"><div class="k">所在象限</div><div class="v" id="vQ">第 Ⅰ 象限</div><div class="s" id="sQ">全部为正</div></div>
+</div>
+  <p class="note">
+    <b>三个自己转出来的结论</b>：<br>
+    ① 不管怎么转，点永远跑不出这个圆 → 所以 <b>sin、cos 的值域是 [−1, 1]</b>。<br>
+    ② 转到 240° 和 −120°，点停在同一个位置 → 所以 <b>终边相同的角，三角函数值一样</b>。<br>
+    ③ 勾上「显示三个对称角」再转：它们的坐标只差正负号 → 这就是<b>诱导公式</b>。
+  </p>
+</figure>
+<figure>
+  <div class="fig-cap"><span class="fig-no">图 8</span><span class="fig-t">别人会怎么问你：六个最常被考的角度</span></div>
+  <p class="fig-s">听懂不等于扛得住追问。下面是这个知识点最常被问到的六种角度——每个都配一句话答案和一张小图，答不上来的直接翻回去看图 1–6。</p>
+<div class="svgbox"><div class="qa"><div class="qac"><p class="q">「sin 30° 为什么正好是 1/2？」</p><p class="a">把 30° 放进单位圆，那个点的<b>高度</b>就是 1/2——它正好是等边三角形掰成两半后的短边比斜边。不是背下来的，是量出来的。</p><svg viewBox="0 0 240 132" role="img" aria-label="示意图"><line x1="-6.00" y1="66.00" x2="134.00" y2="66.00" stroke="#dcdad2" stroke-width="1.1"/><line x1="64.00" y1="-4.00" x2="64.00" y2="136.00" stroke="#dcdad2" stroke-width="1.1"/><circle cx="64" cy="66" r="40" fill="none" stroke="#e3e1d9" stroke-width="1.2"/><line x1="64.00" y1="66.00" x2="98.64" y2="46.00" stroke="#1b1b19" stroke-width="1.6"/><path d="M 79.00 66.00 A 15.00 15.00 0 0 0 76.99 58.50" fill="none" stroke="#c8862a" stroke-width="1.8"/><line x1="64.00" y1="66.00" x2="104.00" y2="66.00" stroke="#2f6fd0" stroke-width="3.2"/><line x1="98.64" y1="46.00" x2="98.64" y2="66.00" stroke="#2f8a5b" stroke-width="3.2"/><text class="ms" x="70.00" y="62.00" text-anchor="start">1</text><text class="mm" x="103.64" y="56.00" text-anchor="start" fill="#2f8a5b">0.5</text><text class="ms" x="80.00" y="88.00" text-anchor="start" fill="#c8862a">30°</text><text class="mh" x="150.00" y="44.00" text-anchor="start">半径 = 1</text><text class="ms" x="150.00" y="62.00" text-anchor="start">高度就是 sin</text><text class="mm" x="150.00" y="86.00" text-anchor="start" fill="#2f8a5b">= 1/2</text></svg></div><div class="qac"><p class="q">「90° 是个正经的角，为什么 tan 90° 不存在？」</p><p class="a">tan 是在 x = 1 那条切线上量的。转到 90° 时射线和切线<b>平行</b>，永远交不上——所以不是“很大”，是没有。</p><svg viewBox="0 0 240 132" role="img" aria-label="示意图"><line x1="-6.00" y1="66.00" x2="134.00" y2="66.00" stroke="#dcdad2" stroke-width="1.1"/><line x1="64.00" y1="-4.00" x2="64.00" y2="136.00" stroke="#dcdad2" stroke-width="1.1"/><circle cx="64" cy="66" r="40" fill="none" stroke="#e3e1d9" stroke-width="1.2"/><line x1="104.00" y1="14.00" x2="104.00" y2="118.00" stroke="#f0dedb" stroke-width="1.4" stroke-dasharray="5 5"/><line x1="64.00" y1="118.00" x2="64.00" y2="14.00" stroke="#1b1b19" stroke-width="1.6"/><path d="M 79.00 66.00 A 15.00 15.00 0 0 0 64.00 51.00" fill="none" stroke="#c8862a" stroke-width="1.8"/><text class="ms" x="96.00" y="22.00" text-anchor="end" fill="#c0503f">x = 1</text><text class="ms" x="58.00" y="24.00" text-anchor="end">射线转到这里</text><text class="mh" x="150.00" y="56.00" text-anchor="start">两条线平行了</text><text class="ms" x="150.00" y="76.00" text-anchor="start">永远不相交</text><text class="ms" x="150.00" y="96.00" text-anchor="start" fill="#c04a3c">→ 不是“很大”</text><text class="ms" x="150.00" y="112.00" text-anchor="start" fill="#c04a3c">→ 是“不存在”</text></svg></div><div class="qac"><p class="q">「为什么加个 π，sin 不变号、cos 却变号？」</p><p class="a">因为点是<b>翻到对面</b>去了：横坐标变负、纵坐标没动。所以管纵坐标的 sin 不变，管横坐标的 cos 变号。</p><svg viewBox="0 0 240 132" role="img" aria-label="示意图"><line x1="-6.00" y1="66.00" x2="134.00" y2="66.00" stroke="#dcdad2" stroke-width="1.1"/><line x1="64.00" y1="-4.00" x2="64.00" y2="136.00" stroke="#dcdad2" stroke-width="1.1"/><circle cx="64" cy="66" r="40" fill="none" stroke="#e3e1d9" stroke-width="1.2"/><line x1="64.00" y1="66.00" x2="94.64" y2="40.29" stroke="#2f6fd0" stroke-width="1.6"/><line x1="64.00" y1="66.00" x2="33.36" y2="40.29" stroke="#c8862a" stroke-width="1.6"/><line x1="33.36" y1="40.29" x2="94.64" y2="40.29" stroke="#c9c7bf" stroke-width="1.2" stroke-dasharray="4 3"/><circle cx="94.64" cy="40.29" r="3.6" fill="#2f6fd0"/><circle cx="33.36" cy="40.29" r="3.6" fill="#c8862a"/><text class="mm" x="100.64" y="35.29" text-anchor="start" fill="#2f6fd0">α</text><text class="mm" x="26.36" y="35.29" text-anchor="end" fill="#c8862a">π−α</text><text class="ms" x="64.00" y="124.00" text-anchor="middle">左右翻了个身：横坐标变负</text><text class="mh" x="152.00" y="56.00" text-anchor="start">纵坐标没动</text><text class="ms" x="152.00" y="74.00" text-anchor="start" fill="#2f8a5b">sin 不变号</text><text class="mh" x="152.00" y="98.00" text-anchor="start">横坐标翻负</text><text class="ms" x="152.00" y="116.00" text-anchor="start" fill="#2f6fd0">cos 变号</text></svg></div><div class="qac"><p class="q">「角度用得好好的，为什么非要发明弧度？」</p><p class="a">为了让公式<b>没有多余系数</b>。弧长 = 半径 × 弧度，干净到底；换成角度就得写成 l = πrα/180。</p><svg viewBox="0 0 240 132" role="img" aria-label="示意图"><line x1="-6.00" y1="66.00" x2="134.00" y2="66.00" stroke="#dcdad2" stroke-width="1.1"/><line x1="64.00" y1="-4.00" x2="64.00" y2="136.00" stroke="#dcdad2" stroke-width="1.1"/><circle cx="64" cy="66" r="40" fill="none" stroke="#e3e1d9" stroke-width="1.2"/><line x1="64.00" y1="66.00" x2="104.00" y2="66.00" stroke="#c8862a" stroke-width="3"/><path d="M 104.00 66.00 A 40.00 40.00 0 0 0 85.61 32.34" fill="none" stroke="#c8862a" stroke-width="3.4"/><text class="mm" x="74.00" y="58.00" text-anchor="start">r</text><text class="ms" x="64.00" y="124.00" text-anchor="middle" fill="#c8862a">弧长 = 半径 → 1 弧度</text><text class="mh" x="150.00" y="44.00" text-anchor="start">用弧度</text><text class="mm" x="150.00" y="62.00" text-anchor="start" fill="#2f8a5b">l = αr</text><text class="mh" x="150.00" y="88.00" text-anchor="start">用角度</text><text class="mm" x="150.00" y="106.00" text-anchor="start" fill="#c04a3c">l = πrα/180</text><text class="ms" x="150.00" y="124.00" text-anchor="start" fill="#6b6a64">多出一个系数</text></svg></div><div class="qac"><p class="q">「sin 能大于 1 吗？」</p><p class="a">不能。sin 是圆上点的高度，<b>圆就那么大</b>。所以值域 [−1, 1] 不是谁规定的，是画出来的。</p><svg viewBox="0 0 240 132" role="img" aria-label="示意图"><line x1="-6.00" y1="66.00" x2="134.00" y2="66.00" stroke="#dcdad2" stroke-width="1.1"/><line x1="64.00" y1="-4.00" x2="64.00" y2="136.00" stroke="#dcdad2" stroke-width="1.1"/><circle cx="64" cy="66" r="40" fill="none" stroke="#e3e1d9" stroke-width="1.2"/><rect x="24" y="26" width="80" height="80" fill="#dcefe5" opacity=".55"/><line x1="16.00" y1="26.00" x2="112.00" y2="26.00" stroke="#2f8a5b" stroke-width="1.6"/><line x1="16.00" y1="106.00" x2="112.00" y2="106.00" stroke="#2f8a5b" stroke-width="1.6"/><text class="mm" x="14.00" y="30.00" text-anchor="end" fill="#2f8a5b">1</text><text class="mm" x="14.00" y="110.00" text-anchor="end" fill="#2f8a5b">−1</text><text class="ms" x="64.00" y="124.00" text-anchor="middle">点只能在这个圆上</text><text class="mh" x="148.00" y="56.00" text-anchor="start">sin、cos 的值域</text><text class="mm" x="148.00" y="76.00" text-anchor="start" fill="#2f8a5b">[−1, 1]</text><text class="ms" x="148.00" y="100.00" text-anchor="start">不是规定的</text><text class="ms" x="148.00" y="118.00" text-anchor="start">是圆决定的</text></svg></div><div class="qac"><p class="q">「这玩意儿今天还有什么用？」</p><p class="a">你手机里的 JPEG、MP3、5G 都在做同一件事：把信号<b>拆成一堆正弦波</b>再压。三角函数是这件事唯一的基础语言。</p><svg viewBox="0 0 240 132" role="img" aria-label="示意图"><path d="M 22.0 40.0 L 24.4 38.8 L 26.9 37.7 L 29.4 36.5 L 31.8 35.4 L 34.2 34.3 L 36.7 33.2 L 39.1 32.2 L 41.6 31.2 L 44.0 30.3 L 46.5 29.4 L 49.0 28.6 L 51.4 27.9 L 53.9 27.2 L 56.3 26.6 L 58.8 26.1 L 61.2 25.7 L 63.6 25.4 L 66.1 25.2 L 68.5 25.0 L 71.0 25.0 L 73.5 25.0 L 75.9 25.2 L 78.3 25.4 L 80.8 25.7 L 83.2 26.1 L 85.7 26.6 L 88.2 27.2 L 90.6 27.9 L 93.0 28.6 L 95.5 29.4 L 98.0 30.3 L 100.4 31.2 L 102.8 32.2 L 105.3 33.2 L 107.8 34.3 L 110.2 35.4 L 112.7 36.5 L 115.1 37.7 L 117.5 38.8 L 120.0 40.0 L 122.4 41.2 L 124.9 42.3 L 127.3 43.5 L 129.8 44.6 L 132.2 45.7 L 134.7 46.8 L 137.2 47.8 L 139.6 48.8 L 142.1 49.7 L 144.5 50.6 L 146.9 51.4 L 149.4 52.1 L 151.8 52.8 L 154.3 53.4 L 156.8 53.9 L 159.2 54.3 L 161.7 54.6 L 164.1 54.8 L 166.6 55.0 L 169.0 55.0 L 171.4 55.0 L 173.9 54.8 L 176.3 54.6 L 178.8 54.3 L 181.2 53.9 L 183.7 53.4 L 186.2 52.8 L 188.6 52.1 L 191.1 51.4 L 193.5 50.6 L 195.9 49.7 L 198.4 48.8 L 200.8 47.8 L 203.3 46.8 L 205.8 45.7 L 208.2 44.6 L 210.7 43.5 L 213.1 42.3 L 215.6 41.2 L 218.0 40.0" fill="none" stroke="#cfd8e6" stroke-width="1.4"/><path d="M 22.0 40.0 L 24.4 38.4 L 26.9 36.8 L 29.4 35.5 L 31.8 34.3 L 34.2 33.5 L 36.7 33.1 L 39.1 33.0 L 41.6 33.3 L 44.0 34.0 L 46.5 35.1 L 49.0 36.3 L 51.4 37.8 L 53.9 39.5 L 56.3 41.1 L 58.8 42.7 L 61.2 44.1 L 63.6 45.3 L 66.1 46.2 L 68.5 46.8 L 71.0 47.0 L 73.5 46.8 L 75.9 46.2 L 78.3 45.3 L 80.8 44.1 L 83.2 42.7 L 85.7 41.1 L 88.2 39.5 L 90.6 37.8 L 93.0 36.3 L 95.5 35.1 L 98.0 34.0 L 100.4 33.3 L 102.8 33.0 L 105.3 33.1 L 107.8 33.5 L 110.2 34.3 L 112.7 35.5 L 115.1 36.8 L 117.5 38.4 L 120.0 40.0 L 122.4 41.6 L 124.9 43.2 L 127.3 44.5 L 129.8 45.7 L 132.2 46.5 L 134.7 46.9 L 137.2 47.0 L 139.6 46.7 L 142.1 46.0 L 144.5 44.9 L 146.9 43.7 L 149.4 42.2 L 151.8 40.5 L 154.3 38.9 L 156.8 37.3 L 159.2 35.9 L 161.7 34.7 L 164.1 33.8 L 166.6 33.2 L 169.0 33.0 L 171.4 33.2 L 173.9 33.8 L 176.3 34.7 L 178.8 35.9 L 181.2 37.3 L 183.7 38.9 L 186.2 40.5 L 188.6 42.2 L 191.1 43.7 L 193.5 44.9 L 195.9 46.0 L 198.4 46.7 L 200.8 47.0 L 203.3 46.9 L 205.8 46.5 L 208.2 45.7 L 210.7 44.5 L 213.1 43.2 L 215.6 41.6 L 218.0 40.0" fill="none" stroke="#cfd8e6" stroke-width="1.4"/><path d="M 22.0 40.0 L 24.4 38.4 L 26.9 36.9 L 29.4 35.3 L 31.8 33.8 L 34.2 32.3 L 36.7 30.9 L 39.1 29.6 L 41.6 28.2 L 44.0 27.0 L 46.5 25.9 L 49.0 24.8 L 51.4 23.8 L 53.9 22.9 L 56.3 22.2 L 58.8 21.5 L 61.2 21.0 L 63.6 20.6 L 66.1 20.2 L 68.5 20.1 L 71.0 20.0 L 73.5 20.1 L 75.9 20.2 L 78.3 20.6 L 80.8 21.0 L 83.2 21.5 L 85.7 22.2 L 88.2 22.9 L 90.6 23.8 L 93.0 24.8 L 95.5 25.9 L 98.0 27.0 L 100.4 28.2 L 102.8 29.6 L 105.3 30.9 L 107.8 32.3 L 110.2 33.8 L 112.7 35.3 L 115.1 36.9 L 117.5 38.4 L 120.0 40.0 L 122.4 41.6 L 124.9 43.1 L 127.3 44.7 L 129.8 46.2 L 132.2 47.7 L 134.7 49.1 L 137.2 50.4 L 139.6 51.8 L 142.1 53.0 L 144.5 54.1 L 146.9 55.2 L 149.4 56.2 L 151.8 57.1 L 154.3 57.8 L 156.8 58.5 L 159.2 59.0 L 161.7 59.4 L 164.1 59.8 L 166.6 59.9 L 169.0 60.0 L 171.4 59.9 L 173.9 59.8 L 176.3 59.4 L 178.8 59.0 L 181.2 58.5 L 183.7 57.8 L 186.2 57.1 L 188.6 56.2 L 191.1 55.2 L 193.5 54.1 L 195.9 53.0 L 198.4 51.8 L 200.8 50.4 L 203.3 49.1 L 205.8 47.7 L 208.2 46.2 L 210.7 44.7 L 213.1 43.1 L 215.6 41.6 L 218.0 40.0" fill="none" stroke="#2f6fd0" stroke-width="2.4"/><path d="M 22.0 90.0 L 24.4 89.3 L 26.9 88.6 L 29.4 87.9 L 31.8 87.2 L 34.2 86.6 L 36.7 85.9 L 39.1 85.3 L 41.6 84.7 L 44.0 84.2 L 46.5 83.6 L 49.0 83.2 L 51.4 82.7 L 53.9 82.3 L 56.3 82.0 L 58.8 81.7 L 61.2 81.4 L 63.6 81.2 L 66.1 81.1 L 68.5 81.0 L 71.0 81.0 L 73.5 81.0 L 75.9 81.1 L 78.3 81.2 L 80.8 81.4 L 83.2 81.7 L 85.7 82.0 L 88.2 82.3 L 90.6 82.7 L 93.0 83.2 L 95.5 83.6 L 98.0 84.2 L 100.4 84.7 L 102.8 85.3 L 105.3 85.9 L 107.8 86.6 L 110.2 87.2 L 112.7 87.9 L 115.1 88.6 L 117.5 89.3 L 120.0 90.0 L 122.4 90.7 L 124.9 91.4 L 127.3 92.1 L 129.8 92.8 L 132.2 93.4 L 134.7 94.1 L 137.2 94.7 L 139.6 95.3 L 142.1 95.8 L 144.5 96.4 L 146.9 96.8 L 149.4 97.3 L 151.8 97.7 L 154.3 98.0 L 156.8 98.3 L 159.2 98.6 L 161.7 98.8 L 164.1 98.9 L 166.6 99.0 L 169.0 99.0 L 171.4 99.0 L 173.9 98.9 L 176.3 98.8 L 178.8 98.6 L 181.2 98.3 L 183.7 98.0 L 186.2 97.7 L 188.6 97.3 L 191.1 96.8 L 193.5 96.4 L 195.9 95.8 L 198.4 95.3 L 200.8 94.7 L 203.3 94.1 L 205.8 93.4 L 208.2 92.8 L 210.7 92.1 L 213.1 91.4 L 215.6 90.7 L 218.0 90.0" fill="none" stroke="#c8862a" stroke-width="2.2"/><path d="M 22.0 90.0 L 24.4 88.8 L 26.9 87.7 L 29.4 86.8 L 31.8 86.0 L 34.2 85.4 L 36.7 85.1 L 39.1 85.0 L 41.6 85.2 L 44.0 85.7 L 46.5 86.5 L 49.0 87.4 L 51.4 88.5 L 53.9 89.6 L 56.3 90.8 L 58.8 91.9 L 61.2 92.9 L 63.6 93.8 L 66.1 94.5 L 68.5 94.9 L 71.0 95.0 L 73.5 94.9 L 75.9 94.5 L 78.3 93.8 L 80.8 92.9 L 83.2 91.9 L 85.7 90.8 L 88.2 89.6 L 90.6 88.5 L 93.0 87.4 L 95.5 86.5 L 98.0 85.7 L 100.4 85.2 L 102.8 85.0 L 105.3 85.1 L 107.8 85.4 L 110.2 86.0 L 112.7 86.8 L 115.1 87.7 L 117.5 88.8 L 120.0 90.0 L 122.4 91.2 L 124.9 92.3 L 127.3 93.2 L 129.8 94.0 L 132.2 94.6 L 134.7 94.9 L 137.2 95.0 L 139.6 94.8 L 142.1 94.3 L 144.5 93.5 L 146.9 92.6 L 149.4 91.5 L 151.8 90.4 L 154.3 89.2 L 156.8 88.1 L 159.2 87.1 L 161.7 86.2 L 164.1 85.5 L 166.6 85.1 L 169.0 85.0 L 171.4 85.1 L 173.9 85.5 L 176.3 86.2 L 178.8 87.1 L 181.2 88.1 L 183.7 89.2 L 186.2 90.4 L 188.6 91.5 L 191.1 92.6 L 193.5 93.5 L 195.9 94.3 L 198.4 94.8 L 200.8 95.0 L 203.3 94.9 L 205.8 94.6 L 208.2 94.0 L 210.7 93.2 L 213.1 92.3 L 215.6 91.2 L 218.0 90.0" fill="none" stroke="#2f8a5b" stroke-width="2.2"/><text class="ms" x="120.00" y="13.00" text-anchor="middle" fill="#1b1b19">JPEG · MP3 · 5G 都在做这件事</text><text class="ms" x="120.00" y="127.00" text-anchor="middle">= 一堆正弦波叠起来</text></svg></div></div><span class="zoomchip">🔍 点击放大</span></div>
+  <p class="note">这六问背后其实只有一句：<b>一切都回到单位圆上那个点</b>。谁问、怎么拐弯问，只要把问题丢回圆上，都能自己推出来。</p>
+</figure>
+<figure>
+  <div class="fig-cap"><span class="fig-no">图 9</span><span class="fig-t">它从哪来：一段始于看星星的历史</span></div>
+  <p class="fig-s">三角函数不是哪个数学家拍脑袋发明的，它一开始是<b>天文台的计算工具</b>——为了算星星在哪，才被迫造出了这些表。</p>
+<div class="svgbox"><div class="tl"><div class="ev"><div class="when">约公元前 1800 · 巴比伦</div><div class="why">泥板上把圆分成 360 份。为什么是 360？因为他们的算术是六十进制，连一年也约莫 360 天——“度”从这儿来。</div></div><div class="ev"><div class="when">约公元前 150 · 希腊 · 喜帕恰斯</div><div class="why">为了算星星的位置，造出第一张“弦表”。那时量的还是<b>整条弦</b>，压根没有 sin 这个词。</div></div><div class="ev"><div class="when">约公元 150 · 托勒密《天文学大成》</div><div class="why">弦表细到半度。此后一千多年，天文计算用的都是它的底子。</div></div><div class="ev warm"><div class="when">约公元 500 · 印度 · 阿耶波多</div><div class="why">关键一步：改用<b>半弦</b>（ardha-jya）来算。从整条弦砍成半条弦，这才有了今天的 sin。</div></div><div class="ev warm"><div class="when">8–12 世纪 · 阿拉伯世界</div><div class="why">翻译梵文时把 jya 误读成同音词 jaib（衣褶、胸怀），拉丁语再照字面翻成 sinus（弯曲处）。阿布·瓦法等引入正切余切，把表做得更细。</div></div><div class="ev"><div class="when">1464 · 欧洲 · 雷格蒙塔努斯《论各种三角形》</div><div class="why">三角学第一次脱离天文，成为一门独立的数学分支。</div></div><div class="ev"><div class="when">1748 · 欧拉《无穷分析引论》</div><div class="why">把三角函数从“两条线段的比”改造成<b>函数</b>：现代记号定型，还给出 e<sup>ix</sup> = cos x + i sin x。</div></div><div class="ev now"><div class="when">今天 · 傅里叶之后</div><div class="why">任何信号都能拆成正弦波——JPEG、MP3、5G、振动分析，全在做这件事。</div></div></div><div class="etym"><b>顺便一个词源乌龙：</b>你念的 sine，本意是“衣褶”。<span class="chain">jya（梵语“弦”） → jiba（阿拉伯语转写，省掉元音） → jaib（“衣褶”） → sinus（拉丁语“弯曲处”） → sine</span>一次次抄写和翻译里的误会，就这么固化成了全世界通用的数学名词。</div><span class="zoomchip">🔍 点击放大</span></div>
+  <p class="note">顺便说明一句：<b>数学里没有“最新发现”这种时效性说法</b>——定理不会过期。所以这里不硬凑“近日研究”，只给一条诚实的延伸：它从测星星的工具，变成了描述一切波动的语言。</p>
+</figure>
+
+<figure>
+  <div class="fig-cap"><span class="fig-no">附</span><span class="fig-t">必须记住的四组公式（都是上面两件事的推论）</span></div>
+  <div class="cards">
+    <div class="c">
+      <h3>和角与差角</h3>
+      <span class="fx">sin(α+β) = sinα cosβ + cosα sinβ
+sin(α−β) = sinα cosβ − cosα sinβ
+cos(α+β) = cosα cosβ − sinα sinβ
+cos(α−β) = cosα cosβ + sinα sinβ</span>
+      <p>记忆点：sin 的符号跟着走，cos 的符号反着来。</p>
+    </div>
+    <div class="c">
+      <h3>二倍角（令 β = α）</h3>
+      <span class="fx">sin2α = 2 sinα cosα
+cos2α = cos²α − sin²α
+      = 2cos²α − 1
+      = 1 − 2sin²α</span>
+      <p>不用另背，从和角公式直接得到。</p>
+    </div>
+    <div class="c">
+      <h3>降幂（半角）</h3>
+      <span class="fx">sin²α = (1 − cos2α) / 2
+cos²α = (1 + cos2α) / 2</span>
+      <p>把 cos2α 的三个式子反解出来就是了。</p>
+    </div>
+    <div class="c">
+      <h3>辅助角</h3>
+      <span class="fx">a sinx + b cosx = √(a² + b²) · sin(x + φ)
+其中 tanφ = b / a</span>
+      <p>把两项合成一项，最值、周期一眼看出。</p>
+    </div>
+  </div>
+</figure>
+
+<figure>
+  <div class="fig-cap"><span class="fig-no">终</span><span class="fig-t">一句话带走</span></div>
+  <p class="fig-s" style="margin-bottom:0;font-size:16px;color:#3a3a35">
+  本章所有公式的源头，就是<b style="color:#2f6fd0">单位圆上一个点的横纵坐标</b>。
+  看到一条三角函数公式卡住时，把它丢回单位圆：画个角、找那个点、读坐标——基本都能自己推出来。</p>
+</figure>
+
+<footer>
+  生成自 <code>eli5</code> skill 的原文提示词 · 手写 SVG（坐标由三角函数实时计算）· 单文件零依赖 · 图 7 为内联 JS 实时联动<br>
+  对应人教版必修第一册 第五章：任意角与弧度制 · 三角函数概念 · 诱导公式 · 图象与性质 · 三角恒等变换 · y = A sin(ωx + φ) · 三角函数的应用
+</footer>
+
+</div>
+
+<div class="zoom" id="zoom" hidden>
+  <span class="zoom-tip">左右滑动看图 · 双指放大细节</span>
+  <button class="zoom-x" type="button" aria-label="关闭">✕</button>
+  <div id="zoomInner"></div>
+</div>
+<script>
+(function () {
+  "use strict";
+  var zoom = document.getElementById("zoom");
+  var inner = document.getElementById("zoomInner");
+  if (!zoom || !inner) return;
+
+  function open(svg) {
+    inner.innerHTML = "";
+    inner.appendChild(svg.cloneNode(true));
+    zoom.hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+  function close() {
+    zoom.hidden = true;
+    document.body.style.overflow = "";
+    inner.innerHTML = "";
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".svgbox"), function (box) {
+    box.addEventListener("click", function () {
+      if (window.innerWidth > 760) return;          // 宽屏本来就看得清，不弹
+      var svg = box.querySelector("svg");
+      if (svg) open(svg);
+    });
+  });
+  zoom.addEventListener("click", function (ev) {
+    if (ev.target === zoom || ev.target.className === "zoom-x") close();
+  });
+  document.addEventListener("keydown", function (ev) {
+    if (ev.key === "Escape" && !zoom.hidden) close();
+  });
+})();
+</script>
+<script>
+(function () {
+  "use strict";
+
+  // ---------- 几何常量：两套布局，窄屏自动切换成上下堆叠 ----------
+  var RAD = Math.PI / 180;
+  var TWO_PI = Math.PI * 2;
+
+  var WIDE = {                                   // 宽屏：圆在左、曲线在右
+    VW: 1100, viewBox: "0 0 1100 462",
+    CX: 190, CY: 230, R: 140,
+    X0: 470, W: 600, AMP: 140, AY: 230,          // AY = 曲线中轴
+    hit:   { x: 22,  y: 62, w: 336, h: 336 },    // 可拖拽的区域
+    cClip: { x: 34,  y: 74, w: 312, h: 312 },
+    wClip: { x: 466, y: 74, w: 618, h: 312 },
+    axisL: 156, circleCapY: 400, tanLabelY: 416, waveCapY: 422,
+    breakpoint: 860
+  };
+  var NARROW = {                                 // 窄屏：圆在上、曲线在下
+    VW: 430, viewBox: "0 0 430 830",
+    CX: 215, CY: 180, R: 132,
+    X0: 40, W: 350, AMP: 132, AY: 620,
+    hit:   { x: 55,  y: 24, w: 312, h: 312 },
+    cClip: { x: 60,  y: 30, w: 312, h: 300 },
+    wClip: { x: 28,  y: 476, w: 366, h: 300 },
+    axisL: 158, circleCapY: 348, tanLabelY: 372, waveCapY: 804,
+    breakpoint: 860
+  };
+  var L = WIDE;
+  var CX = L.CX, CY = L.CY, R = L.R, X0 = L.X0, W = L.W, AMP = L.AMP, AY = L.AY;
+
+  var xOf = function (rad) { return X0 + W * (rad / TWO_PI); };
+  var yOf = function (rad) { return AY - AMP * Math.sin(rad); };
+  var pt = function (r, deg) {
+    var a = deg * RAD;
+    return [CX + r * Math.cos(a), CY - r * Math.sin(a)];
+  };
+  var f = function (n, d) { return n.toFixed(d === undefined ? 3 : d); };
+  var $ = function (id) { return document.getElementById(id); };
+
+  var NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, parent) {
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+  function arcD(r, a1, a2) {                       // 数学逆时针 → sweep 0（SVG 的 y 轴朝下）
+    var p1 = pt(r, a1), p2 = pt(r, a2);
+    var span = Math.abs(a2 - a1) % 360;
+    var large = span > 180 ? 1 : 0;
+    return "M " + f(p1[0], 2) + " " + f(p1[1], 2) +
+           " A " + r + " " + r + " 0 " + large + " 0 " + f(p2[0], 2) + " " + f(p2[1], 2);
+  }
+
+  // ---------- 静态层：随布局重建（宽屏/窄屏两套坐标） ----------
+  var S = $("static");
+  var cosGhost = null;
+
+  function buildStatic() {
+    S.innerHTML = "";
+    // 单位圆面板
+    el("line", { x1: CX - L.axisL, y1: CY, x2: CX + L.axisL, y2: CY,
+                 stroke: "#e3e1d9", "stroke-width": 1.4 }, S);
+    el("line", { x1: CX, y1: CY - 152, x2: CX, y2: CY + 152, stroke: "#e3e1d9", "stroke-width": 1.4 }, S);
+    el("circle", { cx: CX, cy: CY, r: R, fill: "none", stroke: "#e3e1d9", "stroke-width": 1.4 }, S);
+    el("line", { x1: CX + R, y1: CY - R - 26, x2: CX + R, y2: CY + R + 26,
+                 stroke: "#f0dedb", "stroke-width": 1.4, "stroke-dasharray": "5 5" }, S);
+    // 右对齐贴在切线左侧：窄屏下右边界只有 430，居中对齐会顶到画布边缘
+    el("text", { x: CX + R - 6, y: L.tanLabelY, "text-anchor": "end",
+                 "font-size": 14, fill: "#c0503f" }, S)
+      .textContent = "x = 1 这条切线，用来量 tan";
+    el("text", { x: CX, y: L.circleCapY, "text-anchor": "middle", "font-size": 14.5,
+                 "font-weight": 600, fill: "#1b1b19" }, S)
+      .textContent = "半径 = 1 的单位圆";
+
+    // 正弦曲线面板
+    el("line", { x1: X0, y1: AY, x2: X0 + W, y2: AY, stroke: "#e3e1d9", "stroke-width": 1.4 }, S);
+    el("line", { x1: X0, y1: AY - AMP, x2: X0, y2: AY + AMP, stroke: "#e3e1d9", "stroke-width": 1.4 }, S);
+    curve(AMP, 0, "#cfd8e6", "5 4", 1.6, "waveClip");                       // 正弦底图
+    cosGhost = curve(AMP, Math.PI / 2, "#e6d3c0", "5 4", 1.6, "waveClip");  // 余弦底图
+    cosGhost.style.display = showCos ? "" : "none";
+
+    for (var i = 0; i < 5; i++) {
+      var rad2 = i * Math.PI / 2, x2 = xOf(rad2);
+      el("line", { x1: x2, y1: AY + 3, x2: x2, y2: AY + 10, stroke: "#c9c7bf", "stroke-width": 1.1 }, S);
+      el("text", { x: x2, y: AY + 26, "text-anchor": "middle", "font-size": 14, fill: "#6b6a64" }, S)
+        .textContent = ["0", "π/2", "π", "3π/2", "2π"][i];
+    }
+    el("text", { x: X0 - 9, y: AY - AMP + 5, "text-anchor": "end", "font-size": 14, fill: "#6b6a64" }, S)
+      .textContent = "1";
+    el("text", { x: X0 - 9, y: AY + AMP + 5, "text-anchor": "end", "font-size": 14, fill: "#6b6a64" }, S)
+      .textContent = "−1";
+    el("text", { x: X0 + W / 2, y: L.waveCapY, "text-anchor": "middle",
+                 "font-size": 14.5, "font-weight": 600, fill: "#1b1b19" }, S)
+      .textContent = "把圆上点的高度横着展开 → y = sin x";
+  }
+
+  function curve(amp, phase, color, dash, width, clip) {
+    var d = "", i, n = 240, t, rad;
+    for (i = 0; i <= n; i++) {
+      t = i / n;
+      rad = t * TWO_PI;
+      d += (i ? " L " : "M ") + f(xOf(rad), 2) + " " + f(AY - amp * Math.sin(rad + phase), 2);
+    }
+    return el("path", { d: d, fill: "none", stroke: color, "stroke-width": width,
+                        "stroke-dasharray": dash || "none", "clip-path": "url(#" + clip + ")" }, S);
+  }
+
+  // ---------- 对称角（可切换） ----------
+  var G = $("ghosts");
+  var ghostDefs = [
+    { deg: function (d) { return 360 - d; }, color: "#c04a3c", tag: "−α" },
+    { deg: function (d) { return 180 - d; }, color: "#2f8a5b", tag: "π − α" },
+    { deg: function (d) { return 180 + d; }, color: "#c8862a", tag: "π + α" }
+  ];
+  var ghostNodes = ghostDefs.map(function (g) {
+    var ray = el("line", { stroke: g.color, "stroke-width": 1.5, "stroke-dasharray": "4 4", opacity: .75 }, G);
+    var dot = el("circle", { r: 5, fill: g.color, opacity: .9 }, G);
+    var txt = el("text", { "font-size": 14, fill: g.color, "font-weight": 700, class: "halo" }, G);
+    return { cfg: g, ray: ray, dot: dot, txt: txt };
+  });
+  G.style.display = "none";
+
+  // ---------- 动态层 ----------
+  var D = $("dynamic");
+  var traceClipG = el("g", { "clip-path": "url(#waveClip)" }, D);
+  var tanClipG = el("g", { "clip-path": "url(#circleClip)" }, D);
+
+  var tanSeg = el("line", { stroke: "#c04a3c", "stroke-width": 4, "stroke-linecap": "round" }, tanClipG);
+  var cosSeg = el("line", { stroke: "#2f6fd0", "stroke-width": 4.5, "stroke-linecap": "round" }, D);
+  var dropLine = el("line", { stroke: "#2f6fd0", "stroke-width": 1.4, "stroke-dasharray": "4 3", opacity: .5 }, D);
+  var sinSeg = el("line", { stroke: "#2f8a5b", "stroke-width": 4.5, "stroke-linecap": "round" }, D);
+  var connector = el("line", { stroke: "#c8862a", "stroke-width": 1.6, "stroke-dasharray": "5 4" }, D);
+  var angleArc = el("path", { fill: "none", stroke: "#c8862a", "stroke-width": 2.6 }, D);
+  var alphaTxt = el("text", { "font-size": 16, "font-weight": 700, fill: "#c8862a", class: "halo",
+                              "font-family": "ui-monospace,Consolas,monospace" }, D);
+  var tracePath = el("path", { fill: "none", stroke: "#2f8a5b", "stroke-width": 3.5,
+                               "stroke-linecap": "round" }, traceClipG);
+  var waveDot = el("circle", { r: 6, fill: "#2f8a5b" }, traceClipG);
+  var waveDrop = el("line", { stroke: "#2f8a5b", "stroke-width": 1.4, "stroke-dasharray": "4 3", opacity: .6 }, D);
+  var waveTxt = el("text", { "font-size": 14.5, "font-weight": 700, fill: "#2f8a5b", class: "halo",
+                             "font-family": "ui-monospace,Consolas,monospace" }, D);
+
+  // ---------- 拖拽手柄 ----------
+  var H = $("handle");
+  var halo = el("circle", { cx: CX + R, cy: CY, r: 17, fill: "transparent" }, H);
+  var ring = el("circle", { cx: CX + R, cy: CY, r: 12, fill: "#fff", stroke: "#1b1b19", "stroke-width": 2 }, H);
+  var core = el("circle", { cx: CX + R, cy: CY, r: 4.5, fill: "#1b1b19" }, H);
+  var rayFromO = el("line", { x1: CX, y1: CY, x2: CX + R, y2: CY, stroke: "#1b1b19", "stroke-width": 2 }, H);
+  var origin = el("circle", { cx: CX, cy: CY, r: 3.5, fill: "#1b1b19" }, H);
+  // 透明抓取面：放在最上层，整个单位圆区域都能按（比精确点中手柄友好得多）
+  var grip = el("rect", { x: 0, y: 0, width: 0, height: 0, fill: "transparent", class: "hit" }, H);
+
+  // ---------- 状态与更新 ----------
+  var alpha = 40;                 // 度，可超出 [0,360)
+  var dragging = false;
+  var playing = false;
+  var showCos = false;
+
+  function wrapDeg(d) { return ((d % 360) + 360) % 360; }
+
+  function render() {
+    var th = wrapDeg(alpha);
+    var rad = th * RAD;
+    var c = Math.cos(rad), s = Math.sin(rad);
+    var P = pt(R, th);
+
+    // 手柄与半径
+    ring.setAttribute("cx", P[0]); ring.setAttribute("cy", P[1]);
+    core.setAttribute("cx", P[0]); core.setAttribute("cy", P[1]);
+    halo.setAttribute("cx", P[0]); halo.setAttribute("cy", P[1]);
+    rayFromO.setAttribute("x1", CX); rayFromO.setAttribute("y1", CY);
+    rayFromO.setAttribute("x2", P[0]); rayFromO.setAttribute("y2", P[1]);
+    origin.setAttribute("cx", CX); origin.setAttribute("cy", CY);
+
+    // 角度扇形
+    if (th > 0.6 && th < 359.4) {
+      angleArc.setAttribute("d", arcD(44, 0, th));
+      angleArc.style.display = "";
+    } else {
+      angleArc.style.display = "none";
+    }
+    var ap = pt(58, th / 2);
+    alphaTxt.setAttribute("x", ap[0] - 6);
+    alphaTxt.setAttribute("y", ap[1] + 5);
+    alphaTxt.textContent = f(th, 0) + "°";
+
+    // cos / sin 线段
+    cosSeg.setAttribute("x1", CX); cosSeg.setAttribute("y1", CY);
+    cosSeg.setAttribute("x2", P[0]); cosSeg.setAttribute("y2", CY);
+    dropLine.setAttribute("x1", P[0]); dropLine.setAttribute("y1", P[1]);
+    dropLine.setAttribute("x2", P[0]); dropLine.setAttribute("y2", CY);
+    sinSeg.setAttribute("x1", P[0]); sinSeg.setAttribute("y1", CY);
+    sinSeg.setAttribute("x2", P[0]); sinSeg.setAttribute("y2", P[1]);
+
+    // tan：x = 1 切线上的截距
+    var tv = Math.tan(rad);
+    if (Math.abs(c) < 1e-4) {
+      tanSeg.style.display = "none";
+    } else {
+      tanSeg.style.display = "";
+      tanSeg.setAttribute("x1", CX + R); tanSeg.setAttribute("y1", CY);
+      tanSeg.setAttribute("x2", CX + R); tanSeg.setAttribute("y2", CY - R * tv);
+    }
+
+    // 波浪与连线
+    var wx = xOf(rad), wy = yOf(rad);
+    connector.setAttribute("x1", P[0]); connector.setAttribute("y1", P[1]);
+    connector.setAttribute("x2", wx);   connector.setAttribute("y2", wy);
+
+    var d = "", n = 90, i, t2;
+    for (i = 0; i <= n; i++) {
+      t2 = th * (i / n) * RAD;
+      d += (i ? " L " : "M ") + f(xOf(t2), 2) + " " + f(yOf(t2), 2);
+    }
+    tracePath.setAttribute("d", th > 0.4 ? d : "");
+    waveDot.setAttribute("cx", wx); waveDot.setAttribute("cy", wy);
+    waveDrop.setAttribute("x1", wx); waveDrop.setAttribute("y1", wy);
+    waveDrop.setAttribute("x2", wx); waveDrop.setAttribute("y2", AY);
+    var wtx = wx + 12, wanchor = "start";
+    if (wx > X0 + W - 96) { wtx = wx - 12; wanchor = "end"; }   // 靠右时标签翻到左侧，免得被画布裁掉
+    waveTxt.setAttribute("x", f(wtx, 1));
+    waveTxt.setAttribute("text-anchor", wanchor);
+    waveTxt.setAttribute("y", f(wy + (s >= 0 ? -14 : 24), 1));
+    waveTxt.textContent = "sin " + f(th, 0) + "° = " + f(s, 3);
+
+    // 对称角
+    ghostNodes.forEach(function (g) {
+      var dg = wrapDeg(g.cfg.deg(th));
+      var gp = pt(R, dg);
+      g.ray.setAttribute("x1", CX); g.ray.setAttribute("y1", CY);
+      g.ray.setAttribute("x2", gp[0]); g.ray.setAttribute("y2", gp[1]);
+      g.dot.setAttribute("cx", gp[0]); g.dot.setAttribute("cy", gp[1]);
+      // 标签沿射线方向放到圆外，避开圆内的所有元素
+      var ang = dg * RAD;
+      var lx = CX + (R + 22) * Math.cos(ang);
+      var ly = CY - (R + 22) * Math.sin(ang);
+      var anchor = Math.cos(ang) >= 0 ? "start" : "end";
+      if (Math.abs(Math.cos(ang)) < 0.25) { anchor = "middle"; }
+      lx = Math.max(CX - L.axisL + 10, Math.min(CX + L.axisL - 10, lx));
+      g.txt.setAttribute("x", f(lx, 1));
+      g.txt.setAttribute("y", f(ly + 4, 1));
+      g.txt.setAttribute("text-anchor", anchor);
+      g.txt.textContent = g.cfg.tag;
+    });
+
+    // 数值面板
+    $("vDeg").textContent = f(th, 1) + "°";
+    // alpha 可为负（反向拖拽），圈数必须按绝对值算，否则会出现「第 0 圈 / 已转 -1 整圈」
+    var turnsAbs = Math.floor(Math.abs(alpha) / 360);
+    $("vTurn").textContent = turnsAbs ? "已累计 " + turnsAbs + " 整圈" : "还没转满一整圈";
+    $("vRad").textContent = f(rad / Math.PI, 3) + "π";
+    $("vCos").textContent = f(c, 3);
+    $("vSin").textContent = f(s, 3);
+    $("vTan").textContent = Math.abs(c) < 1e-4 ? "不存在" : f(tv, 3);
+    $("sTan").textContent = Math.abs(c) < 1e-4 ? "此时 cos α = 0" : "x = 1 处的红段";
+
+    var q = th === 0 || th === 90 || th === 180 || th === 270
+      ? "坐标轴上"
+      : (th < 90 ? "第 Ⅰ 象限" : th < 180 ? "第 Ⅱ 象限" : th < 270 ? "第 Ⅲ 象限" : "第 Ⅳ 象限");
+    var qs = { "坐标轴上": "口诀用不了，要单独判断", "第 Ⅰ 象限": "全部为正",
+               "第 Ⅱ 象限": "只有 sin 为正", "第 Ⅲ 象限": "只有 tan 为正",
+               "第 Ⅳ 象限": "只有 cos 为正" };
+    $("vQ").textContent = q;
+    $("sQ").textContent = qs[q];
+    $("slider").value = th;
+  }
+
+  // ---------- 交互 ----------
+  function angleFromEvent(ev) {
+    var box = $("stage").getBoundingClientRect();
+    var vb = L.VW / box.width;
+    var x = (ev.clientX - box.left) * vb - CX;
+    var y = CY - (ev.clientY - box.top) * vb;
+    return Math.atan2(y, x) / RAD;
+  }
+
+  var stage = $("stage");
+  function down(ev) {
+    var box = stage.getBoundingClientRect();
+    var vbs = L.VW / box.width;
+    var vx = (ev.clientX - box.left) * vbs, vy = (ev.clientY - box.top) * vbs;
+    var hr = L.hit;
+    if (vx < hr.x || vx > hr.x + hr.w || vy < hr.y || vy > hr.y + hr.h) return;  // 只在单位圆面板内响应旋转
+    dragging = true;
+    playing = false; $("play").classList.remove("on"); $("play").textContent = "▶ 自动旋转";
+    stage.classList.add("dragging");
+    try { stage.setPointerCapture(ev.pointerId); } catch (e) { /* 忽略无效指针 */ }
+    alpha = Math.round(angleFromEvent(ev));
+    render();
+  }
+  // 监听挂在 svg 上，任意子元素（圆点、半径线、抓取面）按下都能冒泡到这里
+  stage.addEventListener("pointerdown", down);
+  stage.addEventListener("pointermove", function (ev) {
+    if (!dragging) return;
+    ev.preventDefault();
+    var raw = angleFromEvent(ev);
+    // 允许跨过 0°/360° 连续累加，保留整圈数
+    var base = Math.floor((alpha + 180) / 360) * 360;
+    var cand = base + raw;
+    if (cand - alpha > 180) cand -= 360;
+    if (alpha - cand > 180) cand += 360;
+    alpha = Math.round(cand);
+    render();
+  });
+  ["pointerup", "pointercancel"].forEach(function (e) {
+    stage.addEventListener(e, function () { dragging = false; stage.classList.remove("dragging"); });
+  });
+  window.addEventListener("blur", function () { dragging = false; stage.classList.remove("dragging"); });
+
+  document.addEventListener("keydown", function (ev) {
+    if (ev.target.tagName === "INPUT") return;
+    var step = ev.shiftKey ? 15 : 1;
+    if (ev.key === "ArrowRight" || ev.key === "ArrowUp") { alpha += step; render(); ev.preventDefault(); }
+    else if (ev.key === "ArrowLeft" || ev.key === "ArrowDown") { alpha -= step; render(); ev.preventDefault(); }
+  });
+
+  $("slider").addEventListener("input", function () {
+    var th = parseFloat(this.value);
+    var turn = Math.floor(alpha / 360) * 360;
+    alpha = turn + th;
+    if (alpha < 0) alpha += 360;
+    render();
+  });
+
+  $("showSym").addEventListener("change", function () {
+    G.style.display = this.checked ? "" : "none";
+    $("symLegend").hidden = !this.checked;
+  });
+
+  $("showCos").addEventListener("change", function () {
+    showCos = this.checked;
+    cosGhost.style.display = showCos ? "" : "none";
+  });
+
+  var raf = null;
+  $("play").addEventListener("click", function () {
+    playing = !playing;
+    this.classList.toggle("on", playing);
+    this.textContent = playing ? "❚❚ 暂停" : "▶ 自动旋转";
+    if (playing) {
+      (function loop() {
+        if (!playing) return;
+        alpha += 0.7;
+        render();
+        raf = requestAnimationFrame(loop);
+      })();
+    } else if (raf) { cancelAnimationFrame(raf); }
+  });
+
+  // ---------- 布局切换 ----------
+  function setRect(node, r) {
+    node.setAttribute("x", r.x); node.setAttribute("y", r.y);
+    node.setAttribute("width", r.w); node.setAttribute("height", r.h);
+  }
+
+  function applyLayout() {
+    CX = L.CX; CY = L.CY; R = L.R; X0 = L.X0; W = L.W; AMP = L.AMP; AY = L.AY;
+    stage.setAttribute("viewBox", L.viewBox);
+    setRect(grip, L.hit);
+    setRect($("circleClip").querySelector("rect"), L.cClip);
+    setRect($("waveClip").querySelector("rect"), L.wClip);
+    var host = stage.parentElement;
+    if (host) host.classList.toggle("stacked", L !== WIDE);
+    buildStatic();
+    render();
+  }
+
+  function pickLayout() {
+    var host = stage.parentElement;
+    var w = host ? host.getBoundingClientRect().width : window.innerWidth;
+    return w >= WIDE.breakpoint ? WIDE : NARROW;
+  }
+
+  var resizeTimer = null;
+  window.addEventListener("resize", function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      var want = pickLayout();
+      if (want !== L) { L = want; applyLayout(); }
+    }, 120);
+  });
+
+  L = pickLayout();
+  applyLayout();
+  window.__render = render;      // 便于调试
+  window.__layout = function () { return L === WIDE ? "wide" : "narrow"; };
+})();
+</script>
+</body>
+</html>

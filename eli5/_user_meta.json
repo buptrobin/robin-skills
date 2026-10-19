@@ -1,0 +1,26 @@
+{
+  "name": "eli5",
+  "installedAt": 1792255800000,
+  "source": "https://github.com/anthropics/claude-plugins-community/tree/main/eli5/skills/eli5",
+  "ref": "main@06ec7b6a0a82bdc4bec44bd82d4368c42f20d7c1",
+  "author": "Thariq Shihipar (Anthropic)",
+  "license": "MIT",
+  "locallyModified": true,
+  "modifiedAt": 1792290600000,
+  "revision": 6,
+  "modifications": [
+    "SKILL.md：上游 321 字节原文保留，追加「本机约定」——①适配性判断 ②兜底与反偷懒 ③内容必备两区块（考问角度 / 历史）④硬性约束（手机优先、kicker 文案）⑤五坑 ⑥验证链",
+    "references/interactive.md：§0 适配性判断表 · §1 骨架 · §2 配色 · §3 几何 helper · §4 交互四件套 · §5 单一 render · §6 五坑 · §7 验证链 · §8 手机窄屏适配 · §9 「别人会怎么问你」 · §10 「它从哪来」 · §11 交付清单",
+    "examples/trig-page-full.html：完整参考页（9 张图 + 互动面板 + 问答卡 + 历史时间轴，含响应式）",
+    "examples/trig-phone-390.png / trig-phone-board.png：手机端版面与互动面板基准",
+    "examples/trig-qa-cards.png / trig-history.png：问答卡与历史时间轴的成品基准",
+    "references/interactive.md §7 新增「CSS 注入后的结构自检」：<style>/</style> 必须配平、body 顶部不得有文本节点、首屏必须单独截图、测试脚本别复用截图文件名；交付清单加两条对应项",
+    "SKILL.md 末尾追加「隔壁有个 eli5-high」路由提示：高中课程内容优先走 eli5-high，本 skill 保留零基础科普/跨学科场景"
+  ],
+  "rule": "主题合适就做 B 级参数联动（连续可调量 + 图形随动 + 反直觉结论）；不合适就退回 A/静态，但必须指出命中的不适合判据并说明理由 —— 不允许因为「做静态更快」而悄悄退回静态。一页最多 1-2 个动手点。",
+  "updatePolicy": "上游更新时：raw.githubusercontent 覆盖 SKILL.md 会丢掉本机约定 —— 必须把 '## 本机约定' 之后的内容整段搬回；references/ 与 examples/ 为本机新增，不受上游影响。",
+  "note": "$ARGUMENTS 是 Claude Code 的斜杠参数占位符，WorkBuddy 下模型自行把用户输入当话题。",
+  "responsiveRule": "默认假设页面会被转发到手机上看：静态宽图给「点击放大」浮层（默认全宽看整体、点一下放大看细节）；互动图窄屏切换成上下堆叠（读者必须同时看到拖的东西和变的东西），断点看容器宽度(≥860 用并排)、堆叠版限制渲染宽度 460px；任何宽度下 document.scrollWidth - innerWidth 必须为 0。",
+  "contentRule": "每页必有两个内容区块：①「别人会怎么问你」4–8 问（定义追问/概念混淆/反直觉/易错点/边界/有什么用），每问配一句话答案 + 240×132 迷你图，收尾点明「其实是同一件事」；②「它从哪来」只写有人/年份/动机的真实节点、优先挖意外转折。⚠️ 数学/理论类没有真进展时**不写「最新发现」**，不许用「近年来研究者不断探索」充版面，改为写「它今天长到哪去了」。",
+  "pitfall": "往 <style> 里追加 CSS 时多带一个 </style> → 其后的媒体查询会整段变成正文文本跑到页面顶上。此时 console: clean、横向溢出 0、逐图截图全正常，常规检查抓不到 —— 必须专门做标签配平 + body 顶部文本节点自检 + 首屏截图。"
+}

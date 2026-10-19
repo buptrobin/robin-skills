@@ -1,0 +1,30 @@
+{
+  "name": "eli5-high",
+  "installedAt": 1792290600000,
+  "source": "forked from local skill `eli5` (which itself derives from anthropics/claude-plugins-community@06ec7b6 · MIT · Thariq Shihipar)",
+  "parent": "eli5",
+  "license": "MIT",
+  "locallyModified": true,
+  "modifiedAt": 1792281960000,
+  "revision": 3,
+  "purpose": "面向高中生的图解讲义版本。eli5 讲直觉、图多字少；eli5-high 术语照课本、密度更高、带例题与易错清单。",
+  "inherited": [
+    "references/interactive.md：原样复制自 eli5（§0 适配性判断 · §1 骨架 · §2 配色 · §3 几何 helper · §4 交互四件套 · §5 单一 render · §6 五坑 · §7 验证链与 CSS 自检 · §8 手机窄屏 · §9 讨论角度 · §10 历史由来 · §11 交付清单）",
+    "examples/trig-page-full.html 与 4 张 png：eli5 的工程参考页（B 级互动 + 响应式），**只作代码参考，不作版式参考**",
+    "配色语义（蓝=主/正向、绿=正确、琥珀=警示、红=错误）与单文件零依赖、手机优先、drive.mjs 验证链"
+  ],
+  "newInThisFork": [
+    "SKILL.md：完全重写。核心是「与 eli5 的分工表」+ 八步流程（三件套 → 适配性 → 六区块 → 版式 → 四条硬线 → 七坑 → 验证链 → 交付四句）",
+    "references/handout.md：讲义版版式规范（§0 绘本脸 vs 讲义脸对照表 · §1 骨架与字号表 · §2 考点徽章 · §3 课本原话卡 · §4 图块头与结论条 · §5 例题分步揭示含 JS · §6 易错清单两栏 · §7 辨析表 · §8 章节目录 · §9 数据来源写法 · §10 交互区三个可读数值 · §11 交付清单追加项）",
+    "examples/handout-demo.html：完整成品基准（生物·酶，3 图 + B 级互动 + 4 步例题 + 6 问 + 6 条易错），已跑通 drive.mjs 全部断言",
+    "references/autopilot.md（rev2）：互动页「自走」规范 —— 默认规则与三类例外、四条硬规则、API 表、循环关键帧设计（10–15 秒 + 停留 2–3 秒）、与 SVG 页面接线、七个坑、验证断言、交付话术",
+    "assets/autopilot.js（rev2）：无依赖 ES5 引擎，约 250 行。状态机（auto/manual + 5 秒 idle 交还 + nearestPhase 平滑接回）、滑块回写守卫、点击跳关键帧、← → 步进、prefers-reduced-motion 兜底。产出页面时必须全文内联",
+    "examples/handout-demo.html（rev3）：C 区互动接上 Autopilot —— 引擎全文内联（单文件）、状态徽标、循环 12.4 秒（37℃ 停 2.4 秒）、点画面按 keys [20,37,50,65] 跳、拖曲线直接取值、松手 5 秒交还、reduced-motion 下直接 manual；`window.__ap` / `__probe().apMode` 供 drive.mjs 断言。实测 360/390/768/1024/1440/1920 六档零横向溢出、console clean",
+    "references/autopilot.md（rev3）：§5 补了第 8 个坑 —— 拖完浏览器补发的 `click` 会被引擎当成「点」多跳一帧；修法是在 `AutoPilot.create` 之前注册 click 守卫、拖过就 `stopImmediatePropagation()`，并配合 pointerdown 记起点 / 走够 5px 才算拖"
+  ],
+  "rule": "六区块缺一不可：A 课本原话（含「几个条件」）/ B 拆开看 / C 自己拖一下 / D 一道题走一遍（分步揭示 + 可抄的答案）/ E 会怎么考（含反直觉与易错）/ F 易错清单（左边是真实错句）。术语必须照课本，比喻只能进 .aside 附注。",
+  "antiDrift": "判断一个页面是不是走回了 eli5 的老路，看五条：图配一句话、出现「就像…一样」当主措辞、全页无数字、没有题目、靠大留白分隔段落。命中任意一条就重排成讲义版。",
+  "dataRule": "数字必须能追来源（教材值 / 实验值 / 明确标注的示意值）。若要让模型复现课本某张表，必须把参数反解出来并在页脚声明口径，不许硬编码一个「看起来像」的数字。同一个量在全文不许出现两个值。",
+  "pitfall": "本次实测踩到的三个新坑（已写进 SKILL.md 第六步与 handout.md）：① 能垒箭头若画在峰左侧会横穿曲线，必须画在峰的 x 位置上（从山包内部竖直上去），并给所有文字加 .halo 白边；② 迷你图的试管液体要从**底部**往上填（写成从 y 顶部填会变成「液体在管口」的荒谬图）；③ 测试脚本复用同一截图文件名会让后一次静默覆盖前一次（390 的图被 1024 覆盖，差点误判版式）。",
+  "updatePolicy": "本 skill 是 eli5 的分叉，不跟随上游自动更新。若 eli5 的 references/interactive.md 有改进，需手动同步并保留 handout.md 的 §10（三个可读数值）等讲义特有段落。"
+}
